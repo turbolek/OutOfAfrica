@@ -18,9 +18,9 @@ public class PlayerUnitController : MonoBehaviour
         InputController.SelectAction -= OnSelectAction;
     }
 
-    private void OnSelectAction(PlayerUnitController selectedPlayer)
+    private void OnSelectAction(List<PlayerUnitController> selectedPlayers)
     {
-        if (selectedPlayer == this)
+        if (selectedPlayers.Contains(this))
         {
             Select();
         }

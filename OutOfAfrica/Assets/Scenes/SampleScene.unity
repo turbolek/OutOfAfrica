@@ -314,6 +314,7 @@ GameObject:
   m_Component:
   - component: {fileID: 549135870}
   - component: {fileID: 549135869}
+  - component: {fileID: 549135871}
   m_Layer: 0
   m_Name: InputController
   m_TagString: Untagged
@@ -334,8 +335,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _camera: {fileID: 963194227}
+  _terrainLayerMask:
+    serializedVersion: 2
+    m_Bits: 64
   _clickIndicator: {fileID: 1097296799}
   _selectionFrame: {fileID: 909665832}
+  _selectionCollider: {fileID: 549135871}
 --- !u!4 &549135870
 Transform:
   m_ObjectHideFlags: 0
@@ -352,6 +357,28 @@ Transform:
   - {fileID: 1097296803}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!64 &549135871
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 549135868}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 0}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -380,7 +407,7 @@ Light:
   m_Enabled: 1
   serializedVersion: 11
   m_Type: 1
-  m_Color: {r: 1, g: 0.8951782, b: 0.6462264, a: 1}
+  m_Color: {r: 1, g: 0.9051887, b: 0.6839622, a: 1}
   m_Intensity: 2
   m_Range: 10
   m_SpotAngle: 30

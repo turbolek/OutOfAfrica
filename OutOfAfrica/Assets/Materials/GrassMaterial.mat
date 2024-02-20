@@ -113,7 +113,7 @@ Material:
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
-    - _HeightBlend: 1.54
+    - _HeightBlend: 1
     - _Metallic: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.005
@@ -138,11 +138,11 @@ Material:
     - _ZWrite: 1
     m_Colors:
     - _BaseColor: {r: 1, g: 0.9685759, b: 0, a: 1}
-    - _BottomColor: {r: 0.32156864, g: 0.2439551, b: 0.11372548, a: 1}
+    - _BottomColor: {r: 0.321055, g: 0.5943396, b: 0.21586862, a: 1}
     - _Color: {r: 0.90331566, g: 0.9056604, b: 0.4229263, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _FarColor: {r: 0.96862745, g: 0.7715335, b: 0.32156864, a: 1}
-    - _NearColor: {r: 0.72156864, g: 0.58290786, b: 0.050980404, a: 1}
+    - _FarColor: {r: 0.9921569, g: 0.80392164, b: 0.078431375, a: 1}
+    - _NearColor: {r: 0.990566, g: 0.8040766, b: 0.07943219, a: 1}
     - _NearFarRange: {r: 10, g: 30, b: 0, a: 0}
     - _ShadowColor: {r: 0, g: 0, b: 0, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
