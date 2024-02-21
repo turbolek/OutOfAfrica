@@ -338,9 +338,10 @@ MonoBehaviour:
   _terrainLayerMask:
     serializedVersion: 2
     m_Bits: 64
-  _clickIndicator: {fileID: 1097296799}
+  _selectionColliderHeight: 100
+  _selectionBoxLifetimeMs: 100
+  _clickLength: 0.1
   _selectionFrame: {fileID: 909665832}
-  _selectionCollider: {fileID: 549135871}
 --- !u!4 &549135870
 Transform:
   m_ObjectHideFlags: 0
@@ -530,8 +531,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 633}
-  m_SizeDelta: {x: 100, y: 100}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &909665833
 MonoBehaviour:
