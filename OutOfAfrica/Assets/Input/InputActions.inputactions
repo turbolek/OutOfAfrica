@@ -15,7 +15,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "EndSelection",
+                    "name": "Command",
                     "type": "Button",
                     "id": "0518ec95-69b3-4617-8521-b25e9a0c72d5",
                     "expectedControlType": "Button",
@@ -43,7 +43,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "EndSelection",
+                    "action": "Command",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

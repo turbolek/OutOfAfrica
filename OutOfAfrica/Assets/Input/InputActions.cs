@@ -37,7 +37,7 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""EndSelection"",
+                    ""name"": ""Command"",
                     ""type"": ""Button"",
                     ""id"": ""0518ec95-69b3-4617-8521-b25e9a0c72d5"",
                     ""expectedControlType"": ""Button"",
@@ -65,7 +65,7 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""EndSelection"",
+                    ""action"": ""Command"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -105,7 +105,7 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
         // Selection
         m_Selection = asset.FindActionMap("Selection", throwIfNotFound: true);
         m_Selection_StartSelection = m_Selection.FindAction("StartSelection", throwIfNotFound: true);
-        m_Selection_EndSelection = m_Selection.FindAction("EndSelection", throwIfNotFound: true);
+        m_Selection_Command = m_Selection.FindAction("Command", throwIfNotFound: true);
         // General
         m_General = asset.FindActionMap("General", throwIfNotFound: true);
         m_General_MousePosition = m_General.FindAction("MousePosition", throwIfNotFound: true);
@@ -171,13 +171,13 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Selection;
     private List<ISelectionActions> m_SelectionActionsCallbackInterfaces = new List<ISelectionActions>();
     private readonly InputAction m_Selection_StartSelection;
-    private readonly InputAction m_Selection_EndSelection;
+    private readonly InputAction m_Selection_Command;
     public struct SelectionActions
     {
         private @InputActions m_Wrapper;
         public SelectionActions(@InputActions wrapper) { m_Wrapper = wrapper; }
         public InputAction @StartSelection => m_Wrapper.m_Selection_StartSelection;
-        public InputAction @EndSelection => m_Wrapper.m_Selection_EndSelection;
+        public InputAction @Command => m_Wrapper.m_Selection_Command;
         public InputActionMap Get() { return m_Wrapper.m_Selection; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -190,9 +190,9 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
             @StartSelection.started += instance.OnStartSelection;
             @StartSelection.performed += instance.OnStartSelection;
             @StartSelection.canceled += instance.OnStartSelection;
-            @EndSelection.started += instance.OnEndSelection;
-            @EndSelection.performed += instance.OnEndSelection;
-            @EndSelection.canceled += instance.OnEndSelection;
+            @Command.started += instance.OnCommand;
+            @Command.performed += instance.OnCommand;
+            @Command.canceled += instance.OnCommand;
         }
 
         private void UnregisterCallbacks(ISelectionActions instance)
@@ -200,9 +200,9 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
             @StartSelection.started -= instance.OnStartSelection;
             @StartSelection.performed -= instance.OnStartSelection;
             @StartSelection.canceled -= instance.OnStartSelection;
-            @EndSelection.started -= instance.OnEndSelection;
-            @EndSelection.performed -= instance.OnEndSelection;
-            @EndSelection.canceled -= instance.OnEndSelection;
+            @Command.started -= instance.OnCommand;
+            @Command.performed -= instance.OnCommand;
+            @Command.canceled -= instance.OnCommand;
         }
 
         public void RemoveCallbacks(ISelectionActions instance)
@@ -269,7 +269,7 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
     public interface ISelectionActions
     {
         void OnStartSelection(InputAction.CallbackContext context);
-        void OnEndSelection(InputAction.CallbackContext context);
+        void OnCommand(InputAction.CallbackContext context);
     }
     public interface IGeneralActions
     {

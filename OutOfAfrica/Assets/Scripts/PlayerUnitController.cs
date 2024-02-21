@@ -1,21 +1,43 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class PlayerUnitController : MonoBehaviour
 {
     [SerializeField] private GameObject m_selectionIndicator;
+    [SerializeField] private float _movementSpeed = 2f;
+
+    private Vector3 _movementTargetPosition;
+    private bool _isMoving;
+    private Rigidbody _rigidbody;
 
     void OnEnable()
     {
         InputController.SelectAction += OnSelectAction;
+        InputController.CommandAction += OnCommandAction;
         Deselect();
+    }
+
+    private void Start()
+    {
+        _rigidbody = GetComponent<Rigidbody>();
+    }
+
+    private void Update()
+    {
+        if (_isMoving)
+        {
+            HandleMovement();
+        }
     }
 
     private void OnDisable()
     {
         InputController.SelectAction -= OnSelectAction;
+        InputController.CommandAction -= OnCommandAction;
     }
 
     private void OnSelectAction(List<PlayerUnitController> selectedPlayers)
@@ -30,6 +52,14 @@ public class PlayerUnitController : MonoBehaviour
         }
     }
 
+    private void OnCommandAction(List<PlayerUnitController> selectedPlayers, Vector3 targetPosition)
+    {
+        if (selectedPlayers.Contains(this))
+        {
+            SetMovementTarget(targetPosition);
+        }
+    }
+
     private void Select()
     {
         m_selectionIndicator.gameObject.SetActive(true);
@@ -38,5 +68,33 @@ public class PlayerUnitController : MonoBehaviour
     private void Deselect()
     {
         m_selectionIndicator.gameObject.SetActive(false);
+    }
+
+    private void SetMovementTarget(Vector3 targetPosition)
+    {
+        _isMoving = true;
+        _movementTargetPosition = targetPosition;
+    }
+
+    private void HandleMovement()
+    {
+        Vector3 offset = _movementTargetPosition - transform.position;
+        offset.y = 0;
+        float stepLength = _movementSpeed * Time.deltaTime;
+
+        transform.LookAt(transform.position + offset);
+        _rigidbody.velocity = Vector3.zero;
+
+        if (offset.magnitude < stepLength)
+        {
+            transform.position = _movementTargetPosition;
+            _isMoving = false;
+        }
+        else
+        {
+            var velocity = transform.forward * _movementSpeed;
+            velocity.y = 0;
+            _rigidbody.AddForce(velocity, ForceMode.VelocityChange);
+        }
     }
 }

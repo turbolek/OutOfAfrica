@@ -10,6 +10,7 @@ using UnityEngine.Serialization;
 public class InputController : MonoBehaviour
 {
     public static event Action<List<PlayerUnitController>> SelectAction;
+    public static event Action<List<PlayerUnitController>, Vector3> CommandAction;
 
     [SerializeField] private Camera _camera;
     [SerializeField] private LayerMask _terrainLayerMask;
@@ -41,6 +42,7 @@ public class InputController : MonoBehaviour
 
         _inputActions.Selection.StartSelection.performed += ctx => { StartSelection(); };
         _inputActions.Selection.StartSelection.canceled += ctx => { EndSelection(); };
+        _inputActions.Selection.Command.performed += ctx => { OnCommandAction(); };
 
         _selectionFrame.gameObject.SetActive(false);
     }
@@ -48,9 +50,17 @@ public class InputController : MonoBehaviour
     private void Update()
     {
         _mousePositionScreen = Mouse.current.position.ReadValue();
-        _mousePositionWorld = _camera.ScreenToWorldPoint(_mousePositionScreen);
+        var ray = _camera.ScreenPointToRay(_mousePositionScreen);
+        _mousePositionWorld = Physics.Raycast(ray, out RaycastHit hit, 1000f, _terrainLayerMask)
+            ? hit.point
+            : _camera.ScreenToWorldPoint(_mousePositionScreen);
 
         HandleSelection();
+    }
+
+    private void OnCommandAction()
+    {
+        CommandAction?.Invoke(_selectedUnits, _mousePositionWorld);
     }
 
     private void HandleSelection()
