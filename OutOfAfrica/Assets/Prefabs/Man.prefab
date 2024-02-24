@@ -1007,9 +1007,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13f099bd27d32bd4d88bcf95b1e44de6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <BaseRadius>k__BackingField: 0.75
   m_selectionIndicator: {fileID: 5254484331454755481}
   _movementSpeed: 1
-  _selectionVariable: {fileID: 11400000, guid: aaebd3cf50f815d42961cc9599f2f13c, type: 2}
+  selectionValueVariable: {fileID: 11400000, guid: aaebd3cf50f815d42961cc9599f2f13c, type: 2}
 --- !u!1 &4203135330754562408
 GameObject:
   m_ObjectHideFlags: 0

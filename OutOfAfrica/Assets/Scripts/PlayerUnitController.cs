@@ -7,8 +7,11 @@ using Variables;
 [Serializable]
 public class PlayerUnitController : MonoBehaviour
 {
+    [field: SerializeField] public float BaseRadius { get; private set; }
+
     [SerializeField] private GameObject m_selectionIndicator;
     [SerializeField] private float _movementSpeed = 2f;
+
 
     [FormerlySerializedAs("_selectionVariable")] [SerializeField]
     private SelectionValueVariable selectionValueVariable;
@@ -20,7 +23,6 @@ public class PlayerUnitController : MonoBehaviour
     void OnEnable()
     {
         selectionValueVariable.Modified += OnSelectAction;
-        InputController.CommandAction += OnCommandAction;
         Deselect();
     }
 
@@ -40,7 +42,6 @@ public class PlayerUnitController : MonoBehaviour
     private void OnDisable()
     {
         selectionValueVariable.Modified -= OnSelectAction;
-        InputController.CommandAction -= OnCommandAction;
     }
 
     private void OnSelectAction((List<PlayerUnitController> selectedPlayers,
@@ -56,14 +57,6 @@ public class PlayerUnitController : MonoBehaviour
         }
     }
 
-    private void OnCommandAction(Vector3 targetPosition)
-    {
-        if (selectionValueVariable.Value.Contains(this))
-        {
-            SetMovementTarget(targetPosition);
-        }
-    }
-
     private void Select()
     {
         m_selectionIndicator.gameObject.SetActive(true);
@@ -74,7 +67,7 @@ public class PlayerUnitController : MonoBehaviour
         m_selectionIndicator.gameObject.SetActive(false);
     }
 
-    private void SetMovementTarget(Vector3 targetPosition)
+    public void SetMovementTarget(Vector3 targetPosition)
     {
         _isMoving = true;
         _movementTargetPosition = targetPosition;
@@ -93,6 +86,7 @@ public class PlayerUnitController : MonoBehaviour
         {
             transform.position = _movementTargetPosition;
             _isMoving = false;
+            _rigidbody.velocity = Vector3.zero;
         }
         else
         {
