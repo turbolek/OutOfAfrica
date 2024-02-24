@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.Serialization;
 using Variables;
 
@@ -18,7 +19,7 @@ public class PlayerUnitController : MonoBehaviour
 
     private Vector3 _movementTargetPosition;
     private bool _isMoving;
-    private Rigidbody _rigidbody;
+    private NavMeshAgent _navMeshAgent;
 
     void OnEnable()
     {
@@ -28,15 +29,7 @@ public class PlayerUnitController : MonoBehaviour
 
     private void Start()
     {
-        _rigidbody = GetComponent<Rigidbody>();
-    }
-
-    private void Update()
-    {
-        if (_isMoving)
-        {
-            HandleMovement();
-        }
+        _navMeshAgent = GetComponent<NavMeshAgent>();
     }
 
     private void OnDisable()
@@ -70,29 +63,7 @@ public class PlayerUnitController : MonoBehaviour
     public void SetMovementTarget(Vector3 targetPosition)
     {
         _isMoving = true;
+        _navMeshAgent.destination = targetPosition;
         _movementTargetPosition = targetPosition;
-    }
-
-    private void HandleMovement()
-    {
-        Vector3 offset = _movementTargetPosition - transform.position;
-        offset.y = 0;
-        float stepLength = _movementSpeed * Time.deltaTime;
-
-        transform.LookAt(transform.position + offset);
-        _rigidbody.velocity = Vector3.zero;
-
-        if (offset.magnitude < stepLength)
-        {
-            transform.position = _movementTargetPosition;
-            _isMoving = false;
-            _rigidbody.velocity = Vector3.zero;
-        }
-        else
-        {
-            var velocity = transform.forward * _movementSpeed;
-            velocity.y = 0;
-            _rigidbody.AddForce(velocity, ForceMode.VelocityChange);
-        }
     }
 }

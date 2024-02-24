@@ -19,7 +19,7 @@ public class CommandManager : MonoBehaviour
 
     private void OnCommandAction(Vector3 targetPosition)
     {
-        if (_currentSelection.Value.Count < 0)
+        if (_currentSelection.Value.Count < 1)
         {
             return;
         }
