@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Unity.VisualScripting;
 using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
+using Variables;
 
 [RequireComponent(typeof(MeshCollider))]
 public class InputController : MonoBehaviour
@@ -18,7 +19,7 @@ public class InputController : MonoBehaviour
     [SerializeField] private float _clickLength = 0.1f;
     [SerializeField] private RectTransform _selectionFrame;
 
-    [SerializeField] private SelectionVariable _selectionVariable;
+    [FormerlySerializedAs("_selectionVariable")] [SerializeField] private SelectionValueVariable selectionValueVariable;
 
     private MeshCollider _selectionCollider;
     private InputActions _inputActions;
@@ -88,7 +89,7 @@ public class InputController : MonoBehaviour
 
     private async void EndSelection()
     {
-        _selectionVariable.Clear();
+        selectionValueVariable.Clear();
 
         if (_isBoxSelection)
         {
@@ -205,7 +206,7 @@ public class InputController : MonoBehaviour
             PlayerUnitController unit = hit.transform.GetComponent<PlayerUnitController>();
             if (unit)
             {
-                _selectionVariable.Set(unit);
+                selectionValueVariable.Set(unit);
             }
         }
     }
@@ -241,7 +242,7 @@ public class InputController : MonoBehaviour
         var unit = other.GetComponent<PlayerUnitController>();
         if (unit)
         {
-            _selectionVariable.Add(unit);
+            selectionValueVariable.Add(unit);
         }
     }
 

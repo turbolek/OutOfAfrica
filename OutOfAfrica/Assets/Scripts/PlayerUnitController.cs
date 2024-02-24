@@ -1,11 +1,17 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
+using Variables;
 
+[Serializable]
 public class PlayerUnitController : MonoBehaviour
 {
     [SerializeField] private GameObject m_selectionIndicator;
     [SerializeField] private float _movementSpeed = 2f;
-    [SerializeField] private SelectionVariable _selectionVariable;
+
+    [FormerlySerializedAs("_selectionVariable")] [SerializeField]
+    private SelectionValueVariable selectionValueVariable;
 
     private Vector3 _movementTargetPosition;
     private bool _isMoving;
@@ -13,7 +19,7 @@ public class PlayerUnitController : MonoBehaviour
 
     void OnEnable()
     {
-        _selectionVariable.Modified += OnSelectAction;
+        selectionValueVariable.Modified += OnSelectAction;
         InputController.CommandAction += OnCommandAction;
         Deselect();
     }
@@ -33,7 +39,7 @@ public class PlayerUnitController : MonoBehaviour
 
     private void OnDisable()
     {
-        _selectionVariable.Modified -= OnSelectAction;
+        selectionValueVariable.Modified -= OnSelectAction;
         InputController.CommandAction -= OnCommandAction;
     }
 
@@ -52,7 +58,7 @@ public class PlayerUnitController : MonoBehaviour
 
     private void OnCommandAction(Vector3 targetPosition)
     {
-        if (_selectionVariable.Value.Contains(this))
+        if (selectionValueVariable.Value.Contains(this))
         {
             SetMovementTarget(targetPosition);
         }

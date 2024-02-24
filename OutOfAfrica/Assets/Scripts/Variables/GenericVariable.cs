@@ -1,15 +1,9 @@
-using System;
-using UnityEngine;
+using Sirenix.OdinInspector;
 
-public abstract class GenericVariable<T> : ScriptableObject
+namespace Variables
 {
-    public T Value { get; private set; }
-    public Action<(T newValue, T oldValue)> Modified;
-
-    public void Set(T value)
+    public abstract class GenericVariable : SerializedScriptableObject
     {
-        var oldValue = Value;
-        Value = value;
-        Modified?.Invoke((value, oldValue));
+        public abstract void Clear();
     }
 }

@@ -1,30 +1,33 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Selection Variable", menuName = "Variables/Selection")]
-public class SelectionVariable : GenericVariable<List<PlayerUnitController>>
+namespace Variables
 {
-    public void Add(PlayerUnitController playerUnit)
+    [CreateAssetMenu(fileName = "Selection Variable", menuName = "Variables/Selection")]
+    public class SelectionValueVariable : GenericValueVariable<List<PlayerUnitController>>
     {
-        var newValue = new List<PlayerUnitController>(Value);
-        newValue.AddExclusive(playerUnit);
-        Set(newValue);
-    }
+        public void Add(PlayerUnitController playerUnit)
+        {
+            var newValue = new List<PlayerUnitController>(Value);
+            newValue.AddExclusive(playerUnit);
+            Set(newValue);
+        }
 
-    public void Remove(PlayerUnitController playerUnit)
-    {
-        var newValue = new List<PlayerUnitController>(Value);
-        newValue.Remove(playerUnit);
-        Set(newValue);
-    }
+        public void Remove(PlayerUnitController playerUnit)
+        {
+            var newValue = new List<PlayerUnitController>(Value);
+            newValue.Remove(playerUnit);
+            Set(newValue);
+        }
 
-    public void Clear()
-    {
-        Set(new List<PlayerUnitController>());
-    }
+        public void Set(PlayerUnitController unit)
+        {
+            Set(new List<PlayerUnitController> { unit });
+        }
 
-    public void Set(PlayerUnitController unit)
-    {
-        Set(new List<PlayerUnitController> { unit });
+        public override void Clear()
+        {
+            Set(new List<PlayerUnitController>());
+        }
     }
 }
