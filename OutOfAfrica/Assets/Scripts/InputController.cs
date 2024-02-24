@@ -9,16 +9,16 @@ using UnityEngine.Serialization;
 [RequireComponent(typeof(MeshCollider))]
 public class InputController : MonoBehaviour
 {
-    public static event Action<List<PlayerUnitController>> SelectAction;
-    public static event Action<List<PlayerUnitController>, Vector3> CommandAction;
+    public static event Action<Vector3> CommandAction;
 
     [SerializeField] private Camera _camera;
     [SerializeField] private LayerMask _terrainLayerMask;
     [SerializeField] private float _selectionColliderHeight = 100f;
     [SerializeField] private int _selectionBoxLifetimeMs = 100;
     [SerializeField] private float _clickLength = 0.1f;
-
     [SerializeField] private RectTransform _selectionFrame;
+
+    [SerializeField] private SelectionVariable _selectionVariable;
 
     private MeshCollider _selectionCollider;
     private InputActions _inputActions;
@@ -29,7 +29,6 @@ public class InputController : MonoBehaviour
     private Vector2 _selectionStartPositionScreen;
     private Vector2 _selectionEndPositionScreen;
     private bool _disableCollider;
-    private List<PlayerUnitController> _selectedUnits = new();
 
     private float _selectionStartTime;
     private bool _isBoxSelection;
@@ -60,7 +59,7 @@ public class InputController : MonoBehaviour
 
     private void OnCommandAction()
     {
-        CommandAction?.Invoke(_selectedUnits, _mousePositionWorld);
+        CommandAction?.Invoke(_mousePositionWorld);
     }
 
     private void HandleSelection()
@@ -89,7 +88,7 @@ public class InputController : MonoBehaviour
 
     private async void EndSelection()
     {
-        _selectedUnits.Clear();
+        _selectionVariable.Clear();
 
         if (_isBoxSelection)
         {
@@ -101,7 +100,6 @@ public class InputController : MonoBehaviour
         }
 
         _isSelecting = false;
-        SelectAction?.Invoke(_selectedUnits);
     }
 
     private void CalculateSelectionRect()
@@ -207,7 +205,7 @@ public class InputController : MonoBehaviour
             PlayerUnitController unit = hit.transform.GetComponent<PlayerUnitController>();
             if (unit)
             {
-                _selectedUnits.Add(unit);
+                _selectionVariable.Set(unit);
             }
         }
     }
@@ -243,7 +241,7 @@ public class InputController : MonoBehaviour
         var unit = other.GetComponent<PlayerUnitController>();
         if (unit)
         {
-            _selectedUnits.Add(unit);
+            _selectionVariable.Add(unit);
         }
     }
 

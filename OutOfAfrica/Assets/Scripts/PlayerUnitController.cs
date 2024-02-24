@@ -1,14 +1,11 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class PlayerUnitController : MonoBehaviour
 {
     [SerializeField] private GameObject m_selectionIndicator;
     [SerializeField] private float _movementSpeed = 2f;
+    [SerializeField] private SelectionVariable _selectionVariable;
 
     private Vector3 _movementTargetPosition;
     private bool _isMoving;
@@ -16,7 +13,7 @@ public class PlayerUnitController : MonoBehaviour
 
     void OnEnable()
     {
-        InputController.SelectAction += OnSelectAction;
+        _selectionVariable.Modified += OnSelectAction;
         InputController.CommandAction += OnCommandAction;
         Deselect();
     }
@@ -36,13 +33,14 @@ public class PlayerUnitController : MonoBehaviour
 
     private void OnDisable()
     {
-        InputController.SelectAction -= OnSelectAction;
+        _selectionVariable.Modified -= OnSelectAction;
         InputController.CommandAction -= OnCommandAction;
     }
 
-    private void OnSelectAction(List<PlayerUnitController> selectedPlayers)
+    private void OnSelectAction((List<PlayerUnitController> selectedPlayers,
+        List<PlayerUnitController> previouslySelectedPlayers) value)
     {
-        if (selectedPlayers.Contains(this))
+        if (value.selectedPlayers.Contains(this))
         {
             Select();
         }
@@ -52,9 +50,9 @@ public class PlayerUnitController : MonoBehaviour
         }
     }
 
-    private void OnCommandAction(List<PlayerUnitController> selectedPlayers, Vector3 targetPosition)
+    private void OnCommandAction(Vector3 targetPosition)
     {
-        if (selectedPlayers.Contains(this))
+        if (_selectionVariable.Value.Contains(this))
         {
             SetMovementTarget(targetPosition);
         }

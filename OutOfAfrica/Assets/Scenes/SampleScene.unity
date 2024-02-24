@@ -127,18 +127,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1374926221276460234, guid: ebbbd79d8b5fac8479060146212384c2, type: 3}
-      propertyPath: m_Drag
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 1374926221276460234, guid: ebbbd79d8b5fac8479060146212384c2, type: 3}
-      propertyPath: m_Mass
-      value: 50
-      objectReference: {fileID: 0}
-    - target: {fileID: 1374926221276460234, guid: ebbbd79d8b5fac8479060146212384c2, type: 3}
-      propertyPath: m_AngularDrag
-      value: 100
-      objectReference: {fileID: 0}
     - target: {fileID: 4203135330754401604, guid: ebbbd79d8b5fac8479060146212384c2, type: 3}
       propertyPath: m_LocalPosition.x
       value: 25
@@ -354,6 +342,7 @@ MonoBehaviour:
   _selectionBoxLifetimeMs: 100
   _clickLength: 0.1
   _selectionFrame: {fileID: 909665832}
+  _selectionVariable: {fileID: 11400000, guid: aaebd3cf50f815d42961cc9599f2f13c, type: 2}
 --- !u!4 &549135870
 Transform:
   m_ObjectHideFlags: 0
