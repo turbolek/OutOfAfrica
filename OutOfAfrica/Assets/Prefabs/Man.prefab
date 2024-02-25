@@ -899,6 +899,8 @@ GameObject:
   - component: {fileID: 1990843913945299367}
   - component: {fileID: 6193429249121731596}
   - component: {fileID: 7520271127653101858}
+  - component: {fileID: 2455896503760198445}
+  - component: {fileID: 6070146930350414532}
   m_Layer: 0
   m_Name: Man
   m_TagString: Untagged
@@ -982,9 +984,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <BaseRadius>k__BackingField: 0.75
-  m_selectionIndicator: {fileID: 5254484331454755481}
   _movementSpeed: 1
-  selectionValueVariable: {fileID: 11400000, guid: aaebd3cf50f815d42961cc9599f2f13c, type: 2}
 --- !u!195 &6193429249121731596
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1034,6 +1034,37 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &2455896503760198445
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4203135330754562406}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdd5ac7e7ff6462448b936e32f274e5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Type: {fileID: 11400000, guid: 111d80bb93d42a841ae490bc2df478a0, type: 2}
+  m_selectionIndicator: {fileID: 5254484331454755481}
+  selectionValueVariable: {fileID: 11400000, guid: aaebd3cf50f815d42961cc9599f2f13c, type: 2}
+--- !u!208 &6070146930350414532
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4203135330754562406}
+  m_Enabled: 0
+  serializedVersion: 3
+  m_Shape: 0
+  m_Extents: {x: 0.5, y: 1.25, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 1.19, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &4203135330754562408
 GameObject:
   m_ObjectHideFlags: 0
@@ -1445,8 +1476,8 @@ Transform:
   m_GameObject: {fileID: 5254484331454755481}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.5, y: 0.1, z: 1.5}
+  m_LocalPosition: {x: 0, y: 2.56, z: 0}
+  m_LocalScale: {x: 0.25, y: 0.25, z: 0.25}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4203135330754401604}
@@ -1458,7 +1489,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5254484331454755481}
-  m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!23 &3724866553071748332
 MeshRenderer:
   m_ObjectHideFlags: 0

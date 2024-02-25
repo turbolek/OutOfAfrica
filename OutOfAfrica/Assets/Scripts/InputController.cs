@@ -19,7 +19,8 @@ public class InputController : MonoBehaviour
     [SerializeField] private float _clickLength = 0.1f;
     [SerializeField] private RectTransform _selectionFrame;
 
-    [FormerlySerializedAs("_selectionVariable")] [SerializeField] private SelectionValueVariable selectionValueVariable;
+    [FormerlySerializedAs("_selectionVariable")] [SerializeField]
+    private SelectionValueVariable selectionValueVariable;
 
     private MeshCollider _selectionCollider;
     private InputActions _inputActions;
@@ -203,10 +204,10 @@ public class InputController : MonoBehaviour
         var ray = _camera.ScreenPointToRay(_mousePositionScreen);
         if (Physics.Raycast(ray, out RaycastHit hit))
         {
-            PlayerUnitController unit = hit.transform.GetComponent<PlayerUnitController>();
-            if (unit)
+            Selectable selectable = hit.transform.GetComponent<Selectable>();
+            if (selectable)
             {
-                selectionValueVariable.Set(unit);
+                selectionValueVariable.Set(selectable);
             }
         }
     }
@@ -239,10 +240,24 @@ public class InputController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        var unit = other.GetComponent<PlayerUnitController>();
-        if (unit)
+        var selectable = other.GetComponent<Selectable>();
+
+        int currentPriority = selectionValueVariable.Value.Count > 0
+            ? selectionValueVariable.Value[0].Type.Priority
+            : int.MaxValue;
+
+        if (selectable)
         {
-            selectionValueVariable.Add(unit);
+            if (selectable.Type.Priority < currentPriority)
+            {
+                selectionValueVariable.Clear();
+                currentPriority = selectable.Type.Priority;
+            }
+
+            if (selectable.Type.Priority == currentPriority)
+            {
+                selectionValueVariable.Add(selectable);
+            }
         }
     }
 

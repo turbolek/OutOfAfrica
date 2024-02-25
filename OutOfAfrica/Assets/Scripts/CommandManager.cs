@@ -26,11 +26,23 @@ public class CommandManager : MonoBehaviour
 
         List<(PlayerUnitController Unit, Vector3 Position)> takenPositions = new();
 
-        takenPositions.Add(new(_currentSelection.Value[0], targetPosition));
+        var mainUnit = _currentSelection.Value[0].GetComponent<PlayerUnitController>();
+
+        if (!mainUnit)
+        {
+            return;
+        }
+
+        takenPositions.Add(new(mainUnit, targetPosition));
 
         for (int i = 1; i < _currentSelection.Value.Count; i++)
         {
-            var unit = _currentSelection.Value[i];
+            var unit = _currentSelection.Value[i].GetComponent<PlayerUnitController>();
+            if (!unit)
+            {
+                continue;
+            }
+
             var position = GetFreePosition(takenPositions, unit);
 
             takenPositions.Add(new(unit, position));
@@ -38,13 +50,21 @@ public class CommandManager : MonoBehaviour
 
         foreach (var takenPosition in takenPositions)
         {
-            takenPosition.Unit.SetMovementTarget(takenPosition.Position);
+            if (takenPosition.Unit)
+            {
+                takenPosition.Unit.SetMovementTarget(takenPosition.Position);
+            }
         }
     }
 
     private Vector3 GetFreePosition(List<(PlayerUnitController unit, Vector3 position)> takenPositions,
         PlayerUnitController unit)
     {
+        if (takenPositions.Count < 1)
+        {
+            return Vector3.zero;
+        }
+
         var startingPosition = takenPositions[0].position;
         var startingRadius = takenPositions[0].unit.BaseRadius;
 
