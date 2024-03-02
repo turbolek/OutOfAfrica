@@ -18,6 +18,7 @@ public class InputController : MonoBehaviour
     [SerializeField] private int _selectionBoxLifetimeMs = 100;
     [SerializeField] private float _clickLength = 0.1f;
     [SerializeField] private RectTransform _selectionFrame;
+    [SerializeField] private Collider _terrainCollider;
 
     [FormerlySerializedAs("_selectionVariable")] [SerializeField]
     private SelectionValueVariable selectionValueVariable;
@@ -219,23 +220,31 @@ public class InputController : MonoBehaviour
 
         Vector3[] worldCorners = new Vector3[4];
 
-        var ray0 = _camera.ScreenPointToRay(corners[0]);
-        Physics.Raycast(ray0, out RaycastHit hit0, 1000f, _terrainLayerMask, QueryTriggerInteraction.UseGlobal);
-        worldCorners[0] = hit0.point;
-        var ray1 = _camera.ScreenPointToRay(corners[1]);
-        Physics.Raycast(ray1, out RaycastHit hit1, 1000f, _terrainLayerMask, QueryTriggerInteraction.UseGlobal);
-        worldCorners[1] = hit1.point;
-        var ray2 = _camera.ScreenPointToRay(corners[2]);
-        Physics.Raycast(ray2, out RaycastHit hit2, 1000f, _terrainLayerMask, QueryTriggerInteraction.UseGlobal);
-        worldCorners[2] = hit2.point;
-        var ray3 = _camera.ScreenPointToRay(corners[3]);
-        Physics.Raycast(ray3, out RaycastHit hit3, 1000f, _terrainLayerMask, QueryTriggerInteraction.UseGlobal);
-        worldCorners[3] = hit3.point;
+        worldCorners[0] = GetClosestPositionOnTerrain(corners[0]);
+        worldCorners[1] = GetClosestPositionOnTerrain(corners[1]);
+        worldCorners[2] = GetClosestPositionOnTerrain(corners[2]);
+        worldCorners[3] = GetClosestPositionOnTerrain(corners[3]);
 
-        _selectionCollider.sharedMesh = GenerateSelectionMesh(worldCorners);
-        _selectionCollider.enabled = true;
+        if (ValidateSelectionCorners(worldCorners))
+        {
+            _selectionCollider.sharedMesh = GenerateSelectionMesh(worldCorners);
+            _selectionCollider.enabled = true;
 
-        await DisableCollider();
+            await DisableCollider();
+        }
+    }
+
+    private Vector3 GetClosestPositionOnTerrain(Vector3 sourcePosition)
+    {
+        Vector3 positionOnTerrain = Vector3.zero;
+        var ray = _camera.ScreenPointToRay(sourcePosition);
+
+        if (Physics.Raycast(ray, out RaycastHit hit, 1000f, _terrainLayerMask, QueryTriggerInteraction.UseGlobal))
+        {
+            positionOnTerrain = hit.point;
+        }
+
+        return positionOnTerrain;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -265,5 +274,23 @@ public class InputController : MonoBehaviour
     {
         await Task.Delay(_selectionBoxLifetimeMs);
         _selectionCollider.enabled = false;
+    }
+
+    private bool ValidateSelectionCorners(Vector3[] corners)
+    {
+        for (int i = 0; i < corners.Length; i++)
+        {
+            var currentCorner = corners[i];
+            for (int j = i + 1; j < corners.Length; j++)
+            {
+                var comparedCorner = corners[j];
+                if (currentCorner == comparedCorner)
+                {
+                    return false;
+                }
+            }
+        }
+
+        return true;
     }
 }
