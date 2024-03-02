@@ -8,11 +8,15 @@ public class PlayerUnitController : MonoBehaviour
 {
     [field: SerializeField] public float BaseRadius { get; private set; }
     [SerializeField] private float _movementSpeed = 2f;
+    [SerializeField] private float _commandCooldown = 1f;
     private NavMeshAgent _navMeshAgent;
     private NavMeshObstacle _navMeshObstacle;
     private Targetable _currentTarget;
     private bool _wasMoving;
     private Vector3 _currentTargetPosition;
+    private Command _currentCommand;
+
+    private float _lastCommandTime;
 
     private void Start()
     {
@@ -31,10 +35,20 @@ public class PlayerUnitController : MonoBehaviour
         }
 
         _wasMoving = IsMoving();
+
+        if (_currentCommand != null)
+        {
+            if (Time.time >= _lastCommandTime + _commandCooldown && _currentCommand.Validate())
+            {
+                _currentCommand.Perform();
+                _lastCommandTime = Time.time;
+            }
+        }
     }
 
     public void SetTarget(Targetable targetable)
     {
+        _currentCommand = null;
         _currentTarget = targetable;
     }
 
@@ -71,5 +85,28 @@ public class PlayerUnitController : MonoBehaviour
     {
         var targetName = _currentTarget != null ? _currentTarget.name : "";
         Debug.Log($"{name} reached target: {targetName} at position: {_currentTargetPosition}");
+        _currentCommand = GetCommand();
+        if (_currentTarget)
+        {
+            var shift = _currentTarget.transform.position - transform.position;
+            shift.y = 0f;
+            transform.LookAt(transform.position + shift);
+        }
+    }
+
+    private Command GetCommand()
+    {
+        if (_currentTarget == null)
+        {
+            return null;
+        }
+
+        var resourceStack = _currentTarget.GetComponent<ResourceStack>();
+        if (resourceStack)
+        {
+            return new CollectResourceCommand(this, _currentTarget);
+        }
+
+        return null;
     }
 }
