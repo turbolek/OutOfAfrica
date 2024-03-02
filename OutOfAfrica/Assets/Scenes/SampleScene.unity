@@ -1117,6 +1117,7 @@ GameObject:
   - component: {fileID: 1061693165}
   - component: {fileID: 1061693166}
   - component: {fileID: 1061693167}
+  - component: {fileID: 1061693168}
   m_Layer: 0
   m_Name: Cube (1)
   m_TagString: Untagged
@@ -1271,6 +1272,18 @@ NavMeshObstacle:
   m_CarveOnlyStationary: 1
   m_Center: {x: 0, y: 0, z: 0}
   m_TimeToStationary: 0.5
+--- !u!114 &1061693168
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1061693160}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 441de4df77240af43af1877f01e64874, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1097296799
 GameObject:
   m_ObjectHideFlags: 0
@@ -1923,6 +1936,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _currentSelection: {fileID: 11400000, guid: aaebd3cf50f815d42961cc9599f2f13c, type: 2}
   _positionSearchAngleStep: 5
+  _camera: {fileID: 963194227}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

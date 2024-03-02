@@ -6,6 +6,7 @@ public class CommandManager : MonoBehaviour
 {
     [SerializeField] private SelectionValueVariable _currentSelection;
     [SerializeField] private float _positionSearchAngleStep;
+    [SerializeField] private Camera _camera; //TODO inject?
 
     private void OnEnable()
     {
@@ -17,12 +18,17 @@ public class CommandManager : MonoBehaviour
         InputController.CommandAction -= OnCommandAction;
     }
 
-    private void OnCommandAction(Vector3 targetPosition)
+    private void OnCommandAction()
     {
         if (_currentSelection.Value.Count < 1)
         {
             return;
         }
+
+        var targetable = GetTargetable(InputController.MousePositionScreen);
+
+        Vector3 targetPosition =
+            targetable != null ? targetable.transform.position : InputController.MousePositionWorld;
 
         List<(PlayerUnitController Unit, Vector3 Position)> takenPositions = new();
 
@@ -52,9 +58,23 @@ public class CommandManager : MonoBehaviour
         {
             if (takenPosition.Unit)
             {
+                takenPosition.Unit.SetTarget(targetable);
                 takenPosition.Unit.SetMovementTarget(takenPosition.Position);
             }
         }
+    }
+
+    private Targetable GetTargetable(Vector3 position)
+    {
+        Targetable targetable = null;
+        var ray = _camera.ScreenPointToRay(position);
+
+        if (Physics.Raycast(ray, out RaycastHit hit))
+        {
+            targetable = hit.transform.GetComponent<Targetable>();
+        }
+
+        return targetable;
     }
 
     private Vector3 GetFreePosition(List<(PlayerUnitController unit, Vector3 position)> takenPositions,

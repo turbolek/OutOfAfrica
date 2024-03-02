@@ -1,8 +1,6 @@
 using UnityEngine;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
-using Unity.VisualScripting;
 using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
 using Variables;
@@ -10,7 +8,7 @@ using Variables;
 [RequireComponent(typeof(MeshCollider))]
 public class InputController : MonoBehaviour
 {
-    public static event Action<Vector3> CommandAction;
+    public static event Action CommandAction;
 
     [SerializeField] private Camera _camera;
     [SerializeField] private LayerMask _terrainLayerMask;
@@ -25,8 +23,8 @@ public class InputController : MonoBehaviour
 
     private MeshCollider _selectionCollider;
     private InputActions _inputActions;
-    private Vector3 _mousePositionWorld;
-    private Vector2 _mousePositionScreen;
+    public static Vector3 MousePositionWorld { get; private set; } //TODO convert to SO
+    public static Vector2 MousePositionScreen{ get; private set; } // TODO convert to SO
 
     private bool _isSelecting;
     private Vector2 _selectionStartPositionScreen;
@@ -51,18 +49,18 @@ public class InputController : MonoBehaviour
 
     private void Update()
     {
-        _mousePositionScreen = Mouse.current.position.ReadValue();
-        var ray = _camera.ScreenPointToRay(_mousePositionScreen);
-        _mousePositionWorld = Physics.Raycast(ray, out RaycastHit hit, 1000f, _terrainLayerMask)
+        MousePositionScreen = Mouse.current.position.ReadValue();
+        var ray = _camera.ScreenPointToRay(MousePositionScreen);
+        MousePositionWorld = Physics.Raycast(ray, out RaycastHit hit, 1000f, _terrainLayerMask)
             ? hit.point
-            : _camera.ScreenToWorldPoint(_mousePositionScreen);
+            : _camera.ScreenToWorldPoint(MousePositionScreen);
 
         HandleSelection();
     }
 
     private void OnCommandAction()
     {
-        CommandAction?.Invoke(_mousePositionWorld);
+        CommandAction?.Invoke();
     }
 
     private void HandleSelection()
@@ -74,7 +72,7 @@ public class InputController : MonoBehaviour
 
             if (_isBoxSelection)
             {
-                _selectionEndPositionScreen = _mousePositionScreen;
+                _selectionEndPositionScreen = MousePositionScreen;
                 CalculateSelectionRect();
             }
         }
@@ -86,7 +84,7 @@ public class InputController : MonoBehaviour
     {
         _selectionStartTime = Time.time;
         _isSelecting = true;
-        _selectionStartPositionScreen = _mousePositionScreen;
+        _selectionStartPositionScreen = MousePositionScreen;
     }
 
     private async void EndSelection()
@@ -202,7 +200,7 @@ public class InputController : MonoBehaviour
 
     private void HandleClickSelection()
     {
-        var ray = _camera.ScreenPointToRay(_mousePositionScreen);
+        var ray = _camera.ScreenPointToRay(MousePositionScreen);
         if (Physics.Raycast(ray, out RaycastHit hit))
         {
             Selectable selectable = hit.transform.GetComponent<Selectable>();
