@@ -1,18 +1,26 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 public class Targetable : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public event Action<PlayerUnitController> UnitEntered;
+    public event Action<PlayerUnitController> UnitExited;
+
+    private void OnTriggerEnter(Collider other)
     {
-        
+        PlayerUnitController unit = other.GetComponent<PlayerUnitController>();
+        if (unit)
+        {
+            UnitEntered?.Invoke(unit);
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnTriggerExit(Collider other)
     {
-        
+        PlayerUnitController unit = other.GetComponent<PlayerUnitController>();
+        if (unit)
+        {
+            UnitExited?.Invoke(unit);
+        }
     }
 }

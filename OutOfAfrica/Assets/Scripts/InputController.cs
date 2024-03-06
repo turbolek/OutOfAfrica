@@ -9,6 +9,7 @@ using Variables;
 public class InputController : MonoBehaviour
 {
     public static event Action CommandAction;
+    public static event Action<Selectable> SelectableHovered;
 
     [SerializeField] private Camera _camera;
     [SerializeField] private LayerMask _terrainLayerMask;
@@ -24,7 +25,7 @@ public class InputController : MonoBehaviour
     private MeshCollider _selectionCollider;
     private InputActions _inputActions;
     public static Vector3 MousePositionWorld { get; private set; } //TODO convert to SO
-    public static Vector2 MousePositionScreen{ get; private set; } // TODO convert to SO
+    public static Vector2 MousePositionScreen { get; private set; } // TODO convert to SO
 
     private bool _isSelecting;
     private Vector2 _selectionStartPositionScreen;
@@ -33,6 +34,7 @@ public class InputController : MonoBehaviour
 
     private float _selectionStartTime;
     private bool _isBoxSelection;
+    private Selectable _hoveredSelectable;
 
     private void Start()
     {
@@ -55,6 +57,8 @@ public class InputController : MonoBehaviour
             ? hit.point
             : _camera.ScreenToWorldPoint(MousePositionScreen);
 
+        _hoveredSelectable = GetHoveredSelectable();
+        SelectableHovered?.Invoke(_hoveredSelectable);
         HandleSelection();
     }
 
@@ -200,14 +204,9 @@ public class InputController : MonoBehaviour
 
     private void HandleClickSelection()
     {
-        var ray = _camera.ScreenPointToRay(MousePositionScreen);
-        if (Physics.Raycast(ray, out RaycastHit hit))
+        if (_hoveredSelectable)
         {
-            Selectable selectable = hit.transform.GetComponent<Selectable>();
-            if (selectable)
-            {
-                selectionValueVariable.Set(selectable);
-            }
+            selectionValueVariable.Set(_hoveredSelectable);
         }
     }
 
@@ -290,5 +289,17 @@ public class InputController : MonoBehaviour
         }
 
         return true;
+    }
+
+    private Selectable GetHoveredSelectable()
+    {
+        var ray = _camera.ScreenPointToRay(MousePositionScreen);
+        Selectable selectable = null;
+        if (Physics.Raycast(ray, out RaycastHit hit))
+        {
+            selectable = hit.transform.GetComponent<Selectable>();
+        }
+
+        return selectable;
     }
 }

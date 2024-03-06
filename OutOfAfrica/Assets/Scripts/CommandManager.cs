@@ -49,7 +49,7 @@ public class CommandManager : MonoBehaviour
                 continue;
             }
 
-            var position = GetFreePosition(takenPositions, unit);
+            var position = targetable ? targetable.transform.position : GetFreePosition(takenPositions, unit);
 
             takenPositions.Add(new(unit, position));
         }

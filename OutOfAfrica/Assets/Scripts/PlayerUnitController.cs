@@ -1,4 +1,5 @@
 using System;
+using Unity.AI.Navigation;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -17,11 +18,13 @@ public class PlayerUnitController : MonoBehaviour
     private Command _currentCommand;
 
     private float _lastCommandTime;
+    private NavMeshSurface _navMeshSurface; //TODO send navmesh update request instead of directly referring
 
     private void Start()
     {
         _navMeshAgent = GetComponent<NavMeshAgent>();
         _navMeshObstacle = GetComponent<NavMeshObstacle>();
+        _navMeshSurface = FindFirstObjectByType<NavMeshSurface>();
     }
 
     private void Update()
@@ -50,12 +53,20 @@ public class PlayerUnitController : MonoBehaviour
     {
         _currentCommand = null;
         _currentTarget = targetable;
+
+        if (targetable)
+        {
+            targetable.UnitEntered += OnEnteredTarget;
+            targetable.UnitEntered += OnEnteredTarget;
+        }
     }
 
     public void SetMovementTarget(Vector3 targetPosition)
     {
-        _currentTargetPosition = targetPosition;
         _navMeshObstacle.enabled = false;
+        
+        _navMeshSurface.BuildNavMesh();
+        
         _navMeshAgent.enabled = true;
         _navMeshAgent.destination = targetPosition;
     }
@@ -108,5 +119,19 @@ public class PlayerUnitController : MonoBehaviour
         }
 
         return null;
+    }
+
+    private void OnEnteredTarget(PlayerUnitController unit)
+    {
+        if (unit == this)
+        {
+            _navMeshAgent.velocity = Vector3.zero;
+            _navMeshAgent.destination = transform.position;
+            _currentTarget.UnitEntered -= OnEnteredTarget;
+        }
+    }
+
+    private void OnExitedTarget(PlayerUnitController unit)
+    {
     }
 }
