@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Unity.AI.Navigation;
 using UnityEngine;
 using UnityEngine.AI;
@@ -10,6 +11,22 @@ public class PlayerUnitController : MonoBehaviour
     [field: SerializeField] public float BaseRadius { get; private set; }
     [SerializeField] private float _movementSpeed = 2f;
     [SerializeField] private float _commandCooldown = 1f;
+    [SerializeField] private int _inventoryCapacity = 10;
+
+    public int RemainingInventoryCapacity
+    {
+        get
+        {
+            int cap = _inventoryCapacity;
+            foreach (var resource in Inventory.Keys)
+            {
+                cap -= Inventory[resource];
+            }
+
+            return cap;
+        }
+    }
+
     private NavMeshAgent _navMeshAgent;
     private NavMeshObstacle _navMeshObstacle;
     private Targetable _currentTarget;
@@ -19,6 +36,7 @@ public class PlayerUnitController : MonoBehaviour
 
     private float _lastCommandTime;
     private NavMeshSurface _navMeshSurface; //TODO send navmesh update request instead of directly referring
+    public Dictionary<ResourceType, int> Inventory { get; private set; } = new(); //TODO make a separate component
 
     private void Start()
     {
@@ -41,9 +59,17 @@ public class PlayerUnitController : MonoBehaviour
 
         if (_currentCommand != null)
         {
-            if (Time.time >= _lastCommandTime + _commandCooldown && _currentCommand.Validate())
+            if (Time.time >= _lastCommandTime + _commandCooldown)
             {
-                _currentCommand.Perform();
+                if (_currentCommand.Validate())
+                {
+                    _currentCommand.Perform();
+                }
+                else
+                {
+                    _currentCommand = null;
+                }
+
                 _lastCommandTime = Time.time;
             }
         }
@@ -64,9 +90,9 @@ public class PlayerUnitController : MonoBehaviour
     public void SetMovementTarget(Vector3 targetPosition)
     {
         _navMeshObstacle.enabled = false;
-        
+
         _navMeshSurface.BuildNavMesh();
-        
+
         _navMeshAgent.enabled = true;
         _navMeshAgent.destination = targetPosition;
     }
@@ -105,7 +131,7 @@ public class PlayerUnitController : MonoBehaviour
         }
     }
 
-    private Command GetCommand()
+    private Command GetCommand() //TODO use command factroy
     {
         if (_currentTarget == null)
         {
@@ -116,6 +142,12 @@ public class PlayerUnitController : MonoBehaviour
         if (resourceStack)
         {
             return new CollectResourceCommand(this, _currentTarget);
+        }
+
+        var dropOffZone = _currentTarget.GetComponent<DropOffZone>();
+        if (dropOffZone)
+        {
+            return new DropOffResourcesCommand(this, _currentTarget);
         }
 
         return null;
@@ -133,5 +165,38 @@ public class PlayerUnitController : MonoBehaviour
 
     private void OnExitedTarget(PlayerUnitController unit)
     {
+    }
+
+    public bool CanPickupResource(ResourceType resourceType)
+    {
+        return RemainingInventoryCapacity > 0;
+    }
+
+    public void PickupResource(ResourceType resourceType)
+    {
+        if (!Inventory.ContainsKey(resourceType))
+        {
+            Inventory.Add(resourceType, 0);
+        }
+
+        Inventory[resourceType] += 1;
+    }
+
+    public void DropResource(ResourceType resourceType)
+    {
+        if (Inventory.ContainsKey(resourceType))
+        {
+            Inventory[resourceType] = 0;
+        }
+    }
+
+    public int GetResourceCount(ResourceType resourceType)
+    {
+        if (Inventory.ContainsKey(resourceType))
+        {
+            return Inventory[resourceType];
+        }
+
+        return 0;
     }
 }
