@@ -1,20 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
+[RequireComponent(typeof(Inventory))]
 public class DropOffZone : MonoBehaviour
 {
-    private Dictionary<ResourceType, int> _inventory = new(); //TODO make a separate component
+    public Inventory Inventory { get; private set; }
 
-    public void AddResource(ResourceType resourceType, int amount)
+    private void Start()
     {
-        if (!_inventory.ContainsKey(resourceType))
-        {
-            _inventory.Add(resourceType, 0);
-        }
-
-        _inventory[resourceType] += amount;
-
-        Debug.Log($"Added {amount} {resourceType} to {name}");
+        Inventory = GetComponent<Inventory>();
     }
 }

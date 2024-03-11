@@ -27,7 +27,7 @@ public class CollectResourceCommand : Command
     public override void Perform()
     {
         _resourceStack.ChangeValue(-1);
-        _unit.PickupResource(_resourceStack.ResourceType);
+        _unit.Inventory.AddResource(_resourceStack.ResourceType);
         Debug.Log(
             $"{Unit.name} collected resource from {_resourceStack.name}. Remaining amount: {_resourceStack.Amount}");
     }

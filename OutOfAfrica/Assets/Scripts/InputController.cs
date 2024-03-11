@@ -57,7 +57,7 @@ public class InputController : MonoBehaviour
             ? hit.point
             : _camera.ScreenToWorldPoint(MousePositionScreen);
 
-        _hoveredSelectable = GetHoveredSelectable();
+        _hoveredSelectable = _isSelecting ? null : GetHoveredSelectable();
         SelectableHovered?.Invoke(_hoveredSelectable);
         HandleSelection();
     }

@@ -19,12 +19,16 @@ public class DropOffResourcesCommand : Command
 
     public override void Perform()
     {
-        var inventoryCopy = new Dictionary<ResourceType, int>(_unit.Inventory);
+        var inventoryCopy = new Dictionary<ResourceType, int>(_unit.Inventory.Content);
 
         foreach (var inventoryEntry in inventoryCopy)
         {
-            _dropOffZone.AddResource(inventoryEntry.Key, inventoryEntry.Value);
-            _unit.DropResource(inventoryEntry.Key);
+            for (int i = 0; i < inventoryEntry.Value; i++)
+            {
+                _dropOffZone.Inventory.AddResource(inventoryEntry.Key);
+            }
+
+            _unit.Inventory.RemoveResource(inventoryEntry.Key);
         }
 
         _performed = true;

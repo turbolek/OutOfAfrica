@@ -10,6 +10,10 @@ public class HoverTooltip : MonoBehaviour
     [SerializeField] private CanvasGroup _canvasGroup;
     [SerializeField] private Camera _camera;
     [SerializeField] private Vector3 _offset;
+    [SerializeField] private InventoryEntry _entryPrefab;
+    [SerializeField] private Transform _entryParent;
+
+    private List<InventoryEntry> _inventoryEntries = new();
 
     private void OnEnable()
     {
@@ -44,6 +48,12 @@ public class HoverTooltip : MonoBehaviour
             return;
         }
 
+        for (int i = _inventoryEntries.Count - 1; i >= 0; i--)
+        {
+            Destroy(_inventoryEntries[i].gameObject);
+        }
+
+        _inventoryEntries.Clear();
 
         transform.position = _camera.WorldToScreenPoint(selectable.transform.position) + _offset;
         Show();
@@ -65,5 +75,11 @@ public class HoverTooltip : MonoBehaviour
 
     private void DisplayInventory(Inventory inventory)
     {
+        foreach (var key in inventory.Content.Keys)
+        {
+            InventoryEntry entry = Instantiate(_entryPrefab, _entryParent);
+            entry.DisplayResource(key, inventory.Content[key]);
+            _inventoryEntries.Add(entry);
+        }
     }
 }
