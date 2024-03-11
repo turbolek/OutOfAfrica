@@ -5,7 +5,7 @@ using Variables;
 public class Selectable : MonoBehaviour
 {
     [field: SerializeField] public SelectableType Type;
-    [SerializeField] private GameObject m_selectionIndicator;
+    [SerializeField] private SelectionIndicator m_selectionIndicator;
     [SerializeField] private SelectionValueVariable selectionValueVariable;
 
     private bool _isHovered;
@@ -40,23 +40,25 @@ public class Selectable : MonoBehaviour
 
     private void Select()
     {
-        m_selectionIndicator.gameObject.SetActive(true);
+        m_selectionIndicator.Select();
     }
 
     private void Deselect()
     {
-        m_selectionIndicator.gameObject.SetActive(false);
+        m_selectionIndicator.Deselect();
     }
 
     private void Hover()
     {
         _isHovered = true;
+        m_selectionIndicator.Hover();
         Debug.Log($"{name} hovered");
     }
 
     private void Unhover()
     {
         _isHovered = false;
+        m_selectionIndicator.Unhover();
         Debug.Log($"{name} unhovered");
     }
 

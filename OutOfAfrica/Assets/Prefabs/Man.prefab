@@ -1050,7 +1050,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Type: {fileID: 11400000, guid: 111d80bb93d42a841ae490bc2df478a0, type: 2}
-  m_selectionIndicator: {fileID: 5254484331454755481}
+  m_selectionIndicator: {fileID: 1536000294037098269}
   selectionValueVariable: {fileID: 11400000, guid: aaebd3cf50f815d42961cc9599f2f13c, type: 2}
 --- !u!208 &6070146930350414532
 NavMeshObstacle:
@@ -1521,11 +1521,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0357ab8b7ef41b84dbad10c27e77bc01, type: 3}
---- !u!1 &5254484331454755481 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1476262832186556645, guid: 0357ab8b7ef41b84dbad10c27e77bc01, type: 3}
+--- !u!114 &1536000294037098269 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5316473729916271969, guid: 0357ab8b7ef41b84dbad10c27e77bc01, type: 3}
   m_PrefabInstance: {fileID: 6671819590573552252}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1916192d291441c43adf6f175d15193e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &7648500503211465293 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3941773644273821745, guid: 0357ab8b7ef41b84dbad10c27e77bc01, type: 3}
