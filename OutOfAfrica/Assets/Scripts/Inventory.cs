@@ -6,21 +6,8 @@ public class Inventory : MonoBehaviour
 {
     [field: SerializeField] public Dictionary<ResourceType, int> Content { get; private set; } = new();
 
-    [SerializeField] private int _inventoryCapacity = 10;
+    [SerializeField] private ItemSlot[] _itemSlots;
 
-    public int RemainingInventoryCapacity
-    {
-        get
-        {
-            int cap = _inventoryCapacity;
-            foreach (var resource in Content.Keys)
-            {
-                cap -= Content[resource];
-            }
-
-            return cap;
-        }
-    }
 
     public void AddResource(ResourceType resourceType)
     {
@@ -32,7 +19,7 @@ public class Inventory : MonoBehaviour
         Content[resourceType] += 1;
     }
 
-    public void RemoveResource(ResourceType resourceType)
+    public void RemoveItem(ResourceType resourceType)
     {
         if (Content.ContainsKey(resourceType))
         {
@@ -48,5 +35,65 @@ public class Inventory : MonoBehaviour
         }
 
         return 0;
+    }
+
+    public ItemSlot GetSlotForAddingItemTo(ItemData item)
+    {
+        ItemSlot bestSlot = null;
+
+        foreach (var slot in _itemSlots)
+        {
+            if (bestSlot == null)
+            {
+                if (slot.CanFitItem(item))
+                {
+                    bestSlot = slot;
+                }
+            }
+            else
+            {
+                if (slot.CanFitItem(item) && slot.Amount <= bestSlot.Amount)
+                {
+                    bestSlot = slot;
+                }
+            }
+        }
+
+        return bestSlot;
+    }
+
+    public ItemSlot GetSlotForPickingUpItemFrom(ItemData item)
+    {
+        ItemSlot bestSlot = null;
+
+        foreach (var slot in _itemSlots)
+        {
+            if (bestSlot == null)
+            {
+                if (slot.ContainsItem(item))
+                {
+                    bestSlot = slot;
+                }
+            }
+            else
+            {
+                if (slot.ContainsItem(item) && slot.Amount <= bestSlot.Amount)
+                {
+                    bestSlot = slot;
+                }
+            }
+        }
+
+        return bestSlot;
+    }
+
+    public bool ContainsItem(ItemData item)
+    {
+        return GetSlotForPickingUpItemFrom(item) != null;
+    }
+
+    public bool CanFitItem(ItemData item)
+    {
+        return GetSlotForAddingItemTo(item) != null;
     }
 }

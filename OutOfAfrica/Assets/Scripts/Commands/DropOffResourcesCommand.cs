@@ -28,7 +28,7 @@ public class DropOffResourcesCommand : Command
                 _dropOffZone.Inventory.AddResource(inventoryEntry.Key);
             }
 
-            _unit.Inventory.RemoveResource(inventoryEntry.Key);
+            _unit.Inventory.RemoveItem(inventoryEntry.Key);
         }
 
         _performed = true;

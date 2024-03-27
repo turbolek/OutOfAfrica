@@ -125,10 +125,10 @@ public class PlayerUnitController : MonoBehaviour
             return null;
         }
 
-        var resourceStack = _currentTarget.GetComponent<ResourceStack>();
+        var resourceStack = _currentTarget.GetComponent<ItemStack>();
         if (resourceStack)
         {
-            return new CollectResourceCommand(this, _currentTarget);
+            return new CollectItemCommand(this, _currentTarget);
         }
 
         var dropOffZone = _currentTarget.GetComponent<DropOffZone>();
@@ -154,10 +154,8 @@ public class PlayerUnitController : MonoBehaviour
     {
     }
 
-    public bool CanPickupResource(ResourceType resourceType)
+    public bool CanPickupItem(ItemData itemData)
     {
-        return Inventory.RemainingInventoryCapacity > 0;
+        return Inventory.CanFitItem(itemData);
     }
-
-
 }
