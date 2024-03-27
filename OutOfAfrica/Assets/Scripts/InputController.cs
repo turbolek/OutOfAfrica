@@ -204,10 +204,7 @@ public class InputController : MonoBehaviour
 
     private void HandleClickSelection()
     {
-        if (_hoveredSelectable)
-        {
-            selectionValueVariable.Set(_hoveredSelectable);
-        }
+        selectionValueVariable.Set(GetHoveredSelectable());
     }
 
     private async Task HandleBoxSelection()
