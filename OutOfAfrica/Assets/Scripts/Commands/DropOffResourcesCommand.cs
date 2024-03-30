@@ -14,8 +14,7 @@ public class DropOffResourcesCommand : Command
     public override bool Validate()
     {
         var item = _unit.Inventory.GetFirstItem();
-        return item != null && _dropOffZone != null && _unit != null &&
-               _dropOffZone.Inventory.CanFitItem(item);
+        return item != null && _dropOffZone != null && _unit != null;
     }
 
     public override void Perform()
@@ -23,7 +22,7 @@ public class DropOffResourcesCommand : Command
         var item = _unit.Inventory.GetFirstItem();
 
         _unit.Inventory.RemoveItem(item);
-        _dropOffZone.Inventory.AddItem(item);
+        _dropOffZone.Bank.AddResource(item.Resource, 1);
     }
 
     public override float GetCooldown()
