@@ -284,7 +284,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e8338290ba674f4689e3e59df0c2e81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _inventoryCapacity: 100
+  <ItemSlots>k__BackingField:
+  - ItemData: {fileID: 0}
+    Amount: 0
+  - ItemData: {fileID: 0}
+    Amount: 0
+  - ItemData: {fileID: 0}
+    Amount: 0
+  - ItemData: {fileID: 0}
+    Amount: 0
+  - ItemData: {fileID: 0}
+    Amount: 0
+  - ItemData: {fileID: 0}
+    Amount: 0
+  - ItemData: {fileID: 0}
+    Amount: 0
+  - ItemData: {fileID: 0}
+    Amount: 0
+  - ItemData: {fileID: 0}
+    Amount: 0
+  - ItemData: {fileID: 0}
+    Amount: 0
 --- !u!1 &273444195
 GameObject:
   m_ObjectHideFlags: 0
@@ -353,6 +373,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 551928483981787726, guid: ebbbd79d8b5fac8479060146212384c2, type: 3}
+      propertyPath: <ItemSlots>k__BackingField.Array.data[0].Amount
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 551928483981787726, guid: ebbbd79d8b5fac8479060146212384c2, type: 3}
+      propertyPath: <ItemSlots>k__BackingField.Array.data[1].Amount
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 551928483981787726, guid: ebbbd79d8b5fac8479060146212384c2, type: 3}
+      propertyPath: <ItemSlots>k__BackingField.Array.data[0].ItemData
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 551928483981787726, guid: ebbbd79d8b5fac8479060146212384c2, type: 3}
+      propertyPath: <ItemSlots>k__BackingField.Array.data[1].ItemData
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 4203135330754401604, guid: ebbbd79d8b5fac8479060146212384c2, type: 3}
       propertyPath: m_LocalPosition.x
       value: 25
@@ -1291,6 +1327,7 @@ GameObject:
   - component: {fileID: 1061693167}
   - component: {fileID: 1061693168}
   - component: {fileID: 1061693169}
+  - component: {fileID: 1061693170}
   m_Layer: 0
   m_Name: FoodStack
   m_TagString: Untagged
@@ -1469,8 +1506,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9758e7db5d89e49448bcbee4601eb6f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <ResourceType>k__BackingField: {fileID: 11400000, guid: 82da1252e5d13794fab2e3a4c239f94f, type: 2}
-  <Amount>k__BackingField: 50
+  <Inventory>k__BackingField: {fileID: 1061693170}
+--- !u!114 &1061693170
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1061693160}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e8338290ba674f4689e3e59df0c2e81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <ItemSlots>k__BackingField:
+  - ItemData: {fileID: 11400000, guid: 71f1bd3b5e9781246b905cb977858063, type: 2}
+    Amount: 5
+  - ItemData: {fileID: 11400000, guid: 71f1bd3b5e9781246b905cb977858063, type: 2}
+    Amount: 5
+  - ItemData: {fileID: 11400000, guid: 71f1bd3b5e9781246b905cb977858063, type: 2}
+    Amount: 5
+  - ItemData: {fileID: 11400000, guid: 71f1bd3b5e9781246b905cb977858063, type: 2}
+    Amount: 5
+  - ItemData: {fileID: 11400000, guid: 71f1bd3b5e9781246b905cb977858063, type: 2}
+    Amount: 5
+  - ItemData: {fileID: 11400000, guid: 71f1bd3b5e9781246b905cb977858063, type: 2}
+    Amount: 5
+  - ItemData: {fileID: 11400000, guid: 71f1bd3b5e9781246b905cb977858063, type: 2}
+    Amount: 5
 --- !u!1 &1097296799
 GameObject:
   m_ObjectHideFlags: 0

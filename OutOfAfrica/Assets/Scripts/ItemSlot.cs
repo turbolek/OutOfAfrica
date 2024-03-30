@@ -15,4 +15,18 @@ public class ItemSlot
     {
         return ItemData == item && Amount > 0;
     }
+
+    public void Increment()
+    {
+        Amount++;
+    }
+
+    public void Decrement()
+    {
+        Amount--;
+        if (Amount <= 0)
+        {
+            ItemData = null;
+        }
+    }
 }

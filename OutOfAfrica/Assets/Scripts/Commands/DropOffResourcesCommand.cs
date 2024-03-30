@@ -4,7 +4,6 @@ public class DropOffResourcesCommand : Command
 {
     private DropOffZone _dropOffZone;
     private PlayerUnitController _unit;
-    private bool _performed;
 
     public DropOffResourcesCommand(PlayerUnitController unit, Targetable target) : base(unit, target)
     {
@@ -14,23 +13,16 @@ public class DropOffResourcesCommand : Command
 
     public override bool Validate()
     {
-        return !_performed && _dropOffZone != null && _unit != null;
+        var item = _unit.Inventory.GetFirstItem();
+        return item != null && _dropOffZone != null && _unit != null &&
+               _dropOffZone.Inventory.CanFitItem(item);
     }
 
     public override void Perform()
     {
-        var inventoryCopy = new Dictionary<ResourceType, int>(_unit.Inventory.Content);
+        var item = _unit.Inventory.GetFirstItem();
 
-        foreach (var inventoryEntry in inventoryCopy)
-        {
-            for (int i = 0; i < inventoryEntry.Value; i++)
-            {
-                _dropOffZone.Inventory.AddResource(inventoryEntry.Key);
-            }
-
-            _unit.Inventory.RemoveItem(inventoryEntry.Key);
-        }
-
-        _performed = true;
+        _unit.Inventory.RemoveItem(item);
+        _dropOffZone.Inventory.AddItem(item);
     }
 }

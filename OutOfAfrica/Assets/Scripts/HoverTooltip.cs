@@ -75,10 +75,10 @@ public class HoverTooltip : MonoBehaviour
 
     private void DisplayInventory(Inventory inventory)
     {
-        foreach (var key in inventory.Content.Keys)
+        foreach (var itemSlot in inventory.ItemSlots)
         {
             InventoryEntry entry = Instantiate(_entryPrefab, _entryParent);
-            entry.DisplayResource(key, inventory.Content[key]);
+            entry.DisplaySlot(itemSlot);
             _inventoryEntries.Add(entry);
         }
     }

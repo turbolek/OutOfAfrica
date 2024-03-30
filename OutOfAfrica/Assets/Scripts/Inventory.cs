@@ -4,44 +4,32 @@ using UnityEngine;
 
 public class Inventory : MonoBehaviour
 {
-    [field: SerializeField] public Dictionary<ResourceType, int> Content { get; private set; } = new();
+    [field: SerializeField] public ItemSlot[] ItemSlots { get; private set; }
 
-    [SerializeField] private ItemSlot[] _itemSlots;
-
-
-    public void AddResource(ResourceType resourceType)
+    public void AddItem(ItemData item)
     {
-        if (!Content.ContainsKey(resourceType))
+        var slot = GetSlotForAddingItemTo(item);
+        if (slot != null)
         {
-            Content.Add(resourceType, 0);
-        }
-
-        Content[resourceType] += 1;
-    }
-
-    public void RemoveItem(ResourceType resourceType)
-    {
-        if (Content.ContainsKey(resourceType))
-        {
-            Content[resourceType] = 0;
+            slot.ItemData = item;
+            slot.Increment();
         }
     }
 
-    public int GetResourceCount(ResourceType resourceType)
+    public void RemoveItem(ItemData item)
     {
-        if (Content.ContainsKey(resourceType))
+        var slot = GetSlotForPickingUpItemFrom(item);
+        if (slot != null)
         {
-            return Content[resourceType];
+            slot.Decrement();
         }
-
-        return 0;
     }
 
     public ItemSlot GetSlotForAddingItemTo(ItemData item)
     {
         ItemSlot bestSlot = null;
 
-        foreach (var slot in _itemSlots)
+        foreach (var slot in ItemSlots)
         {
             if (bestSlot == null)
             {
@@ -52,7 +40,8 @@ public class Inventory : MonoBehaviour
             }
             else
             {
-                if (slot.CanFitItem(item) && slot.Amount <= bestSlot.Amount)
+                if (slot.CanFitItem(item) && (slot.Amount < bestSlot.Amount && slot.ItemData == bestSlot.ItemData ||
+                                              (slot.ItemData == item && bestSlot.ItemData == null)))
                 {
                     bestSlot = slot;
                 }
@@ -66,7 +55,7 @@ public class Inventory : MonoBehaviour
     {
         ItemSlot bestSlot = null;
 
-        foreach (var slot in _itemSlots)
+        foreach (var slot in ItemSlots)
         {
             if (bestSlot == null)
             {
@@ -95,5 +84,18 @@ public class Inventory : MonoBehaviour
     public bool CanFitItem(ItemData item)
     {
         return GetSlotForAddingItemTo(item) != null;
+    }
+
+    public ItemData GetFirstItem()
+    {
+        foreach (var itemSlot in ItemSlots)
+        {
+            if (itemSlot.ItemData != null)
+            {
+                return itemSlot.ItemData;
+            }
+        }
+
+        return null;
     }
 }

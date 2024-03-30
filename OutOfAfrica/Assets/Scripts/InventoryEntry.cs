@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -8,9 +6,18 @@ public class InventoryEntry : MonoBehaviour
     [SerializeField] private TMP_Text _resourceName;
     [SerializeField] private TMP_Text _resourceCount;
 
-    public void DisplayResource(ResourceType type, int count)
+    public void DisplaySlot(ItemSlot itemSlot)
     {
-        _resourceName.text = type.name;
-        _resourceCount.text = count.ToString();
+        string resourceName = string.Empty;
+        string resourceCount = string.Empty;
+
+        if (itemSlot.ItemData != null)
+        {
+            resourceName = itemSlot.ItemData.name;
+            resourceCount = itemSlot.Amount.ToString();
+        }
+
+        _resourceName.text = resourceName;
+        _resourceCount.text = resourceCount;
     }
 }

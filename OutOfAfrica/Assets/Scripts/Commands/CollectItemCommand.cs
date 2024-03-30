@@ -14,8 +14,9 @@ public class CollectItemCommand : Command
     public override bool Validate()
     {
         //TODO How to determine what item to pick up? Context menu?
-        var canPerform = _itemStack && _itemStack.Inventory.ContainsItem() > 0 &&
-                         _unit.CanPickupItem();
+        var item = _itemStack.Inventory.GetFirstItem();
+        var canPerform = item != null && _itemStack && _itemStack.Inventory.ContainsItem(item) &&
+                         _unit.CanPickupItem(item);
 
         if (!canPerform)
         {
@@ -27,9 +28,9 @@ public class CollectItemCommand : Command
 
     public override void Perform()
     {
-        _itemStack.Inventory.RemoveItem();
-        _unit.Inventory.AddResource();
-        Debug.Log(
-            $"{Unit.name} collected resource from {_itemStack.name}. Remaining amount: {_itemStack.Amount}");
+        var item = _itemStack.Inventory.GetFirstItem();
+
+        _itemStack.Inventory.RemoveItem(item);
+        _unit.Inventory.AddItem(item);
     }
 }
