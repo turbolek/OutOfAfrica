@@ -25,4 +25,9 @@ public class DropOffResourcesCommand : Command
         _unit.Inventory.RemoveItem(item);
         _dropOffZone.Inventory.AddItem(item);
     }
+
+    public override float GetCooldown()
+    {
+        return 0f;
+    }
 }

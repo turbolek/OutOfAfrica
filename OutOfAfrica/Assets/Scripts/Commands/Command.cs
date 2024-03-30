@@ -11,4 +11,5 @@ public abstract class Command
 
     public abstract bool Validate();
     public abstract void Perform();
+    public abstract float GetCooldown();
 }

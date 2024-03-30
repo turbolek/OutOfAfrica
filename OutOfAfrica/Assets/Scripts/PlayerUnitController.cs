@@ -10,7 +10,7 @@ public class PlayerUnitController : MonoBehaviour
 {
     [field: SerializeField] public float BaseRadius { get; private set; }
     [SerializeField] private float _movementSpeed = 2f;
-    [SerializeField] private float _commandCooldown = 1f;
+    [field: SerializeField] public float CommandCooldown { get; private set; } = 1f;
 
     private NavMeshAgent _navMeshAgent;
     private NavMeshObstacle _navMeshObstacle;
@@ -46,7 +46,7 @@ public class PlayerUnitController : MonoBehaviour
 
         if (_currentCommand != null)
         {
-            if (Time.time >= _lastCommandTime + _commandCooldown)
+            if (Time.time >= _lastCommandTime + _currentCommand.GetCooldown())
             {
                 if (_currentCommand.Validate())
                 {

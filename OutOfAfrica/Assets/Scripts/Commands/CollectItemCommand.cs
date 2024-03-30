@@ -33,4 +33,9 @@ public class CollectItemCommand : Command
         _itemStack.Inventory.RemoveItem(item);
         _unit.Inventory.AddItem(item);
     }
+
+    public override float GetCooldown()
+    {
+        return _unit.CommandCooldown;
+    }
 }
