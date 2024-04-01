@@ -3,15 +3,15 @@ using UnityEngine;
 
 public class Targetable : MonoBehaviour
 {
-    public event Action<PlayerUnitController> UnitEntered;
-    public event Action<PlayerUnitController> UnitExited;
+    public static event Action<Targetable, PlayerUnitController> UnitEntered;
+    public static event Action<Targetable, PlayerUnitController> UnitExited;
 
     private void OnTriggerEnter(Collider other)
     {
         PlayerUnitController unit = other.GetComponent<PlayerUnitController>();
         if (unit)
         {
-            UnitEntered?.Invoke(unit);
+            UnitEntered?.Invoke(this, unit);
         }
     }
 
@@ -20,7 +20,7 @@ public class Targetable : MonoBehaviour
         PlayerUnitController unit = other.GetComponent<PlayerUnitController>();
         if (unit)
         {
-            UnitExited?.Invoke(unit);
+            UnitExited?.Invoke(this, unit);
         }
     }
 }

@@ -58,8 +58,7 @@ public class CommandManager : MonoBehaviour
         {
             if (takenPosition.Unit)
             {
-                takenPosition.Unit.SetTarget(targetable);
-                takenPosition.Unit.SetMovementTarget(takenPosition.Position);
+                takenPosition.Unit.SetTarget(targetable, takenPosition.Position);
             }
         }
     }

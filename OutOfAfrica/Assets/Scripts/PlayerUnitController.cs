@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Unity.AI.Navigation;
 using UnityEngine;
 using UnityEngine.AI;
@@ -23,6 +24,13 @@ public class PlayerUnitController : MonoBehaviour
     private float _lastCommandTime;
     private NavMeshSurface _navMeshSurface; //TODO send navmesh update request instead of directly referring
 
+    private List<Targetable> _targetablesInTouch = new();
+
+    private void OnEnable()
+    {
+        Targetable.UnitEntered += OnEnteredTarget;
+        Targetable.UnitExited += OnExitedTarget;
+    }
 
     private void Start()
     {
@@ -31,6 +39,7 @@ public class PlayerUnitController : MonoBehaviour
         _navMeshObstacle = GetComponent<NavMeshObstacle>();
         _navMeshSurface = FindFirstObjectByType<NavMeshSurface>();
     }
+
 
     private void Update()
     {
@@ -62,16 +71,24 @@ public class PlayerUnitController : MonoBehaviour
         }
     }
 
-    public void SetTarget(Targetable targetable)
+    private void OnDisable()
     {
-        _currentCommand = null;
+        Targetable.UnitEntered -= OnEnteredTarget;
+        Targetable.UnitExited -= OnExitedTarget;
+    }
+
+    public void SetTarget(Targetable targetable, Vector3 targetPosition)
+    {
         _currentTarget = targetable;
 
-        if (targetable)
+        if (_targetablesInTouch.Contains(targetable))
         {
-            targetable.UnitEntered += OnEnteredTarget;
-            targetable.UnitEntered += OnEnteredTarget;
+            OnTargetReached();
+            return;
         }
+
+        _currentCommand = null;
+        SetMovementTarget(targetPosition);
     }
 
     public void SetMovementTarget(Vector3 targetPosition)
@@ -125,33 +142,37 @@ public class PlayerUnitController : MonoBehaviour
             return null;
         }
 
-        var resourceStack = _currentTarget.GetComponent<ItemStack>();
-        if (resourceStack)
-        {
-            return new CollectItemCommand(this, _currentTarget);
-        }
-
-        var dropOffZone = _currentTarget.GetComponent<DropOffZone>();
-        if (dropOffZone)
-        {
-            return new DropOffResourcesCommand(this, _currentTarget);
-        }
+        // var resourceStack = _currentTarget.GetComponent<ItemStack>();
+        // if (resourceStack)
+        // {
+        //     return new CollectItemCommand(this, _currentTarget);
+        // }
+        //
+        // var dropOffZone = _currentTarget.GetComponent<DropOffZone>();
+        // if (dropOffZone)
+        // {
+        //     return new DropOffResourcesCommand(this, _currentTarget);
+        // }
 
         return null;
     }
 
-    private void OnEnteredTarget(PlayerUnitController unit)
+    private void OnEnteredTarget(Targetable targetable, PlayerUnitController unit)
     {
         if (unit == this)
         {
+            _targetablesInTouch.AddExclusive(_currentTarget);
             _navMeshAgent.velocity = Vector3.zero;
             _navMeshAgent.destination = transform.position;
-            _currentTarget.UnitEntered -= OnEnteredTarget;
         }
     }
 
-    private void OnExitedTarget(PlayerUnitController unit)
+    private void OnExitedTarget(Targetable targetable, PlayerUnitController unit)
     {
+        if (unit == this)
+        {
+            _targetablesInTouch.Remove(targetable);
+        }
     }
 
     public bool CanPickupItem(ItemData itemData)
