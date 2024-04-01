@@ -1,11 +1,11 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class HoverTooltip : MonoBehaviour
+public class InventoryView : MonoBehaviour
 {
+    [SerializeField] private Inventory _inventory;
     [SerializeField] private TMP_Text _title;
     [SerializeField] private CanvasGroup _canvasGroup;
     [SerializeField] private Camera _camera;
@@ -17,7 +17,9 @@ public class HoverTooltip : MonoBehaviour
 
     private void OnEnable()
     {
-        InputController.SelectableHovered += OnSelectableHovered;
+        _inventory.OpenRequested += OnOpenRequest;
+        _inventory.CloseRequested += OnCloseRequest;
+        //InputController.SelectableHovered += OnSelectableHovered;
     }
 
     private void Start()
@@ -27,7 +29,9 @@ public class HoverTooltip : MonoBehaviour
 
     private void OnDisable()
     {
-        InputController.SelectableHovered -= OnSelectableHovered;
+        _inventory.OpenRequested -= OnOpenRequest;
+        _inventory.CloseRequested -= OnCloseRequest;
+        //InputController.SelectableHovered -= OnSelectableHovered;
     }
 
     private void Show()
@@ -81,5 +85,15 @@ public class HoverTooltip : MonoBehaviour
             entry.DisplaySlot(itemSlot);
             _inventoryEntries.Add(entry);
         }
+    }
+
+    private void OnOpenRequest()
+    {
+        Show();
+    }
+
+    private void OnCloseRequest()
+    {
+        Hide();
     }
 }

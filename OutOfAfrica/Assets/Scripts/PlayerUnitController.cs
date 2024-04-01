@@ -25,6 +25,7 @@ public class PlayerUnitController : MonoBehaviour
     private NavMeshSurface _navMeshSurface; //TODO send navmesh update request instead of directly referring
 
     private List<Targetable> _targetablesInTouch = new();
+    private List<Inventory> _openedInventories = new();
 
     private void OnEnable()
     {
@@ -79,6 +80,7 @@ public class PlayerUnitController : MonoBehaviour
 
     public void SetTarget(Targetable targetable, Vector3 targetPosition)
     {
+        CloseInventories();
         _currentTarget = targetable;
 
         if (_targetablesInTouch.Contains(targetable))
@@ -142,6 +144,29 @@ public class PlayerUnitController : MonoBehaviour
             return null;
         }
 
+        List<Inventory> inventoriesInTouch = new();
+
+        foreach (var targetable in _targetablesInTouch)
+        {
+            var inventory = targetable.GetComponent<Inventory>();
+            if (inventory != null)
+            {
+                inventoriesInTouch.Add(inventory);
+            }
+        }
+
+        if (inventoriesInTouch.Count > 0)
+        {
+            var inventoriesToOpen = new List<Inventory>(inventoriesInTouch);
+            inventoriesToOpen.Add(Inventory);
+
+            foreach (var inventory in inventoriesToOpen)
+            {
+                inventory.Open();
+                _openedInventories.AddExclusive(inventory);
+            }
+        }
+
         // var resourceStack = _currentTarget.GetComponent<ItemStack>();
         // if (resourceStack)
         // {
@@ -178,5 +203,13 @@ public class PlayerUnitController : MonoBehaviour
     public bool CanPickupItem(ItemData itemData)
     {
         return Inventory.CanFitItem(itemData);
+    }
+
+    private void CloseInventories()
+    {
+        foreach (var inventory in _openedInventories)
+        {
+            inventory.Close();
+        }
     }
 }

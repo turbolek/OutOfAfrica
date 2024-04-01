@@ -1,9 +1,13 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Inventory : MonoBehaviour
 {
+    public Action OpenRequested;
+    public Action CloseRequested;
+
     [field: SerializeField] public ItemSlot[] ItemSlots { get; private set; }
 
     public void AddItem(ItemData item)
@@ -97,5 +101,15 @@ public class Inventory : MonoBehaviour
         }
 
         return null;
+    }
+
+    public void Open()
+    {
+        OpenRequested?.Invoke();
+    }
+
+    public void Close()
+    {
+        CloseRequested?.Invoke();
     }
 }
