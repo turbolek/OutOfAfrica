@@ -8,6 +8,8 @@ public class Selectable : MonoBehaviour
     [SerializeField] private SelectionIndicator m_selectionIndicator;
     [SerializeField] private SelectionValueVariable selectionValueVariable;
 
+
+    public bool IsSelected => selectionValueVariable.Value.Contains(this);
     private bool _isHovered;
 
     void OnEnable()

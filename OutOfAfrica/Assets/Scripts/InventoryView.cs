@@ -2,25 +2,19 @@ using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class InventoryView : MonoBehaviour
 {
-    [SerializeField] private Inventory _inventory;
     [SerializeField] private TMP_Text _title;
     [SerializeField] private CanvasGroup _canvasGroup;
-    [SerializeField] private Camera _camera;
     [SerializeField] private Vector3 _offset;
     [SerializeField] private InventoryEntry _entryPrefab;
     [SerializeField] private Transform _entryParent;
 
+    public Inventory Inventory { get; private set; }
+    private Camera _camera;
     private List<InventoryEntry> _inventoryEntries = new();
-
-    private void OnEnable()
-    {
-        _inventory.OpenRequested += OnOpenRequest;
-        _inventory.CloseRequested += OnCloseRequest;
-        //InputController.SelectableHovered += OnSelectableHovered;
-    }
 
     private void Start()
     {
@@ -29,17 +23,24 @@ public class InventoryView : MonoBehaviour
 
     private void OnDisable()
     {
-        _inventory.OpenRequested -= OnOpenRequest;
-        _inventory.CloseRequested -= OnCloseRequest;
         //InputController.SelectableHovered -= OnSelectableHovered;
     }
 
-    private void Show()
+    public void Init(Inventory inventory, Camera camera)
     {
+        _camera = camera;
+        Inventory = inventory;
+        DisplaySelectable(inventory.Owner);
+        DisplayInventory(inventory);
+    }
+
+    public void Show()
+    {
+        transform.position = _camera.WorldToScreenPoint(Inventory.Owner.transform.position) + _offset;
         _canvasGroup.alpha = 1f;
     }
 
-    private void Hide()
+    public void Hide()
     {
         _canvasGroup.alpha = 0f;
     }
@@ -59,7 +60,7 @@ public class InventoryView : MonoBehaviour
 
         _inventoryEntries.Clear();
 
-        transform.position = _camera.WorldToScreenPoint(selectable.transform.position) + _offset;
+        transform.position = _camera.WorldToScreenPoint(Inventory.transform.position) + _offset;
         Show();
         DisplaySelectable(selectable);
 
@@ -79,6 +80,13 @@ public class InventoryView : MonoBehaviour
 
     private void DisplayInventory(Inventory inventory)
     {
+        for (int i = _inventoryEntries.Count - 1; i >= 0; i--)
+        {
+            Destroy(_inventoryEntries[i].gameObject);
+        }
+
+        _inventoryEntries.Clear();
+        
         foreach (var itemSlot in inventory.ItemSlots)
         {
             InventoryEntry entry = Instantiate(_entryPrefab, _entryParent);
@@ -87,13 +95,19 @@ public class InventoryView : MonoBehaviour
         }
     }
 
-    private void OnOpenRequest()
+    private void OnOpenRequest(Selectable owner)
     {
-        Show();
+        if (owner == Inventory.Owner)
+        {
+            Show();
+        }
     }
 
-    private void OnCloseRequest()
+    private void OnCloseRequest(Selectable owner)
     {
-        Hide();
+        if (owner == Inventory.Owner)
+        {
+            Hide();
+        }
     }
 }

@@ -9,6 +9,9 @@ using UnityEngine.Serialization;
 [RequireComponent(typeof(Selectable), typeof(Inventory))]
 public class PlayerUnitController : MonoBehaviour
 {
+    public static Action<Inventory, Inventory> ConnectInventoriesRequest;
+    public static Action<Inventory, Inventory> DisconnectInventoriesRequest;
+
     [field: SerializeField] public float BaseRadius { get; private set; }
     [SerializeField] private float _movementSpeed = 2f;
     [field: SerializeField] public float CommandCooldown { get; private set; } = 1f;
@@ -20,6 +23,7 @@ public class PlayerUnitController : MonoBehaviour
     private Vector3 _currentTargetPosition;
     private Command _currentCommand;
     public Inventory Inventory { get; private set; }
+    public Selectable Selectable { get; private set; }
 
     private float _lastCommandTime;
     private NavMeshSurface _navMeshSurface; //TODO send navmesh update request instead of directly referring
@@ -36,6 +40,7 @@ public class PlayerUnitController : MonoBehaviour
     private void Start()
     {
         Inventory = GetComponent<Inventory>();
+        Selectable = GetComponent<Selectable>();
         _navMeshAgent = GetComponent<NavMeshAgent>();
         _navMeshObstacle = GetComponent<NavMeshObstacle>();
         _navMeshSurface = FindFirstObjectByType<NavMeshSurface>();
@@ -162,7 +167,7 @@ public class PlayerUnitController : MonoBehaviour
 
             foreach (var inventory in inventoriesToOpen)
             {
-                inventory.Open();
+                ConnectInventoriesRequest?.Invoke(inventory, Inventory);
                 _openedInventories.AddExclusive(inventory);
             }
         }
@@ -209,7 +214,7 @@ public class PlayerUnitController : MonoBehaviour
     {
         foreach (var inventory in _openedInventories)
         {
-            inventory.Close();
+            DisconnectInventoriesRequest?.Invoke(inventory, Inventory);
         }
     }
 }

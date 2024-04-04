@@ -1,14 +1,28 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Variables;
 
 public class Inventory : MonoBehaviour
 {
-    public Action OpenRequested;
-    public Action CloseRequested;
+    public static Action<Inventory> Initialized;
+    public static Action<Inventory> Destroyed;
 
     [field: SerializeField] public ItemSlot[] ItemSlots { get; private set; }
+
+    public Selectable Owner { get; private set; }
+    public List<Inventory> ConnectedInventories { get; private set; } = new();
+
+    private void Start()
+    {
+        Owner = GetComponent<Selectable>();
+        Initialized?.Invoke(this);
+    }
+
+    private void OnDestroy()
+    {
+        Destroyed?.Invoke(this);
+    }
 
     public void AddItem(ItemData item)
     {
@@ -101,15 +115,5 @@ public class Inventory : MonoBehaviour
         }
 
         return null;
-    }
-
-    public void Open()
-    {
-        OpenRequested?.Invoke();
-    }
-
-    public void Close()
-    {
-        CloseRequested?.Invoke();
     }
 }
