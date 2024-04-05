@@ -50,11 +50,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5e18993c642420479ec5243dbedf502, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _inventory: {fileID: 0}
   _title: {fileID: 4931701910310974938}
   _canvasGroup: {fileID: 5462211340844317777}
-  _camera: {fileID: 0}
-  _offset: {x: 0, y: 100, z: 0}
+  _offset: {x: 0, y: 0, z: 0}
   _entryPrefab: {fileID: 2122288635565003897, guid: 7cd0a05fb63a48b4388db53cc124223e, type: 3}
   _entryParent: {fileID: 4301585341156061722}
 --- !u!225 &5462211340844317777

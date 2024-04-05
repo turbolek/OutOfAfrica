@@ -292,6 +292,7 @@ MonoBehaviour:
     Amount: 0
   - ItemData: {fileID: 0}
     Amount: 0
+  SortPriority: 0
 --- !u!224 &163038462 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5091079117592604662, guid: bf1ad12e2abcac74882343b0ef66bb88, type: 3}
@@ -1623,6 +1624,7 @@ MonoBehaviour:
     Amount: 5
   - ItemData: {fileID: 11400000, guid: 71f1bd3b5e9781246b905cb977858063, type: 2}
     Amount: 5
+  SortPriority: 50
 --- !u!1 &1097296799
 GameObject:
   m_ObjectHideFlags: 0
@@ -2822,6 +2824,7 @@ MonoBehaviour:
     Amount: 2
   - ItemData: {fileID: 11400000, guid: 17f48b1fac0a8ca4d8b558cc2688477b, type: 2}
     Amount: 1
+  SortPriority: 50
 --- !u!114 &2052914887
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3303,6 +3306,7 @@ MonoBehaviour:
     Amount: 3
   - ItemData: {fileID: 11400000, guid: c12a70f34631dca46b51a1044e3aaea3, type: 2}
     Amount: 3
+  SortPriority: 50
 --- !u!114 &2101954420
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -987,7 +987,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <BaseRadius>k__BackingField: 0.75
   _movementSpeed: 1
-  _commandCooldown: 1
+  <CommandCooldown>k__BackingField: 1
 --- !u!195 &6193429249121731596
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1097,6 +1097,7 @@ MonoBehaviour:
     Amount: 0
   - ItemData: {fileID: 0}
     Amount: 0
+  SortPriority: 100
 --- !u!1 &4203135330754562408
 GameObject:
   m_ObjectHideFlags: 0

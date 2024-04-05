@@ -111,6 +111,8 @@ public class UIManager : MonoBehaviour
             }
         }
 
+        _inventoryViews.Sort((v1, v2) => v1.Inventory.SortPriority.CompareTo(v2.Inventory.SortPriority));
+
         foreach (var inventoryView in _inventoryViews)
         {
             if (inventoriesToShow.Contains(inventoryView.Inventory))

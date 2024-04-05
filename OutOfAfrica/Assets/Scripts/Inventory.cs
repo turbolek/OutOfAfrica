@@ -9,6 +9,7 @@ public class Inventory : MonoBehaviour
     public static Action<Inventory> Destroyed;
 
     [field: SerializeField] public ItemSlot[] ItemSlots { get; private set; }
+    [field: SerializeField] public int SortPriority;
 
     public Selectable Owner { get; private set; }
     public List<Inventory> ConnectedInventories { get; private set; } = new();
