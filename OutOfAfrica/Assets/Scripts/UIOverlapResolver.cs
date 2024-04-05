@@ -92,8 +92,18 @@ public class UIOverlapResolver : MonoBehaviour
         bool canMoveDown = true;
         bool canMoveUp = true;
 
+        bool reset = false;
+
+        Vector2 totalShift = Vector2.zero;
+
         for (int i = 0; i < _fixedUIs.Count; i++)
         {
+            if (reset)
+            {
+                i = 0;
+                reset = false;
+            }
+
             var fixedUI = _fixedUIs[i];
             if (fixedUI == uiData)
             {
@@ -136,40 +146,50 @@ public class UIOverlapResolver : MonoBehaviour
                 downShift.y = -5;
             }
 
-            List<Vector2> allowedShifts = new();
+
+            var bestShift = Vector2.positiveInfinity;
 
             if (canMoveLeft)
             {
-                allowedShifts.Add(leftShift);
+                bestShift = leftShift;
             }
 
             if (canMoveRight)
             {
-                allowedShifts.Add(rightShift);
+                if ((totalShift + rightShift).magnitude < (totalShift + bestShift).magnitude)
+                {
+                    bestShift = rightShift;
+                }
             }
 
             if (canMoveUp)
             {
-                allowedShifts.Add(upShift);
+                if ((totalShift + upShift).magnitude < (totalShift + bestShift).magnitude)
+                {
+                    bestShift = upShift;
+                }
             }
 
             if (canMoveDown)
             {
-                allowedShifts.Add(downShift);
+                if ((totalShift + downShift).magnitude < (totalShift + bestShift).magnitude)
+                {
+                    bestShift = downShift;
+                }
             }
 
-            var minShift = allowedShifts.OrderBy(s => s.magnitude).First();
 
-            canMoveLeft = minShift != rightShift;
-            canMoveRight = minShift != leftShift;
-            canMoveDown = minShift != upShift;
-            canMoveUp = minShift != downShift;
+            canMoveLeft = bestShift != rightShift;
+            canMoveRight = bestShift != leftShift;
+            canMoveDown = bestShift != upShift;
+            canMoveUp = bestShift != downShift;
 
-            var randomMultiplier = Random.Range(1f, 1.1f);
-            minShift *= randomMultiplier; //prevents infinite loops in edge case
-            currentPosition += minShift;
+            var randomMultiplier = 1.05f;
+            bestShift *= randomMultiplier; //prevents infinite loops in edge case
+            currentPosition += bestShift;
+            totalShift += bestShift;
 
-            i = 0;
+            reset = true;
         }
 
         return currentPosition;
