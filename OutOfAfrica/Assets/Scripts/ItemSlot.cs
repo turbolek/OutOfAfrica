@@ -1,10 +1,13 @@
 using System;
+using UnityEngine;
+using UnityEngine.Serialization;
 
 [Serializable]
 public class ItemSlot
 {
     public ItemData ItemData;
-    public int Amount;
+    [HideInInspector] //changed design for all items to have capacity == 1. Leaved the functionality in case design changes again to various capacities.
+    public int Amount = 1;
 
     public bool CanFitItem(ItemData item)
     {

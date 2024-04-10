@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: Fruits
   m_EditorClassIdentifier: 
   <Resource>k__BackingField: {fileID: 11400000, guid: 82da1252e5d13794fab2e3a4c239f94f, type: 2}
-  <SlotCapacity>k__BackingField: 3
+  <SlotCapacity>k__BackingField: 1
+  <Sprite>k__BackingField: {fileID: 0}

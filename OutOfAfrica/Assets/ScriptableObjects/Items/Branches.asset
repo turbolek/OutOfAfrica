@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: Branches
   m_EditorClassIdentifier: 
   <Resource>k__BackingField: {fileID: 11400000, guid: 6859ee6bc580d5a41af5c64c1ba5920a, type: 2}
-  <SlotCapacity>k__BackingField: 2
+  <SlotCapacity>k__BackingField: 1
+  <Sprite>k__BackingField: {fileID: 0}

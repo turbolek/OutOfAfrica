@@ -273,25 +273,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <ItemSlots>k__BackingField:
   - ItemData: {fileID: 0}
-    Amount: 0
+    Amount: 1
   - ItemData: {fileID: 0}
-    Amount: 0
+    Amount: 1
   - ItemData: {fileID: 0}
-    Amount: 0
+    Amount: 1
   - ItemData: {fileID: 0}
-    Amount: 0
+    Amount: 1
   - ItemData: {fileID: 0}
-    Amount: 0
+    Amount: 1
   - ItemData: {fileID: 0}
-    Amount: 0
+    Amount: 1
   - ItemData: {fileID: 0}
-    Amount: 0
+    Amount: 1
   - ItemData: {fileID: 0}
-    Amount: 0
+    Amount: 1
   - ItemData: {fileID: 0}
-    Amount: 0
+    Amount: 1
   - ItemData: {fileID: 0}
-    Amount: 0
+    Amount: 1
   SortPriority: 0
 --- !u!224 &163038462 stripped
 RectTransform:
@@ -1611,19 +1611,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <ItemSlots>k__BackingField:
   - ItemData: {fileID: 11400000, guid: 71f1bd3b5e9781246b905cb977858063, type: 2}
-    Amount: 5
+    Amount: 1
   - ItemData: {fileID: 11400000, guid: 71f1bd3b5e9781246b905cb977858063, type: 2}
-    Amount: 5
+    Amount: 1
   - ItemData: {fileID: 11400000, guid: 71f1bd3b5e9781246b905cb977858063, type: 2}
-    Amount: 5
+    Amount: 1
   - ItemData: {fileID: 11400000, guid: 71f1bd3b5e9781246b905cb977858063, type: 2}
-    Amount: 5
+    Amount: 1
   - ItemData: {fileID: 11400000, guid: 71f1bd3b5e9781246b905cb977858063, type: 2}
-    Amount: 5
+    Amount: 1
   - ItemData: {fileID: 11400000, guid: 71f1bd3b5e9781246b905cb977858063, type: 2}
-    Amount: 5
+    Amount: 1
   - ItemData: {fileID: 11400000, guid: 71f1bd3b5e9781246b905cb977858063, type: 2}
-    Amount: 5
+    Amount: 1
   SortPriority: 50
 --- !u!1 &1097296799
 GameObject:
@@ -2819,9 +2819,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <ItemSlots>k__BackingField:
   - ItemData: {fileID: 11400000, guid: 17f48b1fac0a8ca4d8b558cc2688477b, type: 2}
-    Amount: 2
+    Amount: 1
   - ItemData: {fileID: 11400000, guid: 17f48b1fac0a8ca4d8b558cc2688477b, type: 2}
-    Amount: 2
+    Amount: 1
   - ItemData: {fileID: 11400000, guid: 17f48b1fac0a8ca4d8b558cc2688477b, type: 2}
     Amount: 1
   SortPriority: 50
@@ -3303,9 +3303,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <ItemSlots>k__BackingField:
   - ItemData: {fileID: 11400000, guid: c12a70f34631dca46b51a1044e3aaea3, type: 2}
-    Amount: 3
+    Amount: 1
   - ItemData: {fileID: 11400000, guid: c12a70f34631dca46b51a1044e3aaea3, type: 2}
-    Amount: 3
+    Amount: 1
   SortPriority: 50
 --- !u!114 &2101954420
 MonoBehaviour:
