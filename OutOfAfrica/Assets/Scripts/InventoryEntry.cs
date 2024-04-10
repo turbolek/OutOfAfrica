@@ -1,23 +1,25 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class InventoryEntry : MonoBehaviour
 {
-    [SerializeField] private TMP_Text _resourceName;
     [SerializeField] private TMP_Text _resourceCount;
+    [SerializeField] private Image _icon;
 
     public void DisplaySlot(ItemSlot itemSlot)
     {
-        string resourceName = string.Empty;
         string resourceCount = string.Empty;
+        Sprite resourceSprite = null;
 
         if (itemSlot.ItemData != null)
         {
-            resourceName = itemSlot.ItemData.name;
             resourceCount = itemSlot.Amount.ToString();
+            resourceSprite = itemSlot.ItemData.Sprite;
         }
 
-        _resourceName.text = resourceName;
         _resourceCount.text = resourceCount;
+        _icon.sprite = resourceSprite;
+        _icon.enabled = resourceSprite != null;
     }
 }

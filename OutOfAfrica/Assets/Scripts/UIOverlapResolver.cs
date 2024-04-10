@@ -197,9 +197,16 @@ public class UIOverlapResolver : MonoBehaviour
 
     private bool CheckOverlap(Vector2 min1, Vector2 max1, Vector2 min2, Vector2 max2)
     {
-        return (min1.x >= min2.x && min1.x <= max2.x && min1.y >= min2.y && min1.y <= max2.y) || //bottom left
-               (min1.x >= min2.x && min1.x <= max2.x && max1.y >= min2.y && max1.y <= max2.y) || //top left
-               (max1.x >= min2.x && max1.x <= max2.x && max1.y >= min2.y && max1.y <= max2.y) || //top right
-               (max1.x >= min2.x && max1.x <= max2.x && min1.y >= min2.y && min1.y <= max2.y); // bottom right
+        return
+            //1 contains 2
+            (min1.x >= min2.x && min1.x <= max2.x && min1.y >= min2.y && min1.y <= max2.y) || //bottom left
+            (min1.x >= min2.x && min1.x <= max2.x && max1.y >= min2.y && max1.y <= max2.y) || //top left
+            (max1.x >= min2.x && max1.x <= max2.x && max1.y >= min2.y && max1.y <= max2.y) || //top right
+            (max1.x >= min2.x && max1.x <= max2.x && min1.y >= min2.y && min1.y <= max2.y) || // bottom right
+            //2 contains 1
+            (min2.x >= min1.x && min2.x <= max1.x && min2.y >= min1.y && min2.y <= max1.y) || //bottom left
+            (min2.x >= min1.x && min2.x <= max1.x && max2.y >= min1.y && max2.y <= max1.y) || //top left
+            (max2.x >= min1.x && max2.x <= max1.x && max2.y >= min1.y && max2.y <= max1.y) || //top right
+            (max2.x >= min1.x && max2.x <= max1.x && min2.y >= min1.y && min2.y <= max1.y);
     }
 }

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class InventoryView : MonoBehaviour
 {
@@ -13,6 +14,8 @@ public class InventoryView : MonoBehaviour
     [SerializeField] private Vector3 _offset;
     [SerializeField] private InventoryEntry _entryPrefab;
     [SerializeField] private Transform _entryParent;
+    [SerializeField] private GridLayoutGroup _gridLayoutGroup;
+    [SerializeField] private int _maxColumnsCount;
 
     public Inventory Inventory { get; private set; }
     private Camera _camera;
@@ -88,5 +91,7 @@ public class InventoryView : MonoBehaviour
             entry.DisplaySlot(itemSlot);
             _inventoryEntries.Add(entry);
         }
+
+        _gridLayoutGroup.constraintCount = Math.Clamp(_inventoryEntries.Count, 0, _maxColumnsCount);
     }
 }
