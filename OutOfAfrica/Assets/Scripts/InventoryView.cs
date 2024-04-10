@@ -54,9 +54,9 @@ public class InventoryView : MonoBehaviour
 
         var position = _camera.WorldToScreenPoint(Inventory.Owner.transform.position) + _offset;
         transform.position = position;
-        FixSubscribeRequested?.Invoke(_rectTransform, position);
         _canvasGroup.alpha = 1f;
         _isShown = true;
+        FixSubscribeRequested?.Invoke(_rectTransform, position);
     }
 
     public void Hide()

@@ -1,5 +1,6 @@
 using UnityEngine;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
@@ -36,17 +37,37 @@ public class InputController : MonoBehaviour
     private bool _isBoxSelection;
     private Selectable _hoveredSelectable;
 
+    private List<RaycastBlocker> _raycastBlockers = new();
+
     private void Start()
     {
         _selectionCollider = GetComponent<MeshCollider>();
         _inputActions = new();
         _inputActions.Enable();
 
-        _inputActions.Selection.StartSelection.performed += ctx => { StartSelection(); };
-        _inputActions.Selection.StartSelection.canceled += ctx => { EndSelection(); };
-        _inputActions.Selection.Command.performed += ctx => { OnCommandAction(); };
+        _inputActions.Selection.StartSelection.performed += ctx =>
+        {
+            if (!InputBlocked()) StartSelection();
+        };
+        _inputActions.Selection.StartSelection.canceled += ctx =>
+        {
+            if (!InputBlocked()) EndSelection();
+        };
+        _inputActions.Selection.Command.performed += ctx =>
+        {
+            if (!InputBlocked()) OnCommandAction();
+        };
+
+        RaycastBlocker.CursorEntered += OnCursorEnteredBlocker;
+        RaycastBlocker.CursorExited += OnCursorExitedBlocker;
 
         _selectionFrame.gameObject.SetActive(false);
+    }
+
+    private void OnDestroy()
+    {
+        RaycastBlocker.CursorEntered -= OnCursorEnteredBlocker;
+        RaycastBlocker.CursorExited -= OnCursorExitedBlocker;
     }
 
     private void Update()
@@ -56,6 +77,12 @@ public class InputController : MonoBehaviour
         MousePositionWorld = Physics.Raycast(ray, out RaycastHit hit, 1000f, _terrainLayerMask)
             ? hit.point
             : _camera.ScreenToWorldPoint(MousePositionScreen);
+
+
+        if (InputBlocked())
+        {
+            return;
+        }
 
         _hoveredSelectable = _isSelecting ? null : GetHoveredSelectable();
         SelectableHovered?.Invoke(_hoveredSelectable);
@@ -298,5 +325,20 @@ public class InputController : MonoBehaviour
         }
 
         return selectable;
+    }
+
+    private void OnCursorEnteredBlocker(RaycastBlocker blocker)
+    {
+        _raycastBlockers.AddExclusive(blocker);
+    }
+
+    private void OnCursorExitedBlocker(RaycastBlocker blocker)
+    {
+        _raycastBlockers.Remove(blocker);
+    }
+
+    private bool InputBlocked()
+    {
+        return !_isSelecting && _raycastBlockers.Count > 0;
     }
 }

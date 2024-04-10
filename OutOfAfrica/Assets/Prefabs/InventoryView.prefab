@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5462211340844317777}
   - component: {fileID: 497561402782675063}
   - component: {fileID: 7120458333528056889}
+  - component: {fileID: 9012672657837003536}
   m_Layer: 5
   m_Name: InventoryView
   m_TagString: Untagged
@@ -109,6 +110,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_HorizontalFit: 1
   m_VerticalFit: 1
+--- !u!114 &9012672657837003536
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 264153487505537429}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4520f2c6931012a4db346b9c16af6170, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _canvasGroup: {fileID: 5462211340844317777}
 --- !u!1 &1377657233004006190
 GameObject:
   m_ObjectHideFlags: 0
@@ -200,10 +214,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 2389402090440513605}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 63.05, y: -17}
-  m_SizeDelta: {x: 116.1, y: 15}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 63.05, y: 0}
+  m_SizeDelta: {x: 0, y: 15}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!222 &3702870445638268880
 CanvasRenderer:
