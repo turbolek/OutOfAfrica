@@ -62,6 +62,8 @@ public class UIManager : MonoBehaviour
     {
         if (GetConnection(inventory1, inventory2) == null)
         {
+            inventory1.ConnectedInventories.Add(inventory2);
+            inventory2.ConnectedInventories.Add(inventory1);
             _inventoryConnections.Add(new InventoryConnection(inventory1, inventory2));
         }
 
@@ -73,6 +75,8 @@ public class UIManager : MonoBehaviour
         var connection = GetConnection(inventory1, inventory2);
         if (connection != null)
         {
+            inventory1.ConnectedInventories.Remove(inventory2);
+            inventory2.ConnectedInventories.Remove(inventory1);
             _inventoryConnections.Remove(connection);
         }
 

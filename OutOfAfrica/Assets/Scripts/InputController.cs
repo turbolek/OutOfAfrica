@@ -39,6 +39,9 @@ public class InputController : MonoBehaviour
 
     private List<RaycastBlocker> _raycastBlockers = new();
 
+    private InventoryEntry _itemTransferSourceEntry;
+    private InventoryEntry _itemTransferTargetEntry;
+
     private void Start()
     {
         _selectionCollider = GetComponent<MeshCollider>();
@@ -60,6 +63,7 @@ public class InputController : MonoBehaviour
 
         RaycastBlocker.CursorEntered += OnCursorEnteredBlocker;
         RaycastBlocker.CursorExited += OnCursorExitedBlocker;
+        InventoryEntry.ButtonClicked += OnInventoryEntryClicked;
 
         _selectionFrame.gameObject.SetActive(false);
     }
@@ -68,6 +72,7 @@ public class InputController : MonoBehaviour
     {
         RaycastBlocker.CursorEntered -= OnCursorEnteredBlocker;
         RaycastBlocker.CursorExited -= OnCursorExitedBlocker;
+        InventoryEntry.ButtonClicked -= OnInventoryEntryClicked;
     }
 
     private void Update()
@@ -78,6 +83,10 @@ public class InputController : MonoBehaviour
             ? hit.point
             : _camera.ScreenToWorldPoint(MousePositionScreen);
 
+        if (_itemTransferSourceEntry != null && !_itemTransferSourceEntry.gameObject.activeInHierarchy)
+        {
+            _itemTransferSourceEntry = null;
+        }
 
         if (InputBlocked())
         {
@@ -340,5 +349,30 @@ public class InputController : MonoBehaviour
     private bool InputBlocked()
     {
         return !_isSelecting && _raycastBlockers.Count > 0;
+    }
+
+    private void OnInventoryEntryClicked(InventoryEntry entry)
+    {
+        if (_itemTransferSourceEntry == null)
+        {
+            if (entry.ItemSlot.ItemData != null)
+            {
+                _itemTransferSourceEntry = entry;
+            }
+        }
+        else
+        {
+            if (entry.ItemSlot.CanFitItem(_itemTransferSourceEntry.ItemSlot.ItemData))
+            {
+                entry.ItemSlot.ItemData = _itemTransferSourceEntry.ItemSlot.ItemData;
+                entry.ItemSlot.Increment();
+                entry.DisplaySlot(entry.ItemSlot);
+
+                _itemTransferSourceEntry.ItemSlot.Decrement();
+                _itemTransferSourceEntry.DisplaySlot(_itemTransferSourceEntry.ItemSlot);
+
+                _itemTransferSourceEntry = null;
+            }
+        }
     }
 }

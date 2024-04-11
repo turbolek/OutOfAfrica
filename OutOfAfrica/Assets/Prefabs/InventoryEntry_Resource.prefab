@@ -171,9 +171,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c69e0ba0a9e605468b1016dd128d75e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _resourceName: {fileID: 0}
   _resourceCount: {fileID: 2740309801007232009}
   _icon: {fileID: 8632935971184018967}
+  _button: {fileID: 8230495481813901651}
 --- !u!1 &3827397129996311881
 GameObject:
   m_ObjectHideFlags: 0

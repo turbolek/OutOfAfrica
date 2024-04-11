@@ -88,6 +88,7 @@ public class InventoryView : MonoBehaviour
         foreach (var itemSlot in inventory.ItemSlots)
         {
             InventoryEntry entry = Instantiate(_entryPrefab, _entryParent);
+            entry.Init(Inventory);
             entry.DisplaySlot(itemSlot);
             _inventoryEntries.Add(entry);
         }
