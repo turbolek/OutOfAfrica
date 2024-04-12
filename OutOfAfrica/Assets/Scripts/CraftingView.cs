@@ -106,7 +106,10 @@ public class CraftingView : MonoBehaviour
         {
             foreach (var slot in inventory.Inventory.ItemSlots)
             {
-                slot.Decrement();
+                while (slot.Amount > 0)
+                {
+                    slot.Decrement();
+                }
             }
         }
 
