@@ -22,7 +22,7 @@ public class DropOffResourcesCommand : Command
         var item = _unit.Inventory.GetFirstItem();
 
         _unit.Inventory.RemoveItem(item);
-        _dropOffZone.Bank.AddResource(item.Resource, 1);
+        //_dropOffZone.Bank.AddResource(item.Resource, 1);
     }
 
     public override float GetCooldown()

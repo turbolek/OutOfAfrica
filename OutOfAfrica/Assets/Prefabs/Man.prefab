@@ -1098,6 +1098,7 @@ MonoBehaviour:
   - ItemData: {fileID: 0}
     Amount: 0
   SortPriority: 100
+  <ViewOffset>k__BackingField: {x: 0, y: 75, z: 0}
 --- !u!1 &4203135330754562408
 GameObject:
   m_ObjectHideFlags: 0

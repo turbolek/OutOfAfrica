@@ -9,6 +9,11 @@ public abstract class Command
         Target = target;
     }
 
+    public Command(PlayerUnitController unit, params object[] parameters)
+    {
+        
+    }
+
     public abstract bool Validate();
     public abstract void Perform();
     public abstract float GetCooldown();

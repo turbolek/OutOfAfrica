@@ -32,6 +32,11 @@ public class UIManager : MonoBehaviour
         _selectionValueVariable.Modified += OnSelectionModified;
     }
 
+    private void Update()
+    {
+        RefreshInventoryViews();
+    }
+
     private void OnDisable()
     {
         Inventory.Initialized -= OnInventoryInitialized;
@@ -44,7 +49,7 @@ public class UIManager : MonoBehaviour
     private void OnInventoryInitialized(Inventory inventory)
     {
         var inventoryView = Instantiate(_inventoryViewPrefab, transform);
-        inventoryView.Init(inventory, _camera);
+        inventoryView.Init(inventory, _camera, inventory.ViewOffset);
         _inventoryViews.Add(inventoryView);
     }
 
@@ -98,12 +103,20 @@ public class UIManager : MonoBehaviour
 
     private void OnSelectionModified((List<Selectable> oldValue, List<Selectable> newValue) selection)
     {
-        RefreshInventoryViews();
+        //RefreshInventoryViews();
     }
 
     private void RefreshInventoryViews()
     {
         List<Inventory> inventoriesToShow = new List<Inventory>();
+
+        foreach (var inventoryView in _inventoryViews)
+        {
+            if (inventoryView.Inventory.Owner.IsSelected)
+            {
+                inventoriesToShow.AddExclusive(inventoryView.Inventory);
+            }
+        }
 
         foreach (var connection in _inventoryConnections)
         {

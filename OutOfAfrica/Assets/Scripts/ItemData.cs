@@ -1,9 +1,10 @@
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Item Data", menuName = "Item Data")]
-public class ItemData : ScriptableObject
+public class ItemData : SerializedScriptableObject
 {
-    [field: SerializeField] public ResourceType Resource { get; private set; }
+    [field: SerializeField] public ResourceAmount[] ResourceAmount { get; private set; } = { };
 
     [HideInInspector]
     [field: SerializeField]

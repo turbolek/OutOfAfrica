@@ -23,6 +23,8 @@ public class InventoryView : MonoBehaviour
     private RectTransform _rectTransform;
 
     private bool _isShown = true;
+    private Vector3 _position => _camera.WorldToScreenPoint(Inventory.Owner.transform.position) + _offset;
+
 
     private void Start()
     {
@@ -31,13 +33,22 @@ public class InventoryView : MonoBehaviour
         Hide();
     }
 
+    private void Update()
+    {
+        if (_isShown)
+        {
+            FixSubscribeRequested?.Invoke(_rectTransform, _position);
+        }
+    }
+
     private void OnDisable()
     {
         FixUnsubscribeRequested?.Invoke(_rectTransform);
     }
 
-    public void Init(Inventory inventory, Camera camera)
+    public void Init(Inventory inventory, Camera camera, Vector3 offset)
     {
+        _offset = offset;
         _camera = camera;
         Inventory = inventory;
         name = $"{inventory.Owner.name} inventory view";
@@ -52,11 +63,10 @@ public class InventoryView : MonoBehaviour
             return;
         }
 
-        var position = _camera.WorldToScreenPoint(Inventory.Owner.transform.position) + _offset;
-        transform.position = position;
+        transform.position = _position;
         _canvasGroup.alpha = 1f;
         _isShown = true;
-        FixSubscribeRequested?.Invoke(_rectTransform, position);
+        FixSubscribeRequested?.Invoke(_rectTransform, _position);
     }
 
     public void Hide()

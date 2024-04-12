@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fc6b44092a169fe4d88a5d758fe778b5, type: 3}
-  m_Name: Branches
+  m_Name: Bone
   m_EditorClassIdentifier: 
   serializationData:
     SerializedFormat: 2
@@ -22,9 +22,9 @@ MonoBehaviour:
     PrefabModifications: []
     SerializationNodes: []
   <ResourceAmount>k__BackingField:
+  - <Resource>k__BackingField: {fileID: 11400000, guid: 6859ee6bc580d5a41af5c64c1ba5920a, type: 2}
+    <Amount>k__BackingField: 5
   - <Resource>k__BackingField: {fileID: 11400000, guid: 000ae8f8550a6dd4c9f29e11f89cf963, type: 2}
     <Amount>k__BackingField: 5
-  - <Resource>k__BackingField: {fileID: 11400000, guid: 6859ee6bc580d5a41af5c64c1ba5920a, type: 2}
-    <Amount>k__BackingField: 10
   <SlotCapacity>k__BackingField: 1
-  <Sprite>k__BackingField: {fileID: 21300000, guid: 711bd3364179a5b4d95396d53756bf2c, type: 3}
+  <Sprite>k__BackingField: {fileID: 21300000, guid: 394de01bde4d1b6428b50ba58080c9e1, type: 3}
