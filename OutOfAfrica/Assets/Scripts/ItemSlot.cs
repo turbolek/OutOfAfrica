@@ -5,7 +5,9 @@ using UnityEngine.Serialization;
 [Serializable]
 public class ItemSlot
 {
+    public Action Modified;
     public ItemData ItemData;
+
     [HideInInspector] //changed design for all items to have capacity == 1. Leaved the functionality in case design changes again to various capacities.
     public int Amount = 1;
 
@@ -22,14 +24,18 @@ public class ItemSlot
     public void Increment()
     {
         Amount++;
+        Modified?.Invoke();
     }
 
     public void Decrement()
     {
         Amount--;
+        Amount = Mathf.Clamp(Amount, 0, Amount + 1);
         if (Amount <= 0)
         {
             ItemData = null;
         }
+
+        Modified?.Invoke();
     }
 }

@@ -18,8 +18,8 @@ public class UIOverlapResolver : MonoBehaviour
 
     private void OnEnable()
     {
-        InventoryView.FixSubscribeRequested += OnSubscribeRequested;
-        InventoryView.FixUnsubscribeRequested += OnUnsubscribeRequested;
+        OverlapFixRequester.FixSubscribeRequested += OnSubscribeRequested;
+        OverlapFixRequester.FixUnsubscribeRequested += OnUnsubscribeRequested;
     }
 
     private void Update()
@@ -29,8 +29,8 @@ public class UIOverlapResolver : MonoBehaviour
 
     private void OnDisable()
     {
-        InventoryView.FixSubscribeRequested -= OnSubscribeRequested;
-        InventoryView.FixUnsubscribeRequested -= OnUnsubscribeRequested;
+        OverlapFixRequester.FixSubscribeRequested -= OnSubscribeRequested;
+        OverlapFixRequester.FixUnsubscribeRequested -= OnUnsubscribeRequested;
     }
 
     private void OnSubscribeRequested(RectTransform rectTransform, Vector2 position)

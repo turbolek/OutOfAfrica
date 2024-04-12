@@ -19,6 +19,11 @@ public class InventoryEntry : MonoBehaviour
         _button.onClick.AddListener(OnButtonClicked);
     }
 
+    private void OnDestroy()
+    {
+        ItemSlot.Modified -= OnSlotModified;
+    }
+
     public void Init(Inventory inventory)
     {
         Inventory = inventory;
@@ -27,6 +32,10 @@ public class InventoryEntry : MonoBehaviour
     public void DisplaySlot(ItemSlot itemSlot)
     {
         ItemSlot = itemSlot;
+
+        ItemSlot.Modified -= OnSlotModified;
+        ItemSlot.Modified += OnSlotModified;
+
         string resourceCount = string.Empty;
         Sprite resourceSprite = null;
 
@@ -44,5 +53,10 @@ public class InventoryEntry : MonoBehaviour
     private void OnButtonClicked()
     {
         ButtonClicked?.Invoke(this);
+    }
+
+    private void OnSlotModified()
+    {
+        DisplaySlot(ItemSlot);
     }
 }

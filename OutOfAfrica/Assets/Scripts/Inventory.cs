@@ -15,9 +15,20 @@ public class Inventory : MonoBehaviour
     public Selectable Owner { get; private set; }
     public List<Inventory> ConnectedInventories { get; private set; } = new();
 
+    public bool IsOpen;
+
     private void Start()
     {
-        Owner = GetComponent<Selectable>();
+        var owner = GetComponent<Selectable>();
+        if (owner != null)
+        {
+            Init(owner);
+        }
+    }
+
+    public void Init(Selectable owner)
+    {
+        Owner = owner;
         Initialized?.Invoke(this);
     }
 

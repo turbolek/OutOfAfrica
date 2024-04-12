@@ -6,9 +6,6 @@ using UnityEngine.UI;
 
 public class InventoryView : MonoBehaviour
 {
-    public static Action<RectTransform, Vector2> FixSubscribeRequested;
-    public static Action<RectTransform> FixUnsubscribeRequested;
-
     [SerializeField] private TMP_Text _title;
     [SerializeField] private CanvasGroup _canvasGroup;
     [SerializeField] private Vector3 _offset;
@@ -24,6 +21,7 @@ public class InventoryView : MonoBehaviour
 
     private bool _isShown = true;
     private Vector3 _position => _camera.WorldToScreenPoint(Inventory.Owner.transform.position) + _offset;
+    private OverlapFixRequester _overlapFixRequester = new OverlapFixRequester();
 
 
     private void Start()
@@ -37,13 +35,13 @@ public class InventoryView : MonoBehaviour
     {
         if (_isShown)
         {
-            FixSubscribeRequested?.Invoke(_rectTransform, _position);
+            _overlapFixRequester.RequestFixSubscribe(_rectTransform, _position);
         }
     }
 
     private void OnDisable()
     {
-        FixUnsubscribeRequested?.Invoke(_rectTransform);
+        _overlapFixRequester.RequestFixUnsubscribe(_rectTransform);
     }
 
     public void Init(Inventory inventory, Camera camera, Vector3 offset)
@@ -51,7 +49,7 @@ public class InventoryView : MonoBehaviour
         _offset = offset;
         _camera = camera;
         Inventory = inventory;
-        name = $"{inventory.Owner.name} inventory view";
+        name = $"{inventory.name} inventory view";
         DisplaySelectable(inventory.Owner);
         DisplayInventory(inventory);
     }
@@ -66,7 +64,8 @@ public class InventoryView : MonoBehaviour
         transform.position = _position;
         _canvasGroup.alpha = 1f;
         _isShown = true;
-        FixSubscribeRequested?.Invoke(_rectTransform, _position);
+        _overlapFixRequester.RequestFixSubscribe(_rectTransform, _position);
+        Inventory.IsOpen = true;
     }
 
     public void Hide()
@@ -77,8 +76,9 @@ public class InventoryView : MonoBehaviour
         }
 
         _canvasGroup.alpha = 0f;
-        FixUnsubscribeRequested?.Invoke(_rectTransform);
+        _overlapFixRequester.RequestFixUnsubscribe(_rectTransform);
         _isShown = false;
+        Inventory.IsOpen = false;
     }
 
     private void DisplaySelectable(Selectable selectable)

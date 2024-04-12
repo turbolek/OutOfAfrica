@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.AI.Navigation;
 using UnityEngine;
 using UnityEngine.AI;
@@ -153,10 +154,14 @@ public class PlayerUnitController : MonoBehaviour
 
         foreach (var targetable in _targetablesInTouch)
         {
-            var inventory = targetable.GetComponent<Inventory>();
-            if (inventory != null)
+            var inventories = targetable.GetComponentsInChildren<Inventory>().ToList();
+            inventories.AddExclusive(targetable.GetComponent<Inventory>());
+            foreach (var inventory in inventories)
             {
-                inventoriesInTouch.Add(inventory);
+                if (inventory != null)
+                {
+                    inventoriesInTouch.Add(inventory);
+                }
             }
         }
 
