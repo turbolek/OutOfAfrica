@@ -27,4 +27,5 @@ MonoBehaviour:
   - <Resource>k__BackingField: {fileID: 11400000, guid: 6859ee6bc580d5a41af5c64c1ba5920a, type: 2}
     <Amount>k__BackingField: 10
   <SlotCapacity>k__BackingField: 1
+  <CollectionTime>k__BackingField: 2
   <Sprite>k__BackingField: {fileID: 21300000, guid: 711bd3364179a5b4d95396d53756bf2c, type: 3}

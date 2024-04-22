@@ -272,25 +272,45 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <ItemSlots>k__BackingField:
-  - ItemData: {fileID: 0}
+  - InitialItem: {fileID: 0}
+    Item:
+      CollectionProgress: 0
     Amount: 1
-  - ItemData: {fileID: 0}
+  - InitialItem: {fileID: 0}
+    Item:
+      CollectionProgress: 0
     Amount: 1
-  - ItemData: {fileID: 0}
+  - InitialItem: {fileID: 0}
+    Item:
+      CollectionProgress: 0
     Amount: 1
-  - ItemData: {fileID: 0}
+  - InitialItem: {fileID: 0}
+    Item:
+      CollectionProgress: 0
     Amount: 1
-  - ItemData: {fileID: 0}
+  - InitialItem: {fileID: 0}
+    Item:
+      CollectionProgress: 0
     Amount: 1
-  - ItemData: {fileID: 0}
+  - InitialItem: {fileID: 0}
+    Item:
+      CollectionProgress: 0
     Amount: 1
-  - ItemData: {fileID: 0}
+  - InitialItem: {fileID: 0}
+    Item:
+      CollectionProgress: 0
     Amount: 1
-  - ItemData: {fileID: 0}
+  - InitialItem: {fileID: 0}
+    Item:
+      CollectionProgress: 0
     Amount: 1
-  - ItemData: {fileID: 0}
+  - InitialItem: {fileID: 0}
+    Item:
+      CollectionProgress: 0
     Amount: 1
-  - ItemData: {fileID: 0}
+  - InitialItem: {fileID: 0}
+    Item:
+      CollectionProgress: 0
     Amount: 1
   SortPriority: 0
   <ViewOffset>k__BackingField: {x: 0, y: 0, z: 0}
@@ -995,15 +1015,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <ItemSlots>k__BackingField:
-  - ItemData: {fileID: 11400000, guid: 467f535189387ca4e968bdcdebbca5d6, type: 2}
+  - InitialItem: {fileID: 11400000, guid: 467f535189387ca4e968bdcdebbca5d6, type: 2}
+    Item:
+      CollectionProgress: 0
     Amount: 1
-  - ItemData: {fileID: 11400000, guid: 467f535189387ca4e968bdcdebbca5d6, type: 2}
+  - InitialItem: {fileID: 11400000, guid: 467f535189387ca4e968bdcdebbca5d6, type: 2}
+    Item:
+      CollectionProgress: 0
     Amount: 1
-  - ItemData: {fileID: 11400000, guid: 467f535189387ca4e968bdcdebbca5d6, type: 2}
+  - InitialItem: {fileID: 11400000, guid: 467f535189387ca4e968bdcdebbca5d6, type: 2}
+    Item:
+      CollectionProgress: 0
     Amount: 1
-  - ItemData: {fileID: 11400000, guid: 467f535189387ca4e968bdcdebbca5d6, type: 2}
+  - InitialItem: {fileID: 11400000, guid: 467f535189387ca4e968bdcdebbca5d6, type: 2}
+    Item:
+      CollectionProgress: 0
     Amount: 1
-  - ItemData: {fileID: 11400000, guid: 467f535189387ca4e968bdcdebbca5d6, type: 2}
+  - InitialItem: {fileID: 11400000, guid: 467f535189387ca4e968bdcdebbca5d6, type: 2}
+    Item:
+      CollectionProgress: 0
+    Amount: 1
+  - InitialItem: {fileID: 11400000, guid: 467f535189387ca4e968bdcdebbca5d6, type: 2}
+    Item:
+      CollectionProgress: 0
     Amount: 1
   SortPriority: 50
   <ViewOffset>k__BackingField: {x: 0, y: 0, z: 0}
@@ -1835,19 +1869,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <ItemSlots>k__BackingField:
-  - ItemData: {fileID: 11400000, guid: 71f1bd3b5e9781246b905cb977858063, type: 2}
+  - InitialItem: {fileID: 11400000, guid: 71f1bd3b5e9781246b905cb977858063, type: 2}
+    Item:
+      CollectionProgress: 0
     Amount: 1
-  - ItemData: {fileID: 11400000, guid: 71f1bd3b5e9781246b905cb977858063, type: 2}
+  - InitialItem: {fileID: 11400000, guid: 71f1bd3b5e9781246b905cb977858063, type: 2}
+    Item:
+      CollectionProgress: 0
     Amount: 1
-  - ItemData: {fileID: 11400000, guid: 71f1bd3b5e9781246b905cb977858063, type: 2}
+  - InitialItem: {fileID: 11400000, guid: 71f1bd3b5e9781246b905cb977858063, type: 2}
+    Item:
+      CollectionProgress: 0
     Amount: 1
-  - ItemData: {fileID: 11400000, guid: 6df9f1b32851f74418fe26022690c51a, type: 2}
+  - InitialItem: {fileID: 11400000, guid: 6df9f1b32851f74418fe26022690c51a, type: 2}
+    Item:
+      CollectionProgress: 0
     Amount: 1
-  - ItemData: {fileID: 11400000, guid: 6df9f1b32851f74418fe26022690c51a, type: 2}
+  - InitialItem: {fileID: 11400000, guid: 6df9f1b32851f74418fe26022690c51a, type: 2}
+    Item:
+      CollectionProgress: 0
     Amount: 1
-  - ItemData: {fileID: 11400000, guid: 6df9f1b32851f74418fe26022690c51a, type: 2}
-    Amount: 1
-  - ItemData: {fileID: 11400000, guid: 6df9f1b32851f74418fe26022690c51a, type: 2}
+  - InitialItem: {fileID: 11400000, guid: 6df9f1b32851f74418fe26022690c51a, type: 2}
+    Item:
+      CollectionProgress: 0
     Amount: 1
   SortPriority: 50
   <ViewOffset>k__BackingField: {x: 0, y: 0, z: 0}
@@ -3207,11 +3251,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <ItemSlots>k__BackingField:
-  - ItemData: {fileID: 11400000, guid: 17f48b1fac0a8ca4d8b558cc2688477b, type: 2}
+  - InitialItem: {fileID: 11400000, guid: 17f48b1fac0a8ca4d8b558cc2688477b, type: 2}
+    Item:
+      CollectionProgress: 0
     Amount: 1
-  - ItemData: {fileID: 11400000, guid: 17f48b1fac0a8ca4d8b558cc2688477b, type: 2}
+  - InitialItem: {fileID: 11400000, guid: 17f48b1fac0a8ca4d8b558cc2688477b, type: 2}
+    Item:
+      CollectionProgress: 0
     Amount: 1
-  - ItemData: {fileID: 11400000, guid: 17f48b1fac0a8ca4d8b558cc2688477b, type: 2}
+  - InitialItem: {fileID: 11400000, guid: 17f48b1fac0a8ca4d8b558cc2688477b, type: 2}
+    Item:
+      CollectionProgress: 0
     Amount: 1
   SortPriority: 50
   <ViewOffset>k__BackingField: {x: 0, y: 0, z: 0}
@@ -3693,9 +3743,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <ItemSlots>k__BackingField:
-  - ItemData: {fileID: 11400000, guid: c12a70f34631dca46b51a1044e3aaea3, type: 2}
+  - InitialItem: {fileID: 11400000, guid: c12a70f34631dca46b51a1044e3aaea3, type: 2}
+    Item:
+      CollectionProgress: 0
     Amount: 1
-  - ItemData: {fileID: 11400000, guid: c12a70f34631dca46b51a1044e3aaea3, type: 2}
+  - InitialItem: {fileID: 11400000, guid: c12a70f34631dca46b51a1044e3aaea3, type: 2}
+    Item:
+      CollectionProgress: 0
     Amount: 1
   SortPriority: 50
   <ViewOffset>k__BackingField: {x: 0, y: 0, z: 0}

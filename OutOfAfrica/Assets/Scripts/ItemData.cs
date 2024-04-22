@@ -10,5 +10,7 @@ public class ItemData : SerializedScriptableObject
     [field: SerializeField]
     public int SlotCapacity { get; private set; } = 1;
 
+    [field: SerializeField] public float CollectionTime { get; private set; }
+
     [field: SerializeField] public Sprite Sprite { get; private set; }
 }

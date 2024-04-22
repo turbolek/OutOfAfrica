@@ -29,6 +29,11 @@ public class Inventory : MonoBehaviour
     public void Init(Selectable owner)
     {
         Owner = owner;
+        foreach (var slot in ItemSlots)
+        {
+            slot.Init(this);
+        }
+
         Initialized?.Invoke(this);
     }
 
@@ -37,17 +42,17 @@ public class Inventory : MonoBehaviour
         Destroyed?.Invoke(this);
     }
 
-    public void AddItem(ItemData item)
+    public void AddItem(Item item)
     {
         var slot = GetSlotForAddingItemTo(item);
         if (slot != null)
         {
-            slot.ItemData = item;
+            slot.Item = item;
             slot.Increment();
         }
     }
 
-    public void RemoveItem(ItemData item)
+    public void RemoveItem(Item item)
     {
         var slot = GetSlotForPickingUpItemFrom(item);
         if (slot != null)
@@ -56,7 +61,7 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    public ItemSlot GetSlotForAddingItemTo(ItemData item)
+    public ItemSlot GetSlotForAddingItemTo(Item item)
     {
         ItemSlot bestSlot = null;
 
@@ -71,8 +76,8 @@ public class Inventory : MonoBehaviour
             }
             else
             {
-                if (slot.CanFitItem(item) && (slot.Amount < bestSlot.Amount && slot.ItemData == bestSlot.ItemData ||
-                                              (slot.ItemData == item && bestSlot.ItemData == null)))
+                if (slot.CanFitItem(item) && (slot.Amount < bestSlot.Amount && slot.Item == bestSlot.Item ||
+                                              (slot.Item == item && bestSlot.Item == null)))
                 {
                     bestSlot = slot;
                 }
@@ -82,7 +87,7 @@ public class Inventory : MonoBehaviour
         return bestSlot;
     }
 
-    public ItemSlot GetSlotForPickingUpItemFrom(ItemData item)
+    public ItemSlot GetSlotForPickingUpItemFrom(Item item)
     {
         ItemSlot bestSlot = null;
 
@@ -107,23 +112,23 @@ public class Inventory : MonoBehaviour
         return bestSlot;
     }
 
-    public bool ContainsItem(ItemData item)
+    public bool ContainsItem(Item item)
     {
         return GetSlotForPickingUpItemFrom(item) != null;
     }
 
-    public bool CanFitItem(ItemData item)
+    public bool CanFitItem(Item item)
     {
         return GetSlotForAddingItemTo(item) != null;
     }
 
-    public ItemData GetFirstItem()
+    public Item GetFirstItem()
     {
         foreach (var itemSlot in ItemSlots)
         {
-            if (itemSlot.ItemData != null)
+            if (itemSlot.Item != null)
             {
-                return itemSlot.ItemData;
+                return itemSlot.Item;
             }
         }
 

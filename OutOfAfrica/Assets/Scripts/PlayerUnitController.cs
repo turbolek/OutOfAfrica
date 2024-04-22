@@ -4,7 +4,6 @@ using System.Linq;
 using Unity.AI.Navigation;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.Serialization;
 
 [Serializable]
 [RequireComponent(typeof(Selectable), typeof(Inventory))]
@@ -31,6 +30,9 @@ public class PlayerUnitController : MonoBehaviour
 
     private List<Targetable> _targetablesInTouch = new();
     private List<Inventory> _openedInventories = new();
+
+    private ItemSlot _pickupSourceInventorySlot;
+    private ItemSlot _pickupTargetInventorySlot;
 
     private void OnEnable()
     {
@@ -71,6 +73,7 @@ public class PlayerUnitController : MonoBehaviour
                 else
                 {
                     _currentCommand = null;
+                    SetPickupSlots(null, null);
                 }
 
                 _lastCommandTime = Time.time;
@@ -96,6 +99,7 @@ public class PlayerUnitController : MonoBehaviour
         }
 
         _currentCommand = null;
+        SetPickupSlots(null, null);
         SetMovementTarget(targetPosition);
     }
 
@@ -178,6 +182,16 @@ public class PlayerUnitController : MonoBehaviour
             }
         }
 
+        if (_pickupSourceInventorySlot != null)
+        {
+            var currentCollectCommand = _currentCommand as CollectItemCommand;
+            if (currentCollectCommand == null || currentCollectCommand.SourceSlot != _pickupSourceInventorySlot ||
+                currentCollectCommand.TargetSlot != _pickupTargetInventorySlot)
+            {
+                return new CollectItemCommand(this, _pickupSourceInventorySlot, _pickupTargetInventorySlot);
+            }
+        }
+
         // var resourceStack = _currentTarget.GetComponent<ItemStack>();
         // if (resourceStack)
         // {
@@ -211,9 +225,9 @@ public class PlayerUnitController : MonoBehaviour
         }
     }
 
-    public bool CanPickupItem(ItemData itemData)
+    public bool CanPickupItem(Item item)
     {
-        return Inventory.CanFitItem(itemData);
+        return Inventory.CanFitItem(item);
     }
 
     private void CloseInventories()
@@ -222,5 +236,13 @@ public class PlayerUnitController : MonoBehaviour
         {
             DisconnectInventoriesRequest?.Invoke(inventory, Inventory);
         }
+    }
+
+    public void SetPickupSlots(ItemSlot sourceSlot, ItemSlot targetSlot)
+    {
+        _pickupSourceInventorySlot = sourceSlot;
+        _pickupTargetInventorySlot = targetSlot;
+
+        _currentCommand = GetCommand();
     }
 }

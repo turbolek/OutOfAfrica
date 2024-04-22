@@ -101,7 +101,7 @@ public class CraftingView : MonoBehaviour
 
     private void Craft()
     {
-        var product = _currentRecipe.Product;
+        var productData = _currentRecipe.Product;
         foreach (var inventory in _craftingStation.Inventories)
         {
             foreach (var slot in inventory.Inventory.ItemSlots)
@@ -113,7 +113,7 @@ public class CraftingView : MonoBehaviour
             }
         }
 
-        _craftingStation.Inventories[0].Inventory.ItemSlots[0].ItemData = product;
+        _craftingStation.Inventories[0].Inventory.ItemSlots[0].Item = new Item(productData);
         _craftingStation.Inventories[0].Inventory.ItemSlots[0].Increment();
     }
 

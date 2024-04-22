@@ -47,9 +47,9 @@ public class RecipeResourcePanel : MonoBehaviour
 
         foreach (var slot in _inputInventory.ItemSlots)
         {
-            if (slot.ItemData != null)
+            if (slot.Item != null)
             {
-                foreach (var resourceAmount in slot.ItemData.ResourceAmount)
+                foreach (var resourceAmount in slot.Item.Data.ResourceAmount)
                 {
                     if (resourceAmount.Resource == _requiredResource.Resource)
                     {

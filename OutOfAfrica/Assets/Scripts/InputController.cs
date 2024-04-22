@@ -83,7 +83,7 @@ public class InputController : MonoBehaviour
             ? hit.point
             : _camera.ScreenToWorldPoint(MousePositionScreen);
 
-        if (_itemTransferSourceEntry != null && !_itemTransferSourceEntry.gameObject.activeInHierarchy)
+        if (_itemTransferSourceEntry != null && !_itemTransferSourceEntry.IsVisible())
         {
             _itemTransferSourceEntry = null;
         }
@@ -353,24 +353,24 @@ public class InputController : MonoBehaviour
 
     private void OnInventoryEntryClicked(InventoryEntry entry)
     {
-        if (_itemTransferSourceEntry == null)
+        if (_itemTransferSourceEntry == null || _itemTransferSourceEntry == entry)
         {
-            if (entry.ItemSlot.ItemData != null)
+            if (entry.ItemSlot.Item != null)
             {
                 _itemTransferSourceEntry = entry;
             }
         }
         else
         {
-            if (entry.ItemSlot.CanFitItem(_itemTransferSourceEntry.ItemSlot.ItemData))
+            var unit = entry.ItemSlot.Inventory.Owner.GetComponent<PlayerUnitController>();
+            if (unit == null)
             {
-                entry.ItemSlot.ItemData = _itemTransferSourceEntry.ItemSlot.ItemData;
-                entry.ItemSlot.Increment();
-                entry.DisplaySlot(entry.ItemSlot);
+                unit = _itemTransferSourceEntry.ItemSlot.Inventory.Owner.GetComponent<PlayerUnitController>();
+            }
 
-                _itemTransferSourceEntry.ItemSlot.Decrement();
-                _itemTransferSourceEntry.DisplaySlot(_itemTransferSourceEntry.ItemSlot);
-
+            if (unit != null)
+            {
+                unit.SetPickupSlots(_itemTransferSourceEntry.ItemSlot, entry.ItemSlot);
                 _itemTransferSourceEntry = null;
             }
         }

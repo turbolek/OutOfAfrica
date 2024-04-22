@@ -6,19 +6,27 @@ using UnityEngine.Serialization;
 public class ItemSlot
 {
     public Action Modified;
-    public ItemData ItemData;
+    public ItemData InitialItem;
+    public Item Item;
+    public Inventory Inventory { get; private set; }
 
     [HideInInspector] //changed design for all items to have capacity == 1. Leaved the functionality in case design changes again to various capacities.
     public int Amount = 1;
 
-    public bool CanFitItem(ItemData item)
+    public void Init(Inventory inventory)
     {
-        return ItemData == null || (ItemData == item && Amount < ItemData.SlotCapacity);
+        Inventory = inventory;
+        Item = InitialItem != null ? new Item(InitialItem) : null;
     }
 
-    public bool ContainsItem(ItemData item)
+    public bool CanFitItem(Item item)
     {
-        return ItemData == item && Amount > 0;
+        return Item == null || (Item == item && Amount < Item.Data.SlotCapacity);
+    }
+
+    public bool ContainsItem(Item item)
+    {
+        return Item == item && Amount > 0;
     }
 
     public void Increment()
@@ -33,7 +41,7 @@ public class ItemSlot
         Amount = Mathf.Clamp(Amount, 0, Amount + 1);
         if (Amount <= 0)
         {
-            ItemData = null;
+            Item = null;
         }
 
         Modified?.Invoke();
