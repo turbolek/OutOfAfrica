@@ -154,6 +154,7 @@ public class PlayerUnitController : MonoBehaviour
             return null;
         }
 
+        CloseInventories();
         List<Inventory> inventoriesInTouch = new();
 
         _targetablesInTouch.ClearNulls();
@@ -222,6 +223,7 @@ public class PlayerUnitController : MonoBehaviour
         if (unit == this)
         {
             _targetablesInTouch.Remove(targetable);
+            _currentCommand = GetCommand();
         }
     }
 
