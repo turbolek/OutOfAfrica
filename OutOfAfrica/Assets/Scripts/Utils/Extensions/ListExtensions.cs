@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEngine;
 
 public static class ListExtensions
 {
@@ -15,6 +16,34 @@ public static class ListExtensions
         foreach (var element in elements)
         {
             list.AddExclusive(element);
+        }
+    }
+
+    public static void ClearNulls<T>(this List<T> list) where T : MonoBehaviour
+    {
+        for (int i = list.Count - 1; i >= 0; i--)
+        {
+            if (list[i] == null)
+            {
+                list.RemoveAt(i);
+            }
+        }
+    }
+
+    public static void DestroyElements<T>(this List<T> list, bool clear = false) where T : MonoBehaviour
+    {
+        list.ClearNulls();
+        for (int i = list.Count - 1; i >= 0; i--)
+        {
+            if (list[i] == null)
+            {
+                GameObject.Destroy(list[i].gameObject);
+            }
+        }
+
+        if (clear)
+        {
+            list.Clear();
         }
     }
 }

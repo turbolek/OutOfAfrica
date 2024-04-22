@@ -152,6 +152,7 @@ public class PlayerUnitController : MonoBehaviour
 
         List<Inventory> inventoriesInTouch = new();
 
+        _targetablesInTouch.ClearNulls();
         foreach (var targetable in _targetablesInTouch)
         {
             var inventories = targetable.GetComponentsInChildren<Inventory>().ToList();
