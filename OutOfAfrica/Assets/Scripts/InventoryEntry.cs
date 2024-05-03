@@ -16,9 +16,11 @@ public class InventoryEntry : MonoBehaviour
     public Inventory Inventory { get; private set; }
 
     private CanvasGroup _canvasGroup;
+    private TooltipRequester _tooltipRequester;
 
     private void Start()
     {
+        _tooltipRequester = new TooltipRequester();
         _button.onClick.AddListener(OnButtonClicked);
         Item.CollectionProgressChanged += OnItemCollectionProgressChanged;
     }
@@ -94,5 +96,42 @@ public class InventoryEntry : MonoBehaviour
         }
 
         _collectionSlider.gameObject.SetActive(item != null && item.CollectionProgress < 1f);
+    }
+
+    public void OnPointerEnter()
+    {
+        if (_canvasGroup.alpha <= 0f)
+        {
+            return;
+        }
+
+        var item = ItemSlot.Item;
+        if (item != null)
+        {
+            var title = item.Data.name;
+            var message = string.Empty;
+
+            foreach (var resourceAmount in item.Data.ResourceAmount)
+            {
+                message += $"{resourceAmount.Resource.name} : {resourceAmount.Amount.ToString()} \n";
+            }
+
+            if (item.Data.ToolCategory != null)
+            {
+                message += $"\nTool category: {item.Data.ToolCategory.name}\n";
+            }
+
+            if (item.Data.RequiredTool != null)
+            {
+                message += $"\nRequired tool: {item.Data.RequiredTool.name}\n";
+            }
+
+            _tooltipRequester.RequestShow(title, message);
+        }
+    }
+
+    public void OnPointerExit()
+    {
+        _tooltipRequester.RequestHide();
     }
 }
