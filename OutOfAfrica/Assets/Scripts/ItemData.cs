@@ -13,4 +13,6 @@ public class ItemData : SerializedScriptableObject
     [field: SerializeField] public float CollectionTime { get; private set; }
 
     [field: SerializeField] public Sprite Sprite { get; private set; }
+    [field: SerializeField] public ToolCategory ToolCategory { get; private set; }
+    [field: SerializeField] public ToolCategory RequiredTool { get; private set; }
 }

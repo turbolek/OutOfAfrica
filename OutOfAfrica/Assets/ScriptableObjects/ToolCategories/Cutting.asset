@@ -9,8 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fc6b44092a169fe4d88a5d758fe778b5, type: 3}
-  m_Name: HandAxe
+  m_Script: {fileID: 11500000, guid: 9ca2042a1a6eb0d4db36e3a518f2074b, type: 3}
+  m_Name: Cutting
   m_EditorClassIdentifier: 
   serializationData:
     SerializedFormat: 2
@@ -21,9 +21,3 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  <ResourceAmount>k__BackingField: []
-  <SlotCapacity>k__BackingField: 1
-  <CollectionTime>k__BackingField: 0
-  <Sprite>k__BackingField: {fileID: 21300000, guid: fda65afd93e0efd4291d779e1d566d76, type: 3}
-  <ToolCategory>k__BackingField: {fileID: 11400000, guid: c82f22fc5070d6c408ff817caeae92b2, type: 2}
-  <RequiredTool>k__BackingField: {fileID: 0}

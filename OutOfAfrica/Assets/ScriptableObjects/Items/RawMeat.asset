@@ -27,3 +27,5 @@ MonoBehaviour:
   <SlotCapacity>k__BackingField: 1
   <CollectionTime>k__BackingField: 6
   <Sprite>k__BackingField: {fileID: 21300000, guid: d2333f2f3cf8bf84bae91658d7baf7e7, type: 3}
+  <ToolCategory>k__BackingField: {fileID: 0}
+  <RequiredTool>k__BackingField: {fileID: 11400000, guid: c82f22fc5070d6c408ff817caeae92b2, type: 2}

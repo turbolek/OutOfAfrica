@@ -247,4 +247,22 @@ public class PlayerUnitController : MonoBehaviour
 
         _currentCommand = GetCommand();
     }
+
+    public bool HasTool(ToolCategory toolCategory)
+    {
+        if (toolCategory == null)
+        {
+            return true;
+        }
+
+        foreach (var itemSlot in Inventory.ItemSlots)
+        {
+            if (itemSlot.Item != null && itemSlot.Item.Data.ToolCategory == toolCategory)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }
