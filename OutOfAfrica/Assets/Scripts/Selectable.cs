@@ -54,14 +54,12 @@ public class Selectable : MonoBehaviour
     {
         _isHovered = true;
         m_selectionIndicator.Hover();
-        Debug.Log($"{name} hovered");
     }
 
     private void Unhover()
     {
         _isHovered = false;
         m_selectionIndicator.Unhover();
-        Debug.Log($"{name} unhovered");
     }
 
     private void OnSelectableHovered(Selectable selectable)

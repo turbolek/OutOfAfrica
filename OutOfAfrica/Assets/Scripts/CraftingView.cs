@@ -56,7 +56,7 @@ public class CraftingView : MonoBehaviour
         _craftingStation = craftingStation;
         foreach (var recipe in _craftingStation.Recipes)
         {
-            _recipeDropdown.options.Add(new TMP_Dropdown.OptionData(recipe.Product.name, recipe.Product.Sprite,
+            _recipeDropdown.options.Add(new TMP_Dropdown.OptionData(recipe.Product.Name, recipe.Product.Icon,
                 Color.white));
         }
 
@@ -87,7 +87,7 @@ public class CraftingView : MonoBehaviour
         _currentRecipe = null;
         foreach (var recipe in _craftingStation.Recipes)
         {
-            if (recipe.Product.name == option.text)
+            if (recipe.Product.Name == option.text)
             {
                 _currentRecipe = recipe;
                 break;
@@ -95,26 +95,31 @@ public class CraftingView : MonoBehaviour
         }
 
         _craftingStation.OnRecipeSelected(_currentRecipe);
-        _recipeImage.sprite = _currentRecipe.Product.Sprite;
+        _recipeImage.sprite = _currentRecipe.Product.Icon;
         SpawnResourcePanels();
     }
 
     private void Craft()
     {
-        var productData = _currentRecipe.Product;
-        foreach (var inventory in _craftingStation.Inventories)
+        //TODO handle multiple IRecipeProduct implementations
+
+        if (_currentRecipe.Product is ItemData)
         {
-            foreach (var slot in inventory.Inventory.ItemSlots)
+            var productData = _currentRecipe.Product as ItemData;
+            foreach (var inventory in _craftingStation.Inventories)
             {
-                while (slot.Amount > 0)
+                foreach (var slot in inventory.Inventory.ItemSlots)
                 {
-                    slot.Decrement();
+                    while (slot.Amount > 0)
+                    {
+                        slot.Decrement();
+                    }
                 }
             }
-        }
 
-        _craftingStation.Inventories[0].Inventory.ItemSlots[0].Item = new Item(productData);
-        _craftingStation.Inventories[0].Inventory.ItemSlots[0].Increment();
+            _craftingStation.Inventories[0].Inventory.ItemSlots[0].Item = new Item(productData);
+            _craftingStation.Inventories[0].Inventory.ItemSlots[0].Increment();
+        }
     }
 
 
