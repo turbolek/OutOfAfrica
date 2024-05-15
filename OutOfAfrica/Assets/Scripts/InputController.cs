@@ -11,6 +11,8 @@ public class InputController : MonoBehaviour
 {
     public static event Action CommandAction;
     public static event Action<Selectable> SelectableHovered;
+    public static event Action BuildingConfirmed;
+    public static event Action BuildingCanceled;
 
     [SerializeField] private Camera _camera;
     [SerializeField] private LayerMask _terrainLayerMask;
@@ -22,6 +24,8 @@ public class InputController : MonoBehaviour
 
     [FormerlySerializedAs("_selectionVariable")] [SerializeField]
     private SelectionValueVariable selectionValueVariable;
+
+    [SerializeField] private Vector3Variable _nearestPositionOnGroundVariable;
 
     private MeshCollider _selectionCollider;
     private InputActions _inputActions;
@@ -47,6 +51,7 @@ public class InputController : MonoBehaviour
         _selectionCollider = GetComponent<MeshCollider>();
         _inputActions = new();
         _inputActions.Enable();
+        _inputActions.Building.Disable();
 
         _inputActions.Selection.StartSelection.performed += ctx =>
         {
@@ -60,10 +65,20 @@ public class InputController : MonoBehaviour
         {
             if (!InputBlocked()) OnCommandAction();
         };
+        _inputActions.Building.Confirm.performed += ctx =>
+        {
+            if (!InputBlocked()) OnBuildingConfirmed();
+        };
+        _inputActions.Building.Confirm.performed += ctx =>
+        {
+            if (!InputBlocked()) OnBuildingCanceled();
+        };
 
         RaycastBlocker.CursorEntered += OnCursorEnteredBlocker;
         RaycastBlocker.CursorExited += OnCursorExitedBlocker;
         InventoryEntry.ButtonClicked += OnInventoryEntryClicked;
+        StructureGhost.Enabled += OnStructureGhostEnabled;
+        StructureGhost.Disabled += OnStructureGhostDisabled;
 
         _selectionFrame.gameObject.SetActive(false);
     }
@@ -73,6 +88,8 @@ public class InputController : MonoBehaviour
         RaycastBlocker.CursorEntered -= OnCursorEnteredBlocker;
         RaycastBlocker.CursorExited -= OnCursorExitedBlocker;
         InventoryEntry.ButtonClicked -= OnInventoryEntryClicked;
+        StructureGhost.Enabled -= OnStructureGhostEnabled;
+        StructureGhost.Disabled -= OnStructureGhostDisabled;
     }
 
     private void Update()
@@ -82,6 +99,8 @@ public class InputController : MonoBehaviour
         MousePositionWorld = Physics.Raycast(ray, out RaycastHit hit, 1000f, _terrainLayerMask)
             ? hit.point
             : _camera.ScreenToWorldPoint(MousePositionScreen);
+
+        _nearestPositionOnGroundVariable.Set(GetClosestPositionOnTerrain(MousePositionScreen));
 
         if (_itemTransferSourceEntry != null && !_itemTransferSourceEntry.IsVisible())
         {
@@ -374,5 +393,27 @@ public class InputController : MonoBehaviour
                 _itemTransferSourceEntry = null;
             }
         }
+    }
+
+    private void OnBuildingConfirmed()
+    {
+        BuildingConfirmed?.Invoke();
+    }
+
+    private void OnBuildingCanceled()
+    {
+        BuildingCanceled?.Invoke();
+    }
+
+    private void OnStructureGhostEnabled(StructureGhost ghost)
+    {
+        _inputActions.Selection.Disable();
+        _inputActions.Building.Enable();
+    }
+
+    private void OnStructureGhostDisabled(StructureGhost ghost)
+    {
+        _inputActions.Selection.Enable();
+        _inputActions.Building.Enable();
     }
 }

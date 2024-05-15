@@ -98,6 +98,54 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Building"",
+            ""id"": ""33d95571-368c-4a1d-9ca2-f5b818b0ffc5"",
+            ""actions"": [
+                {
+                    ""name"": ""Confirm"",
+                    ""type"": ""Button"",
+                    ""id"": ""2d66c111-6352-4932-b400-44dbae058637"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Cancel"",
+                    ""type"": ""Button"",
+                    ""id"": ""85e73a98-9de2-4e33-9779-f3d494ba79c8"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""05c2b00b-380c-444e-a7d8-a1e412938914"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Confirm"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""bcbe706c-0e14-4695-91ca-e5a0eda5598f"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Cancel"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -109,6 +157,10 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
         // General
         m_General = asset.FindActionMap("General", throwIfNotFound: true);
         m_General_MousePosition = m_General.FindAction("MousePosition", throwIfNotFound: true);
+        // Building
+        m_Building = asset.FindActionMap("Building", throwIfNotFound: true);
+        m_Building_Confirm = m_Building.FindAction("Confirm", throwIfNotFound: true);
+        m_Building_Cancel = m_Building.FindAction("Cancel", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -266,6 +318,60 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
         }
     }
     public GeneralActions @General => new GeneralActions(this);
+
+    // Building
+    private readonly InputActionMap m_Building;
+    private List<IBuildingActions> m_BuildingActionsCallbackInterfaces = new List<IBuildingActions>();
+    private readonly InputAction m_Building_Confirm;
+    private readonly InputAction m_Building_Cancel;
+    public struct BuildingActions
+    {
+        private @InputActions m_Wrapper;
+        public BuildingActions(@InputActions wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Confirm => m_Wrapper.m_Building_Confirm;
+        public InputAction @Cancel => m_Wrapper.m_Building_Cancel;
+        public InputActionMap Get() { return m_Wrapper.m_Building; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(BuildingActions set) { return set.Get(); }
+        public void AddCallbacks(IBuildingActions instance)
+        {
+            if (instance == null || m_Wrapper.m_BuildingActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_BuildingActionsCallbackInterfaces.Add(instance);
+            @Confirm.started += instance.OnConfirm;
+            @Confirm.performed += instance.OnConfirm;
+            @Confirm.canceled += instance.OnConfirm;
+            @Cancel.started += instance.OnCancel;
+            @Cancel.performed += instance.OnCancel;
+            @Cancel.canceled += instance.OnCancel;
+        }
+
+        private void UnregisterCallbacks(IBuildingActions instance)
+        {
+            @Confirm.started -= instance.OnConfirm;
+            @Confirm.performed -= instance.OnConfirm;
+            @Confirm.canceled -= instance.OnConfirm;
+            @Cancel.started -= instance.OnCancel;
+            @Cancel.performed -= instance.OnCancel;
+            @Cancel.canceled -= instance.OnCancel;
+        }
+
+        public void RemoveCallbacks(IBuildingActions instance)
+        {
+            if (m_Wrapper.m_BuildingActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IBuildingActions instance)
+        {
+            foreach (var item in m_Wrapper.m_BuildingActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_BuildingActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public BuildingActions @Building => new BuildingActions(this);
     public interface ISelectionActions
     {
         void OnStartSelection(InputAction.CallbackContext context);
@@ -274,5 +380,10 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
     public interface IGeneralActions
     {
         void OnMousePosition(InputAction.CallbackContext context);
+    }
+    public interface IBuildingActions
+    {
+        void OnConfirm(InputAction.CallbackContext context);
+        void OnCancel(InputAction.CallbackContext context);
     }
 }

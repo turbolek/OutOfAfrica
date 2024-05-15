@@ -195,6 +195,7 @@ GameObject:
   - component: {fileID: 162671596}
   - component: {fileID: 162671595}
   - component: {fileID: 162671597}
+  - component: {fileID: 162671598}
   m_Layer: 0
   m_Name: Camp
   m_TagString: Untagged
@@ -356,6 +357,23 @@ MonoBehaviour:
   SortPriority: 0
   <ViewOffset>k__BackingField: {x: 0, y: 0, z: 0}
   IsOpen: 0
+--- !u!114 &162671598
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 162671590}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8827564dedc04a647a5670f01c6b49e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  InventoryPrefab: {fileID: 4871486337277431939, guid: 4130a406284c9b14eb4a554795e1cf8d, type: 3}
+  _craftingViewPrefab: {fileID: 9152948936126942200, guid: c347afcdd87d2674c881979e7cb38b4a, type: 3}
+  _craftingViewParent: {fileID: 1313625380}
+  <Recipes>k__BackingField:
+  - {fileID: 11400000, guid: ecc6221db15106a4d92456cbdc84b425, type: 2}
 --- !u!224 &163038462 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5091079117592604662, guid: bf1ad12e2abcac74882343b0ef66bb88, type: 3}
@@ -1016,6 +1034,7 @@ MonoBehaviour:
   _selectionFrame: {fileID: 909665832}
   _terrainCollider: {fileID: 954559661}
   selectionValueVariable: {fileID: 11400000, guid: aaebd3cf50f815d42961cc9599f2f13c, type: 2}
+  _nearestPositionOnGroundVariable: {fileID: 11400000, guid: 9dd59115f04fc8549857f4d02b3325f1, type: 2}
 --- !u!4 &549135870
 Transform:
   m_ObjectHideFlags: 0
@@ -1180,19 +1199,19 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 754152105}
-  - component: {fileID: 754152104}
   - component: {fileID: 754152103}
   - component: {fileID: 754152102}
   - component: {fileID: 754152101}
   - component: {fileID: 754152100}
   - component: {fileID: 754152099}
+  - component: {fileID: 754152106}
   m_Layer: 0
   m_Name: StructureBlueprint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &754152099
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1288,18 +1307,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 441de4df77240af43af1877f01e64874, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &754152104
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 754152098}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c28973646c905494c99e969c3e18f39d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &754152105
 Transform:
   m_ObjectHideFlags: 0
@@ -1316,6 +1323,22 @@ Transform:
   - {fileID: 1298638651}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &754152106
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 754152098}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8827564dedc04a647a5670f01c6b49e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  InventoryPrefab: {fileID: 4871486337277431939, guid: 4130a406284c9b14eb4a554795e1cf8d, type: 3}
+  _craftingViewPrefab: {fileID: 0}
+  _craftingViewParent: {fileID: 1313625380}
+  <Recipes>k__BackingField: []
 --- !u!1 &788434587
 GameObject:
   m_ObjectHideFlags: 0

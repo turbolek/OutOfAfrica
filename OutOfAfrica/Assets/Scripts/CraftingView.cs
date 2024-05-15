@@ -119,6 +119,16 @@ public class CraftingView : MonoBehaviour
 
             _craftingStation.Inventories[0].Inventory.ItemSlots[0].Item = new Item(productData);
             _craftingStation.Inventories[0].Inventory.ItemSlots[0].Increment();
+            return;
+        }
+
+        if (_currentRecipe.Product is StructureData)
+        {
+            var productData = _currentRecipe.Product as StructureData;
+
+            var ghost = Instantiate(productData.StructureGhostPrefab);
+            ghost.SetPosition();
+            Hide();
         }
     }
 
