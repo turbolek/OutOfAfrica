@@ -154,9 +154,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   InventoryPrefab: {fileID: 4871486337277431939, guid: 4130a406284c9b14eb4a554795e1cf8d, type: 3}
   _craftingViewPrefab: {fileID: 9152948936126942200, guid: c347afcdd87d2674c881979e7cb38b4a, type: 3}
-  _craftingViewParent: {fileID: 0}
   <Recipes>k__BackingField:
   - {fileID: 11400000, guid: bcbe6b5046e31374cae34b64471e72c2, type: 2}
+  _mainCanvasVariable: {fileID: 11400000, guid: 0093d132a1f48f6428bc9d69c3879a59, type: 2}
 --- !u!1001 &828191315212559376
 PrefabInstance:
   m_ObjectHideFlags: 0

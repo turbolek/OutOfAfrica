@@ -20,7 +20,8 @@ public class CollectItemCommand : Command
     public override bool Validate()
     {
         var item = SourceSlot.Item;
-        bool canPerform = item != null && TargetSlot.CanFitItem(item) && Unit.HasTool(item.Data.RequiredTool);
+        bool canPerform = item != null && TargetSlot.CanFitItem(item) &&
+                          (Unit.HasTool(item.Data.RequiredTool) || item.CollectionProgress >= 1f);
         return canPerform;
     }
 

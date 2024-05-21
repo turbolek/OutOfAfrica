@@ -371,9 +371,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   InventoryPrefab: {fileID: 4871486337277431939, guid: 4130a406284c9b14eb4a554795e1cf8d, type: 3}
   _craftingViewPrefab: {fileID: 9152948936126942200, guid: c347afcdd87d2674c881979e7cb38b4a, type: 3}
-  _craftingViewParent: {fileID: 1313625380}
   <Recipes>k__BackingField:
   - {fileID: 11400000, guid: ecc6221db15106a4d92456cbdc84b425, type: 2}
+  _mainCanvasVariable: {fileID: 11400000, guid: 0093d132a1f48f6428bc9d69c3879a59, type: 2}
 --- !u!224 &163038462 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5091079117592604662, guid: bf1ad12e2abcac74882343b0ef66bb88, type: 3}
@@ -1337,8 +1337,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   InventoryPrefab: {fileID: 4871486337277431939, guid: 4130a406284c9b14eb4a554795e1cf8d, type: 3}
   _craftingViewPrefab: {fileID: 0}
-  _craftingViewParent: {fileID: 1313625380}
   <Recipes>k__BackingField: []
+  _mainCanvasVariable: {fileID: 0}
 --- !u!1 &788434587
 GameObject:
   m_ObjectHideFlags: 0
@@ -3081,6 +3081,8 @@ MonoBehaviour:
   _inventoryViewPrefab: {fileID: 4852788194417551049, guid: e8781217933d27f409456e5fba114602, type: 3}
   _camera: {fileID: 963194227}
   _selectionValueVariable: {fileID: 11400000, guid: aaebd3cf50f815d42961cc9599f2f13c, type: 2}
+  _mainCanvasTransform: {fileID: 1313625380}
+  _mainCanvasVariable: {fileID: 11400000, guid: 0093d132a1f48f6428bc9d69c3879a59, type: 2}
 --- !u!114 &1313625382
 MonoBehaviour:
   m_ObjectHideFlags: 0

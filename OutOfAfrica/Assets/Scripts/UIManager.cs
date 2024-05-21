@@ -20,6 +20,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] private InventoryView _inventoryViewPrefab;
     [SerializeField] private Camera _camera;
     [SerializeField] private SelectionValueVariable _selectionValueVariable;
+    [SerializeField] private Transform _mainCanvasTransform;
+    [SerializeField] private TransformVariable _mainCanvasVariable;
     private List<InventoryView> _inventoryViews = new();
     private List<InventoryConnection> _inventoryConnections = new();
 
@@ -30,6 +32,8 @@ public class UIManager : MonoBehaviour
         PlayerUnitController.ConnectInventoriesRequest += OnConnectInventoriesRequest;
         PlayerUnitController.DisconnectInventoriesRequest += OnDisconnectInventoriesRequest;
         _selectionValueVariable.Modified += OnSelectionModified;
+        
+        _mainCanvasVariable.Set(_mainCanvasTransform);
     }
 
     private void Update()

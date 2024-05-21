@@ -1,12 +1,14 @@
 using System.Collections.Generic;
 using UnityEngine;
+using Variables;
 
 public class CraftingStation : MonoBehaviour
 {
     [field: SerializeField] public Inventory InventoryPrefab;
     [field: SerializeField] private CraftingView _craftingViewPrefab;
-    [field: SerializeField] private Transform _craftingViewParent;
     [field: SerializeField] public List<CraftingRecipe> Recipes { get; private set; } = new();
+    [SerializeField] private TransformVariable _mainCanvasVariable;
+
 
     public List<(Inventory Inventory, ResourceType Resource)> Inventories { get; private set; } = new();
 
@@ -17,7 +19,7 @@ public class CraftingStation : MonoBehaviour
     private void Start()
     {
         Selectable = GetComponent<Selectable>();
-        CraftingView craftingView = Instantiate(_craftingViewPrefab, _craftingViewParent);
+        CraftingView craftingView = Instantiate(_craftingViewPrefab, _mainCanvasVariable.Value);
         craftingView.Init(this);
         OnRecipeSelected(Recipes[0]);
     }
