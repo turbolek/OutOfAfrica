@@ -69,7 +69,7 @@ public class InputController : MonoBehaviour
         {
             if (!InputBlocked()) OnBuildingConfirmed();
         };
-        _inputActions.Building.Confirm.performed += ctx =>
+        _inputActions.Building.Cancel.performed += ctx =>
         {
             if (!InputBlocked()) OnBuildingCanceled();
         };

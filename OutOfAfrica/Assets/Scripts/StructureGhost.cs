@@ -5,6 +5,9 @@ public class StructureGhost : MonoBehaviour
 {
     public static event Action<StructureGhost> Enabled;
     public static event Action<StructureGhost> Disabled;
+    public event Action<StructureGhost> Confirmed;
+    public event Action<StructureGhost> Canceled;
+
     [SerializeField] private GameObject structurePrefab;
     [SerializeField] private Vector3Variable _nearestPositionOnGroundVariable;
 
@@ -34,6 +37,7 @@ public class StructureGhost : MonoBehaviour
 
     private void OnConfirmed()
     {
+        Confirmed?.Invoke(this);
         var structure = Instantiate(structurePrefab);
         structure.transform.position = transform.position;
         Destroy(gameObject);
@@ -41,6 +45,7 @@ public class StructureGhost : MonoBehaviour
 
     private void OnCanceled()
     {
+        Canceled?.Invoke(this);
         Destroy(gameObject);
     }
 }

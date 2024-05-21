@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -21,6 +22,9 @@ public class CraftingView : MonoBehaviour
     private OverlapFixRequester _overlapFixRequester = new OverlapFixRequester();
     private RectTransform _rectTransform;
     private Vector3 _position => Camera.main.WorldToScreenPoint(_craftingStation.transform.position);
+
+    private bool _awaitingCraftingConfirmation;
+    private bool _craftingConfirmed;
 
     private void Update()
     {
@@ -99,13 +103,12 @@ public class CraftingView : MonoBehaviour
         SpawnResourcePanels();
     }
 
-    private void Craft()
+    private async void Craft()
     {
         //TODO handle multiple IRecipeProduct implementations
 
-        if (_currentRecipe.Product is ItemData)
+        if (await CraftTask())
         {
-            var productData = _currentRecipe.Product as ItemData;
             foreach (var inventory in _craftingStation.Inventories)
             {
                 foreach (var slot in inventory.Inventory.ItemSlots)
@@ -116,10 +119,22 @@ public class CraftingView : MonoBehaviour
                     }
                 }
             }
+        }
+    }
+
+    //TODO make it abstract and implement for each IRecipeProduct implementation
+    private async Task<bool> CraftTask()
+    {
+        _craftingConfirmed = false;
+
+        if (_currentRecipe.Product is ItemData)
+        {
+            var productData = _currentRecipe.Product as ItemData;
+
 
             _craftingStation.Inventories[0].Inventory.ItemSlots[0].Item = new Item(productData);
             _craftingStation.Inventories[0].Inventory.ItemSlots[0].Increment();
-            return;
+            _craftingConfirmed = true;
         }
 
         if (_currentRecipe.Product is StructureData)
@@ -129,9 +144,36 @@ public class CraftingView : MonoBehaviour
             var ghost = Instantiate(productData.StructureGhostPrefab);
             ghost.SetPosition();
             Hide();
+
+            _awaitingCraftingConfirmation = true;
+            ghost.Confirmed += OnStructureGhostConfirmed;
+            ghost.Canceled += OnStructureGhostCanceled;
+            while (_awaitingCraftingConfirmation)
+            {
+                await Task.Yield();
+            }
+
+            return _craftingConfirmed;
         }
+
+        return _craftingConfirmed;
     }
 
+    private void OnStructureGhostConfirmed(StructureGhost ghost)
+    {
+        ghost.Confirmed -= OnStructureGhostConfirmed;
+        ghost.Canceled -= OnStructureGhostCanceled;
+        _craftingConfirmed = true;
+        _awaitingCraftingConfirmation = false;
+    }
+
+    private void OnStructureGhostCanceled(StructureGhost ghost)
+    {
+        ghost.Confirmed -= OnStructureGhostConfirmed;
+        ghost.Canceled -= OnStructureGhostCanceled;
+        _craftingConfirmed = false;
+        _awaitingCraftingConfirmation = false;
+    }
 
     private void ClearResourcePanels()
     {
