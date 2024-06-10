@@ -26,6 +26,8 @@ public class CraftingView : MonoBehaviour
     private bool _awaitingCraftingConfirmation;
     private bool _craftingConfirmed;
 
+    private List<ItemSlot> _productSlots = new();
+
     private void Update()
     {
         if (!_initialized)
@@ -106,6 +108,7 @@ public class CraftingView : MonoBehaviour
     private async void Craft()
     {
         //TODO handle multiple IRecipeProduct implementations
+        _productSlots.Clear();
 
         if (await CraftTask())
         {
@@ -113,9 +116,12 @@ public class CraftingView : MonoBehaviour
             {
                 foreach (var slot in inventory.Inventory.ItemSlots)
                 {
-                    while (slot.Amount > 0)
+                    if (!_productSlots.Contains(slot))
                     {
-                        slot.Decrement();
+                        while (slot.Amount > 0)
+                        {
+                            slot.Decrement();
+                        }
                     }
                 }
             }
@@ -131,9 +137,10 @@ public class CraftingView : MonoBehaviour
         {
             var productData = _currentRecipe.Product as ItemData;
 
-
-            _craftingStation.Inventories[0].Inventory.ItemSlots[0].Item = new Item(productData);
-            _craftingStation.Inventories[0].Inventory.ItemSlots[0].Increment();
+            var slot = _craftingStation.Inventories[0].Inventory.ItemSlots[0];
+            slot.Item = new Item(productData);
+            slot.Increment();
+            _productSlots.Add(slot);
             _craftingConfirmed = true;
         }
 

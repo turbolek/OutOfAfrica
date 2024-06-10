@@ -16,6 +16,7 @@ public class InputController : MonoBehaviour
 
     [SerializeField] private Camera _camera;
     [SerializeField] private LayerMask _terrainLayerMask;
+    [SerializeField] private LayerMask _targetLayerMask;
     [SerializeField] private float _selectionColliderHeight = 100f;
     [SerializeField] private int _selectionBoxLifetimeMs = 100;
     [SerializeField] private float _clickLength = 0.1f;
