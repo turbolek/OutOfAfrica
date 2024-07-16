@@ -1,50 +1,51 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 [Serializable]
-public class Range : MonoBehaviour
+public abstract class Range<T> : MonoBehaviour where T : Component
 {
-    private System.Action _onTargetEnteredCallback;
-    private System.Action _onTargetExitedCallback;
+    private System.Action<T> _onTargetEnteredCallback;
+    private System.Action<T> _onTargetExitedCallback;
 
-    private Type _targetType;
     private bool _initialized;
+    [SerializeField] private float _radius = 5f;
 
-    public void Init(Type targetType, Action onTargetEnteredCallback, Action onTargetExitedCallback)
+    [ReadOnly] [ShowInInspector] public List<T> TargetsInRange { get; private set; } = new();
+
+
+    public void Init(Action<T> onTargetEnteredCallback, Action<T> onTargetExitedCallback)
     {
-        _targetType = targetType;
         _onTargetEnteredCallback = onTargetEnteredCallback;
         _onTargetExitedCallback = onTargetExitedCallback;
         _initialized = true;
     }
 
-    private void OnTriggerEnter(Collider other)
+    public void UpdateHits()
     {
-        if (!_initialized)
+        var hits = Physics.OverlapSphere(transform.position, _radius);
+
+
+        foreach (var hit in hits)
         {
-            return;
+            var target = hit.GetComponent<T>();
+            if (target && !TargetsInRange.Contains(target))
+            {
+                TargetsInRange.Add(target);
+                _onTargetEnteredCallback?.Invoke(target);
+            }
         }
 
-        var target = other.GetComponent(_targetType);
-        if (target != null)
+        for (int i = TargetsInRange.Count - 1; i >= 0; i--)
         {
-            _onTargetEnteredCallback?.Invoke();
-            Debug.Log($"Target: {target.name} entered range: {name}");
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (!_initialized)
-        {
-            return;
-        }
-
-        var target = other.GetComponent(_targetType);
-        if (target != null)
-        {
-            _onTargetExitedCallback?.Invoke();
-            Debug.Log($"Target: {target.name} exited range: {name}");
+            var target = TargetsInRange[i];
+            if (hits.Length > 0 & hits.All(h => h.gameObject != target.gameObject))
+            {
+                TargetsInRange.Remove(target);
+                _onTargetExitedCallback?.Invoke(target);
+            }
         }
     }
 }
