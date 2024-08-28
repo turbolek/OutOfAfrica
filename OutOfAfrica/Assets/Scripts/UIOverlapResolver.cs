@@ -1,3 +1,4 @@
+using Assets.Scripts.Utils.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -57,6 +58,7 @@ public class UIOverlapResolver : MonoBehaviour
     private void FixUIOverlap()
     {
         _fixedUIs.Clear();
+        _shownUIs = _shownUIs.OrderByDescending(ui => ui.RectTransform.GetArea()).ToList();
         foreach (var uiData in _shownUIs)
         {
             FixUI(uiData);
@@ -98,12 +100,6 @@ public class UIOverlapResolver : MonoBehaviour
 
         for (int i = 0; i < _fixedUIs.Count; i++)
         {
-            if (reset)
-            {
-                i = 0;
-                reset = false;
-            }
-
             var fixedUI = _fixedUIs[i];
             if (fixedUI == uiData)
             {
@@ -189,7 +185,7 @@ public class UIOverlapResolver : MonoBehaviour
             currentPosition += bestShift;
             totalShift += bestShift;
 
-            reset = true;
+            i = -1;
         }
 
         return currentPosition;
@@ -203,7 +199,7 @@ public class UIOverlapResolver : MonoBehaviour
             (min1.x >= min2.x && min1.x <= max2.x && max1.y >= min2.y && max1.y <= max2.y) || //top left
             (max1.x >= min2.x && max1.x <= max2.x && max1.y >= min2.y && max1.y <= max2.y) || //top right
             (max1.x >= min2.x && max1.x <= max2.x && min1.y >= min2.y && min1.y <= max2.y) || // bottom right
-            //2 contains 1
+                                                                                              //2 contains 1
             (min2.x >= min1.x && min2.x <= max1.x && min2.y >= min1.y && min2.y <= max1.y) || //bottom left
             (min2.x >= min1.x && min2.x <= max1.x && max2.y >= min1.y && max2.y <= max1.y) || //top left
             (max2.x >= min1.x && max2.x <= max1.x && max2.y >= min1.y && max2.y <= max1.y) || //top right
