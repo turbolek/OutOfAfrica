@@ -11,12 +11,13 @@ public class ItemSlot
     public Inventory Inventory { get; private set; }
 
     [HideInInspector] //changed design for all items to have capacity == 1. Leaved the functionality in case design changes again to various capacities.
-    public int Amount = 1;
+    public int Amount = 0;
 
     public void Init(Inventory inventory)
     {
         Inventory = inventory;
         Item = InitialItem != null ? new Item(InitialItem) : null;
+        Amount = Item != null ? 1 : 0;
     }
 
     public bool CanFitItem(Item item)
