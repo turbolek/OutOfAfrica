@@ -27,12 +27,13 @@ public class UIManager : MonoBehaviour
 
     private void OnEnable()
     {
+        Targetable.InteractionPopupRequest += OnInteractionPopupRequested;
         Inventory.Initialized += OnInventoryInitialized;
         Inventory.Destroyed += OnInventoryDestroyed;
         PlayerUnitController.ConnectInventoriesRequest += OnConnectInventoriesRequest;
         PlayerUnitController.DisconnectInventoriesRequest += OnDisconnectInventoriesRequest;
         _selectionValueVariable.Modified += OnSelectionModified;
-        
+
         _mainCanvasVariable.Set(_mainCanvasTransform);
     }
 
@@ -43,6 +44,7 @@ public class UIManager : MonoBehaviour
 
     private void OnDisable()
     {
+        Targetable.InteractionPopupRequest -= OnInteractionPopupRequested;
         Inventory.Initialized -= OnInventoryInitialized;
         Inventory.Destroyed -= OnInventoryDestroyed;
         PlayerUnitController.ConnectInventoriesRequest -= OnConnectInventoriesRequest;
@@ -112,38 +114,50 @@ public class UIManager : MonoBehaviour
 
     private void RefreshInventoryViews()
     {
-        List<Inventory> inventoriesToShow = new List<Inventory>();
+        //List<Inventory> inventoriesToShow = new List<Inventory>();
 
-        foreach (var inventoryView in _inventoryViews)
+        //foreach (var inventoryView in _inventoryViews)
+        //{
+        //    if (inventoryView.Inventory.Owner.IsSelected)
+        //    {
+        //        inventoriesToShow.AddExclusive(inventoryView.Inventory);
+        //    }
+        //}
+
+        //foreach (var connection in _inventoryConnections)
+        //{
+        //    bool anyInventorySelected = connection.Inventories.Any(i => i.Owner.IsSelected);
+
+        //    if (anyInventorySelected)
+        //    {
+        //        inventoriesToShow.AddRange(connection.Inventories);
+        //    }
+        //}
+
+        //_inventoryViews.Sort((v1, v2) => v1.Inventory.SortPriority.CompareTo(v2.Inventory.SortPriority));
+
+        //foreach (var inventoryView in _inventoryViews)
+        //{
+        //    if (inventoriesToShow.Contains(inventoryView.Inventory))
+        //    {
+        //        inventoryView.Show();
+        //    }
+        //    else
+        //    {
+        //        inventoryView.Hide();
+        //    }
+        //}
+    }
+
+    [SerializeField]
+    private void OnInteractionPopupRequested(PlayerUnitController unit, Targetable targetable)
+    {
+        if (targetable == null)
         {
-            if (inventoryView.Inventory.Owner.IsSelected)
-            {
-                inventoriesToShow.AddExclusive(inventoryView.Inventory);
-            }
+            return;
         }
 
-        foreach (var connection in _inventoryConnections)
-        {
-            bool anyInventorySelected = connection.Inventories.Any(i => i.Owner.IsSelected);
-
-            if (anyInventorySelected)
-            {
-                inventoriesToShow.AddRange(connection.Inventories);
-            }
-        }
-
-        _inventoryViews.Sort((v1, v2) => v1.Inventory.SortPriority.CompareTo(v2.Inventory.SortPriority));
-
-        foreach (var inventoryView in _inventoryViews)
-        {
-            if (inventoriesToShow.Contains(inventoryView.Inventory))
-            {
-                inventoryView.Show();
-            }
-            else
-            {
-                inventoryView.Hide();
-            }
-        }
+        InteractionPopup popup = Instantiate(targetable.InteractionPopupTemplate, transform);
+        popup.Init(unit, targetable);
     }
 }

@@ -3,8 +3,11 @@ using UnityEngine;
 
 public class Targetable : MonoBehaviour
 {
+    public static event Action<PlayerUnitController, Targetable> InteractionPopupRequest;
     public static event Action<Targetable, PlayerUnitController> UnitEntered;
     public static event Action<Targetable, PlayerUnitController> UnitExited;
+
+    [field: SerializeField] public InteractionPopup InteractionPopupTemplate;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -22,5 +25,10 @@ public class Targetable : MonoBehaviour
         {
             UnitExited?.Invoke(this, unit);
         }
+    }
+
+    public void Interact(PlayerUnitController unit)
+    {
+        InteractionPopupRequest?.Invoke(unit, this);
     }
 }

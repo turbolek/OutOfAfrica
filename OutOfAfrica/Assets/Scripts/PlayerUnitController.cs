@@ -16,7 +16,7 @@ public class PlayerUnitController : MonoBehaviour
     [SerializeField] private float _movementSpeed = 2f;
     [field: SerializeField] public float CommandCooldown { get; private set; } = 1f;
 
-    private NavMeshAgent _navMeshAgent;
+    private NavMeshAgentWrapper _navMeshAgent;
     private NavMeshObstacle _navMeshObstacle;
     private Targetable _currentTarget;
     private bool _wasMoving;
@@ -44,7 +44,7 @@ public class PlayerUnitController : MonoBehaviour
     {
         Inventory = GetComponent<Inventory>();
         Selectable = GetComponent<Selectable>();
-        _navMeshAgent = GetComponent<NavMeshAgent>();
+        _navMeshAgent = GetComponent<NavMeshAgentWrapper>();
         _navMeshObstacle = GetComponent<NavMeshObstacle>();
         _navMeshSurface = FindFirstObjectByType<NavMeshSurface>();
     }
@@ -91,6 +91,8 @@ public class PlayerUnitController : MonoBehaviour
     {
         CloseInventories();
         _currentTarget = targetable;
+
+        _targetablesInTouch.ClearNulls();
 
         if (_targetablesInTouch.Contains(targetable))
         {
@@ -144,6 +146,7 @@ public class PlayerUnitController : MonoBehaviour
             var shift = _currentTarget.transform.position - transform.position;
             shift.y = 0f;
             transform.LookAt(transform.position + shift);
+            _currentTarget.Interact(this);
         }
     }
 
@@ -210,13 +213,20 @@ public class PlayerUnitController : MonoBehaviour
 
     private void OnEnteredTarget(Targetable targetable, PlayerUnitController unit)
     {
-        if (unit == this)
+        if (unit == this && _navMeshAgent.enabled)
         {
             _targetablesInTouch.AddExclusive(_currentTarget);
             _navMeshAgent.velocity = Vector3.zero;
             _navMeshAgent.destination = transform.position;
         }
+
+        var predator = targetable.GetComponent<Predator>();
+        if (predator)
+        {
+
+        }
     }
+
 
     private void OnExitedTarget(Targetable targetable, PlayerUnitController unit)
     {
@@ -225,6 +235,11 @@ public class PlayerUnitController : MonoBehaviour
             _targetablesInTouch.Remove(targetable);
             _currentCommand = GetCommand();
         }
+    }
+
+    private void EnterCombat(Predator predator)
+    {
+
     }
 
     public bool CanPickupItem(Item item)
