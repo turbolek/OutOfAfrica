@@ -1,12 +1,10 @@
 using Sirenix.OdinInspector;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class InteractionPopup : MonoBehaviour
+public abstract class InteractionPopup : MonoBehaviour
 {
     public static Action<InteractionPopup> Closed;
 
@@ -29,7 +27,10 @@ public class InteractionPopup : MonoBehaviour
         _unitNameLabel.text = unit.name;
         _targetableNameLabel.text = targetable.name;
         gameObject.SetActive(true);
+        OnInit(unit, targetable);
     }
+
+    protected abstract void OnInit(PlayerUnitController unit, Targetable targetable);
 
     [Button]
     public void Close()

@@ -20,23 +20,23 @@ public class InventoryView : MonoBehaviour
     private RectTransform _rectTransform;
 
     private bool _isShown = true;
-    private Vector3 _position => _camera.WorldToScreenPoint(Inventory.Owner.transform.position) + _offset;
+    //private Vector3 _position => _camera.WorldToScreenPoint(Inventory.Owner.transform.position) + _offset;
     private OverlapFixRequester _overlapFixRequester = new OverlapFixRequester();
 
 
     private void Start()
     {
         _rectTransform = GetComponent<RectTransform>();
-        _isShown = true;
-        Hide();
+        //_isShown = true;
+        //Hide();
     }
 
     private void Update()
     {
-        if (_isShown)
-        {
-            _overlapFixRequester.RequestFixSubscribe(_rectTransform, _position);
-        }
+        //if (_isShown)
+        //{
+        //    _overlapFixRequester.RequestFixSubscribe(_rectTransform, _position);
+        //}
     }
 
     private void OnDisable()
@@ -44,42 +44,40 @@ public class InventoryView : MonoBehaviour
         _overlapFixRequester.RequestFixUnsubscribe(_rectTransform);
     }
 
-    public void Init(Inventory inventory, Camera camera, Vector3 offset)
+    public void Init(Inventory inventory)
     {
-        _offset = offset;
-        _camera = camera;
         Inventory = inventory;
         name = $"{inventory.name} inventory view";
         DisplaySelectable(inventory.Owner);
         DisplayInventory(inventory);
     }
 
-    public void Show()
-    {
-        if (_isShown)
-        {
-            return;
-        }
+    //public void Show()
+    //{
+    //    if (_isShown)
+    //    {
+    //        return;
+    //    }
 
-        transform.position = _position;
-        _canvasGroup.alpha = 1f;
-        _isShown = true;
-        _overlapFixRequester.RequestFixSubscribe(_rectTransform, _position);
-        Inventory.IsOpen = true;
-    }
+    //    transform.position = _position;
+    //    _canvasGroup.alpha = 1f;
+    //    _isShown = true;
+    //    //_overlapFixRequester.RequestFixSubscribe(_rectTransform, _position);
+    //    Inventory.IsOpen = true;
+    //}
 
-    public void Hide()
-    {
-        if (!_isShown)
-        {
-            return;
-        }
+    //public void Hide()
+    //{
+    //    if (!_isShown)
+    //    {
+    //        return;
+    //    }
 
-        _canvasGroup.alpha = 0f;
-        _overlapFixRequester.RequestFixUnsubscribe(_rectTransform);
-        _isShown = false;
-        Inventory.IsOpen = false;
-    }
+    //    _canvasGroup.alpha = 0f;
+    //    _overlapFixRequester.RequestFixUnsubscribe(_rectTransform);
+    //    _isShown = false;
+    //    Inventory.IsOpen = false;
+    //}
 
     private void DisplaySelectable(Selectable selectable)
     {

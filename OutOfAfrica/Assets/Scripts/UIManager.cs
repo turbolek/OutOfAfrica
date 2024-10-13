@@ -22,19 +22,16 @@ public class UIManager : MonoBehaviour
     [SerializeField] private SelectionValueVariable _selectionValueVariable;
     [SerializeField] private Transform _mainCanvasTransform;
     [SerializeField] private TransformVariable _mainCanvasVariable;
-    [SerializeField] private BoolVariable _mapPauseVariable;
     private List<InventoryView> _inventoryViews = new();
     private List<InventoryConnection> _inventoryConnections = new();
-    private InteractionPopup _currentPopup;
     private void OnEnable()
     {
-        Targetable.InteractionPopupRequest += OnInteractionPopupRequested;
-        Inventory.Initialized += OnInventoryInitialized;
-        Inventory.Destroyed += OnInventoryDestroyed;
+
+        //Inventory.Initialized += OnInventoryInitialized;
+        //Inventory.Destroyed += OnInventoryDestroyed;
         PlayerUnitController.ConnectInventoriesRequest += OnConnectInventoriesRequest;
         PlayerUnitController.DisconnectInventoriesRequest += OnDisconnectInventoriesRequest;
         _selectionValueVariable.Modified += OnSelectionModified;
-        InteractionPopup.Closed += OnInteractionPopupClosed;
 
         _mainCanvasVariable.Set(_mainCanvasTransform);
     }
@@ -46,31 +43,30 @@ public class UIManager : MonoBehaviour
 
     private void OnDisable()
     {
-        Targetable.InteractionPopupRequest -= OnInteractionPopupRequested;
-        Inventory.Initialized -= OnInventoryInitialized;
-        Inventory.Destroyed -= OnInventoryDestroyed;
+
+        //Inventory.Initialized -= OnInventoryInitialized;
+        //Inventory.Destroyed -= OnInventoryDestroyed;
         PlayerUnitController.ConnectInventoriesRequest -= OnConnectInventoriesRequest;
         PlayerUnitController.DisconnectInventoriesRequest -= OnDisconnectInventoriesRequest;
         _selectionValueVariable.Modified -= OnSelectionModified;
-        InteractionPopup.Closed -= OnInteractionPopupClosed;
     }
 
-    private void OnInventoryInitialized(Inventory inventory)
-    {
-        var inventoryView = Instantiate(_inventoryViewPrefab, transform);
-        inventoryView.Init(inventory, _camera, inventory.ViewOffset);
-        _inventoryViews.Add(inventoryView);
-    }
+    //private void OnInventoryInitialized(Inventory inventory)
+    //{
+    //    var inventoryView = Instantiate(_inventoryViewPrefab, transform);
+    //    inventoryView.Init(inventory);
+    //    _inventoryViews.Add(inventoryView);
+    //}
 
-    private void OnInventoryDestroyed(Inventory inventory)
-    {
-        var inventoryView = _inventoryViews.Find(v => v.Inventory == inventory);
-        if (inventoryView != null)
-        {
-            _inventoryViews.Remove(inventoryView);
-            Destroy(inventoryView.gameObject);
-        }
-    }
+    //private void OnInventoryDestroyed(Inventory inventory)
+    //{
+    //    var inventoryView = _inventoryViews.Find(v => v.Inventory == inventory);
+    //    if (inventoryView != null)
+    //    {
+    //        _inventoryViews.Remove(inventoryView);
+    //        Destroy(inventoryView.gameObject);
+    //    }
+    //}
 
     private void OnConnectInventoriesRequest(Inventory inventory1, Inventory inventory2)
     {
@@ -152,23 +148,5 @@ public class UIManager : MonoBehaviour
         //}
     }
 
-    private void OnInteractionPopupRequested(PlayerUnitController unit, Targetable targetable)
-    {
-        if (targetable == null)
-        {
-            return;
-        }
 
-        _currentPopup = Instantiate(targetable.InteractionPopupTemplate, transform);
-        _currentPopup.Init(unit, targetable);
-        _mapPauseVariable.Set(true);
-    }
-
-    private void OnInteractionPopupClosed(InteractionPopup popup)
-    {
-        if (popup == _currentPopup)
-        {
-            _mapPauseVariable.Set(false);
-        }
-    }
 }

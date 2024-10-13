@@ -8,21 +8,21 @@ public class SelectionIndicator : MonoBehaviour
 
     public void Hover()
     {
-        _hoverImage.enabled = true;
+       // _hoverImage.enabled = true;
     }
 
     public void Unhover()
     {
-        _hoverImage.enabled = false;
+       // _hoverImage.enabled = false;
     }
 
     public void Select()
     {
-        _selectImage.enabled = true;
+       // _selectImage.enabled = true;
     }
 
     public void Deselect()
     {
-        _selectImage.enabled = false;
+        //_selectImage.enabled = false;
     }
 }

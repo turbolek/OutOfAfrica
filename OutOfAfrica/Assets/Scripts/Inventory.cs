@@ -10,7 +10,6 @@ public class Inventory : MonoBehaviour
 
     [field: SerializeField] public ItemSlot[] ItemSlots { get; private set; }
     [field: SerializeField] public int SortPriority;
-    [field: SerializeField] public Vector3 ViewOffset { get; private set; }
 
     public Selectable Owner { get; private set; }
     public List<Inventory> ConnectedInventories { get; private set; } = new();

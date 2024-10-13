@@ -13,15 +13,14 @@ public class DropOffResourcesCommand : Command
 
     public override bool Validate()
     {
-        var item = _unit.Inventory.GetFirstItem();
+        var item = _unit.GetInventory().GetFirstItem();
         return item != null && _dropOffZone != null && _unit != null;
     }
 
     public override void Perform()
     {
-        var item = _unit.Inventory.GetFirstItem();
-
-        _unit.Inventory.RemoveItem(item);
+        var item = _unit.GetInventory().GetFirstItem();
+        _unit.GetInventory().RemoveItem(item);
         //_dropOffZone.Bank.AddResource(item.Resource, 1);
     }
 

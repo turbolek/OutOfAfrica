@@ -7,7 +7,7 @@ using UnityEngine.AI;
 
 [Serializable]
 [RequireComponent(typeof(Selectable), typeof(Inventory))]
-public class PlayerUnitController : MonoBehaviour
+public class PlayerUnitController : MonoBehaviour, IInventoryOwner
 {
     public static Action<Inventory, Inventory> ConnectInventoriesRequest;
     public static Action<Inventory, Inventory> DisconnectInventoriesRequest;
@@ -22,7 +22,6 @@ public class PlayerUnitController : MonoBehaviour
     private bool _wasMoving;
     private Vector3 _currentTargetPosition;
     private Command _currentCommand;
-    public Inventory Inventory { get; private set; }
     public Selectable Selectable { get; private set; }
 
     private float _lastCommandTime;
@@ -33,6 +32,7 @@ public class PlayerUnitController : MonoBehaviour
 
     private ItemSlot _pickupSourceInventorySlot;
     private ItemSlot _pickupTargetInventorySlot;
+    private Inventory _inventory;
 
     private void OnEnable()
     {
@@ -42,7 +42,7 @@ public class PlayerUnitController : MonoBehaviour
 
     private void Start()
     {
-        Inventory = GetComponent<Inventory>();
+        _inventory = GetComponent<Inventory>();
         Selectable = GetComponent<Selectable>();
         _navMeshAgent = GetComponent<NavMeshAgent>();
         _navMeshObstacle = GetComponent<NavMeshObstacle>();
@@ -177,11 +177,11 @@ public class PlayerUnitController : MonoBehaviour
         if (inventoriesInTouch.Count > 0)
         {
             var inventoriesToOpen = new List<Inventory>(inventoriesInTouch);
-            inventoriesToOpen.Add(Inventory);
+            inventoriesToOpen.Add(_inventory);
 
             foreach (var inventory in inventoriesToOpen)
             {
-                ConnectInventoriesRequest?.Invoke(inventory, Inventory);
+                ConnectInventoriesRequest?.Invoke(inventory, _inventory);
                 _openedInventories.AddExclusive(inventory);
             }
         }
@@ -219,14 +219,7 @@ public class PlayerUnitController : MonoBehaviour
             _navMeshAgent.velocity = Vector3.zero;
             _navMeshAgent.destination = transform.position;
         }
-
-        var predator = targetable.GetComponent<Predator>();
-        if (predator)
-        {
-
-        }
     }
-
 
     private void OnExitedTarget(Targetable targetable, PlayerUnitController unit)
     {
@@ -244,14 +237,14 @@ public class PlayerUnitController : MonoBehaviour
 
     public bool CanPickupItem(Item item)
     {
-        return Inventory.CanFitItem(item);
+        return _inventory.CanFitItem(item);
     }
 
     private void CloseInventories()
     {
         foreach (var inventory in _openedInventories)
         {
-            DisconnectInventoriesRequest?.Invoke(inventory, Inventory);
+            DisconnectInventoriesRequest?.Invoke(inventory, _inventory);
         }
     }
 
@@ -270,7 +263,7 @@ public class PlayerUnitController : MonoBehaviour
             return true;
         }
 
-        foreach (var itemSlot in Inventory.ItemSlots)
+        foreach (var itemSlot in _inventory.ItemSlots)
         {
             if (itemSlot.Item != null && itemSlot.Item.Data.ToolCategory == toolCategory)
             {
@@ -279,5 +272,10 @@ public class PlayerUnitController : MonoBehaviour
         }
 
         return false;
+    }
+
+    public Inventory GetInventory()
+    {
+        return _inventory;
     }
 }

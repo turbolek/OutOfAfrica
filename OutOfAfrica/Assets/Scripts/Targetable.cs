@@ -7,8 +7,6 @@ public class Targetable : MonoBehaviour
     public static event Action<Targetable, PlayerUnitController> UnitEntered;
     public static event Action<Targetable, PlayerUnitController> UnitExited;
 
-    [field: SerializeField] public InteractionPopup InteractionPopupTemplate;
-
     private void OnTriggerEnter(Collider other)
     {
         PlayerUnitController unit = other.GetComponent<PlayerUnitController>();
