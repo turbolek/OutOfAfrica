@@ -196,6 +196,7 @@ GameObject:
   - component: {fileID: 162671595}
   - component: {fileID: 162671597}
   - component: {fileID: 162671598}
+  - component: {fileID: 162671599}
   m_Layer: 0
   m_Name: Camp
   m_TagString: Untagged
@@ -363,7 +364,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 162671590}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8827564dedc04a647a5670f01c6b49e1, type: 3}
   m_Name: 
@@ -373,6 +374,18 @@ MonoBehaviour:
   <Recipes>k__BackingField:
   - {fileID: 11400000, guid: ecc6221db15106a4d92456cbdc84b425, type: 2}
   _mainCanvasVariable: {fileID: 11400000, guid: 0093d132a1f48f6428bc9d69c3879a59, type: 2}
+--- !u!114 &162671599
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 162671590}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9758e7db5d89e49448bcbee4601eb6f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &163038462 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5091079117592604662, guid: bf1ad12e2abcac74882343b0ef66bb88, type: 3}
@@ -677,8 +690,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 95, y: 0}
-  m_SizeDelta: {x: 190, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &326578582
 MonoBehaviour:
@@ -1710,7 +1723,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9758e7db5d89e49448bcbee4601eb6f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Inventory>k__BackingField: {fileID: 788434588}
 --- !u!114 &788434590
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2715,7 +2727,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9758e7db5d89e49448bcbee4601eb6f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Inventory>k__BackingField: {fileID: 1061693170}
 --- !u!114 &1061693170
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3994,8 +4005,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 95, y: 0}
-  m_SizeDelta: {x: 190, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1691333370
 MonoBehaviour:
@@ -4437,7 +4448,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9758e7db5d89e49448bcbee4601eb6f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Inventory>k__BackingField: {fileID: 2052914886}
 --- !u!114 &2052914888
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4928,7 +4938,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9758e7db5d89e49448bcbee4601eb6f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Inventory>k__BackingField: {fileID: 2101954419}
 --- !u!114 &2101954421
 MonoBehaviour:
   m_ObjectHideFlags: 0
