@@ -3,20 +3,25 @@ using UnityEngine.AI;
 
 public class NavMeshAgentWrapper : MonoBehaviour
 {
-    [SerializeField] private NavMeshAgent _navMeshAgent;
-    [SerializeField] private FloatVariable _timescale;
-
-
-    private float _rawSpeed;
+    [field: SerializeField] public NavMeshAgent NavMeshAgent { get; private set; }
+    [SerializeField] private BoolVariable _mapPauseVariable;
 
     private void OnEnable()
     {
-        _timescale.Modified += OnTimescaleModified;
+        _mapPauseVariable.Modified += OnMapPauseChanged;
     }
 
-    private void OnTimescaleModified((float oldValue, float newValue) values)
+    private void OnDisable()
     {
-        _navMeshAgent.speed = _rawSpeed * _timescale.Value;
+        _mapPauseVariable.Modified -= OnMapPauseChanged;
+    }
+
+    private void OnMapPauseChanged((bool newValue, bool oldValue) values)
+    {
+        if (NavMeshAgent.gameObject.activeInHierarchy && NavMeshAgent.enabled)
+        {
+            NavMeshAgent.isStopped = values.newValue;
+        }
     }
 
 

@@ -22,9 +22,10 @@ public class UIManager : MonoBehaviour
     [SerializeField] private SelectionValueVariable _selectionValueVariable;
     [SerializeField] private Transform _mainCanvasTransform;
     [SerializeField] private TransformVariable _mainCanvasVariable;
+    [SerializeField] private BoolVariable _mapPauseVariable;
     private List<InventoryView> _inventoryViews = new();
     private List<InventoryConnection> _inventoryConnections = new();
-
+    private InteractionPopup _currentPopup;
     private void OnEnable()
     {
         Targetable.InteractionPopupRequest += OnInteractionPopupRequested;
@@ -33,6 +34,7 @@ public class UIManager : MonoBehaviour
         PlayerUnitController.ConnectInventoriesRequest += OnConnectInventoriesRequest;
         PlayerUnitController.DisconnectInventoriesRequest += OnDisconnectInventoriesRequest;
         _selectionValueVariable.Modified += OnSelectionModified;
+        InteractionPopup.Closed += OnInteractionPopupClosed;
 
         _mainCanvasVariable.Set(_mainCanvasTransform);
     }
@@ -50,6 +52,7 @@ public class UIManager : MonoBehaviour
         PlayerUnitController.ConnectInventoriesRequest -= OnConnectInventoriesRequest;
         PlayerUnitController.DisconnectInventoriesRequest -= OnDisconnectInventoriesRequest;
         _selectionValueVariable.Modified -= OnSelectionModified;
+        InteractionPopup.Closed -= OnInteractionPopupClosed;
     }
 
     private void OnInventoryInitialized(Inventory inventory)
@@ -149,7 +152,6 @@ public class UIManager : MonoBehaviour
         //}
     }
 
-    [SerializeField]
     private void OnInteractionPopupRequested(PlayerUnitController unit, Targetable targetable)
     {
         if (targetable == null)
@@ -157,7 +159,16 @@ public class UIManager : MonoBehaviour
             return;
         }
 
-        InteractionPopup popup = Instantiate(targetable.InteractionPopupTemplate, transform);
-        popup.Init(unit, targetable);
+        _currentPopup = Instantiate(targetable.InteractionPopupTemplate, transform);
+        _currentPopup.Init(unit, targetable);
+        _mapPauseVariable.Set(true);
+    }
+
+    private void OnInteractionPopupClosed(InteractionPopup popup)
+    {
+        if (popup == _currentPopup)
+        {
+            _mapPauseVariable.Set(false);
+        }
     }
 }

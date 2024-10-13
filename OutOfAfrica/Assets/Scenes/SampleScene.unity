@@ -1057,6 +1057,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 54e1c6152e2ba2f4083a6ec521a90e94, type: 3}
       insertIndex: -1
       addedObject: {fileID: 409188613}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 54e1c6152e2ba2f4083a6ec521a90e94, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 409188618}
   m_SourcePrefab: {fileID: 100100000, guid: 54e1c6152e2ba2f4083a6ec521a90e94, type: 3}
 --- !u!1 &409188609 stripped
 GameObject:
@@ -1209,6 +1212,20 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &409188618
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 409188609}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d726d1f86db8d748b5b6189cc559941, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <NavMeshAgent>k__BackingField: {fileID: 409188616}
+  _mapPauseVariable: {fileID: 11400000, guid: 5d9335def21de8245adb9c8af3734d3c, type: 2}
 --- !u!1 &455187670
 GameObject:
   m_ObjectHideFlags: 0
@@ -3306,6 +3323,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 541217993677833673, guid: ebbbd79d8b5fac8479060146212384c2, type: 3}
+      propertyPath: <NavMeshAgent>k__BackingField
+      value: 
+      objectReference: {fileID: 1273345945}
     - target: {fileID: 551928483981787726, guid: ebbbd79d8b5fac8479060146212384c2, type: 3}
       propertyPath: _selectionVariable
       value: 
@@ -3774,6 +3795,7 @@ MonoBehaviour:
   _selectionValueVariable: {fileID: 11400000, guid: aaebd3cf50f815d42961cc9599f2f13c, type: 2}
   _mainCanvasTransform: {fileID: 1313625380}
   _mainCanvasVariable: {fileID: 11400000, guid: 0093d132a1f48f6428bc9d69c3879a59, type: 2}
+  _mapPauseVariable: {fileID: 11400000, guid: 5d9335def21de8245adb9c8af3734d3c, type: 2}
 --- !u!114 &1313625382
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5362,6 +5384,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 541217993677833673, guid: ebbbd79d8b5fac8479060146212384c2, type: 3}
+      propertyPath: <NavMeshAgent>k__BackingField
+      value: 
+      objectReference: {fileID: 2063299248}
     - target: {fileID: 551928483981787726, guid: ebbbd79d8b5fac8479060146212384c2, type: 3}
       propertyPath: _selectionVariable
       value: 

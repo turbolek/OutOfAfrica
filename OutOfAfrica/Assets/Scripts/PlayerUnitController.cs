@@ -16,7 +16,7 @@ public class PlayerUnitController : MonoBehaviour
     [SerializeField] private float _movementSpeed = 2f;
     [field: SerializeField] public float CommandCooldown { get; private set; } = 1f;
 
-    private NavMeshAgentWrapper _navMeshAgent;
+    private NavMeshAgent _navMeshAgent;
     private NavMeshObstacle _navMeshObstacle;
     private Targetable _currentTarget;
     private bool _wasMoving;
@@ -44,7 +44,7 @@ public class PlayerUnitController : MonoBehaviour
     {
         Inventory = GetComponent<Inventory>();
         Selectable = GetComponent<Selectable>();
-        _navMeshAgent = GetComponent<NavMeshAgentWrapper>();
+        _navMeshAgent = GetComponent<NavMeshAgent>();
         _navMeshObstacle = GetComponent<NavMeshObstacle>();
         _navMeshSurface = FindFirstObjectByType<NavMeshSurface>();
     }
