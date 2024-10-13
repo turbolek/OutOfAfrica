@@ -57,12 +57,12 @@ public class UIOverlapResolver : MonoBehaviour
 
     private void FixUIOverlap()
     {
-        _fixedUIs.Clear();
-        _shownUIs = _shownUIs.OrderByDescending(ui => ui.RectTransform.GetArea()).ToList();
-        foreach (var uiData in _shownUIs)
-        {
-            FixUI(uiData);
-        }
+        //_fixedUIs.Clear();
+        //_shownUIs = _shownUIs.OrderByDescending(ui => ui.RectTransform.GetArea()).ToList();
+        //foreach (var uiData in _shownUIs)
+        //{
+        //    FixUI(uiData);
+        //}
     }
 
     private void FixUI(UIData uiData)

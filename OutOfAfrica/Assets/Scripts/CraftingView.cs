@@ -8,12 +8,14 @@ using UnityEngine.UI;
 
 public class CraftingView : MonoBehaviour
 {
-    [SerializeField] private GameObject _content;
+    //[SerializeField] private GameObject _content;
     [SerializeField] private TMP_Dropdown _recipeDropdown;
     [SerializeField] private Image _recipeImage;
     [SerializeField] private Button _craftButton;
     [SerializeField] private RecipeResourcePanel _resourcePanelprefab;
     [SerializeField] private Transform _resourcePanelParent;
+    [SerializeField] private InventoryView _inventoryViewPrefab;
+    [SerializeField] private Transform _inventoriesParent;
 
     private CraftingStation _craftingStation;
     private bool _initialized;
@@ -27,6 +29,7 @@ public class CraftingView : MonoBehaviour
     private bool _craftingConfirmed;
 
     private List<ItemSlot> _productSlots = new();
+    private List<InventoryView> _inventoryViews = new();
 
     private void Update()
     {
@@ -35,16 +38,16 @@ public class CraftingView : MonoBehaviour
             return;
         }
 
-        if (_craftingStation.Selectable.IsSelected || _craftingStation.Inventories.Any(i => i.Inventory.IsOpen))
-        {
-            if (!_content.activeSelf)
-                Show();
-        }
-        else
-        {
-            if (_content.activeSelf)
-                Hide();
-        }
+        //if (_craftingStation.Selectable.IsSelected || _craftingStation.Inventories.Any(i => i.Inventory.IsOpen))
+        //{
+        //    if (!_content.activeSelf)
+        //        Show();
+        //}
+        //else
+        //{
+        //    if (_content.activeSelf)
+        //        Hide();
+        //}
 
         if (_currentRecipe != null)
         {
@@ -55,6 +58,11 @@ public class CraftingView : MonoBehaviour
     private void OnDisable()
     {
         _overlapFixRequester.RequestFixUnsubscribe(_rectTransform);
+    }
+
+    private void OnDestroy()
+    {
+        _craftingStation.InventoriesUpdated -= DisplayInventories;
     }
 
     public void Init(CraftingStation craftingStation)
@@ -69,21 +77,25 @@ public class CraftingView : MonoBehaviour
         _recipeDropdown.onValueChanged.AddListener(OnRecipeSelected);
         _craftButton.onClick.AddListener(Craft);
         _rectTransform = GetComponent<RectTransform>();
-        Hide();
+        //Hide();
+        Show();
         _initialized = true;
+        //ClearInventories();
+        DisplayInventories(_craftingStation);
+        craftingStation.InventoriesUpdated += DisplayInventories;
     }
 
 
     public void Show()
     {
-        _content.SetActive(true);
+        // _content.SetActive(true);
         _overlapFixRequester.RequestFixSubscribe(_rectTransform, _position);
         OnRecipeSelected(_recipeDropdown.value);
     }
 
     public void Hide()
     {
-        _content.SetActive(false);
+        // _content.SetActive(false);
         _overlapFixRequester.RequestFixUnsubscribe(_rectTransform);
     }
 
@@ -198,12 +210,32 @@ public class CraftingView : MonoBehaviour
 
         foreach (var requiredResource in _currentRecipe.RequiredResources)
         {
-            (Inventory Inventory, ResourceType resource ) inventory =
+            (Inventory Inventory, ResourceType resource) inventory =
                 _craftingStation.Inventories.FirstOrDefault(i => i.Resource == requiredResource.Resource);
 
             RecipeResourcePanel panel = Instantiate(_resourcePanelprefab, _resourcePanelParent);
             panel.Init(requiredResource, inventory.Inventory);
             _resourcePanels.Add(panel);
         }
+    }
+
+    public void DisplayInventories(CraftingStation craftingStation)
+    {
+        ClearInventories();
+        foreach (var inventory in craftingStation.Inventories)
+        {
+            InventoryView inventoryView = Instantiate(_inventoryViewPrefab, _inventoriesParent);
+            inventoryView.Init(inventory.Inventory);
+            _inventoryViews.Add(inventoryView);
+        }
+    }
+    private void ClearInventories()
+    {
+        for (int i = _inventoryViews.Count - 1; i >= 0; i--)
+        {
+            Destroy(_inventoryViews[i].gameObject);
+        }
+
+        _inventoryViews.Clear();
     }
 }

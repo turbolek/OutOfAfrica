@@ -52,7 +52,7 @@ public class InventoryEntry : MonoBehaviour
         string resourceCount = string.Empty;
         Sprite resourceSprite = null;
 
-        if (itemSlot.Item != null)
+        if (itemSlot.Item != null && itemSlot.Item.Data != null)
         {
             resourceCount = itemSlot.Amount.ToString();
             resourceSprite = itemSlot.Item.Data.Sprite;

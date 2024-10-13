@@ -7,6 +7,7 @@ public class InteractionManager : MonoBehaviour
     private InteractionPopup _currentPopup;
     [SerializeField] private BoolVariable _mapPauseVariable;
     [SerializeField] private ItemExchangePopup _itemExchangePopup;
+    [SerializeField] private CampInteractionPopup _campInteractionPopup;
     [SerializeField] private UIManager _uiManager;
 
     private void OnEnable()
@@ -50,6 +51,13 @@ public class InteractionManager : MonoBehaviour
 
     private InteractionPopup GetInteractionPopup(Targetable targetable)
     {
+        var craftingStation = targetable.GetComponent<CraftingStation>();
+
+        if (craftingStation != null)
+        {
+            return _campInteractionPopup;
+        }
+
         var inventoryOwner = targetable.GetComponent<IInventoryOwner>();
 
         if (inventoryOwner != null)

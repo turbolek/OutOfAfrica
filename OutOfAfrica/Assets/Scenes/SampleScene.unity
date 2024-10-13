@@ -364,15 +364,14 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 162671590}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8827564dedc04a647a5670f01c6b49e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   InventoryPrefab: {fileID: 4871486337277431939, guid: 4130a406284c9b14eb4a554795e1cf8d, type: 3}
-  _craftingViewPrefab: {fileID: 9152948936126942200, guid: c347afcdd87d2674c881979e7cb38b4a, type: 3}
   <Recipes>k__BackingField:
-  - {fileID: 11400000, guid: ecc6221db15106a4d92456cbdc84b425, type: 2}
+  - {fileID: 11400000, guid: bcbe6b5046e31374cae34b64471e72c2, type: 2}
   _mainCanvasVariable: {fileID: 11400000, guid: 0093d132a1f48f6428bc9d69c3879a59, type: 2}
 --- !u!114 &162671599
 MonoBehaviour:
@@ -690,8 +689,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 95, y: 0}
+  m_SizeDelta: {x: 190, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &326578582
 MonoBehaviour:
@@ -1656,7 +1655,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   InventoryPrefab: {fileID: 4871486337277431939, guid: 4130a406284c9b14eb4a554795e1cf8d, type: 3}
-  _craftingViewPrefab: {fileID: 0}
   <Recipes>k__BackingField: []
   _mainCanvasVariable: {fileID: 0}
 --- !u!1 &788434587
@@ -1990,6 +1988,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _mapPauseVariable: {fileID: 11400000, guid: 5d9335def21de8245adb9c8af3734d3c, type: 2}
   _itemExchangePopup: {fileID: 7334844286910230340, guid: 0a03b08e2d8803a42b575d148bd30a0d, type: 3}
+  _campInteractionPopup: {fileID: 6151716149816052590, guid: 9aa5d1bdcb151e144b09d9fadd03ba9f, type: 3}
   _uiManager: {fileID: 1313625381}
 --- !u!4 &839420474
 Transform:
@@ -4005,8 +4004,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 95, y: 0}
+  m_SizeDelta: {x: 190, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1691333370
 MonoBehaviour:
