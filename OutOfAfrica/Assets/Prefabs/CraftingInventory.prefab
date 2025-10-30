@@ -45,11 +45,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <ItemSlots>k__BackingField:
-  - ItemData: {fileID: 0}
-    Amount: 1
-  - ItemData: {fileID: 0}
-    Amount: 1
-  - ItemData: {fileID: 0}
-    Amount: 1
+  - InitialItem: {fileID: 0}
+    Amount: 0
+  - InitialItem: {fileID: 0}
+    Amount: 0
+  - InitialItem: {fileID: 0}
+    Amount: 0
+  - InitialItem: {fileID: 0}
+    Amount: 0
+  - InitialItem: {fileID: 0}
+    Amount: 0
   SortPriority: 0
-  <ViewOffset>k__BackingField: {x: 0, y: 0, z: 0}
+  IsOpen: 0
