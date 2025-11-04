@@ -27,7 +27,6 @@ public abstract class Range<T> : MonoBehaviour where T : Component
     {
         var hits = Physics.OverlapSphere(transform.position, _radius);
 
-
         foreach (var hit in hits)
         {
             var target = hit.GetComponent<T>();
@@ -38,6 +37,7 @@ public abstract class Range<T> : MonoBehaviour where T : Component
             }
         }
 
+        TargetsInRange.ClearNulls();
         for (int i = TargetsInRange.Count - 1; i >= 0; i--)
         {
             var target = TargetsInRange[i];

@@ -25,6 +25,15 @@ public class Targetable : MonoBehaviour
         }
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        PlayerUnitController unit = collision.collider.GetComponent<PlayerUnitController>();
+        if (unit)
+        {
+            UnitEntered?.Invoke(this, unit);
+        }
+    }
+
     public void Interact(PlayerUnitController unit)
     {
         InteractionPopupRequest?.Invoke(unit, this);

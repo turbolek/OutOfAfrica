@@ -11,7 +11,22 @@ public class Predator : SerializedMonoBehaviour
     [SerializeField] private NavMeshAgent _navMeshAgent;
     [SerializeField] private NavMeshObstacle _navMeshObstacle;
 
+
     private PlayerUnitController _currentTarget;
+    private bool _wasMoving;
+    private Vector3 _currentTargetPosition;
+    private Targetable _targetable;
+
+    private void OnEnable()
+    {
+        Targetable.UnitEntered += OnEnteredTarget;
+    }
+
+    private void Start()
+    {
+        _targetable = GetComponent<Targetable>();
+    }
+
 
     private void Update()
     {
@@ -27,8 +42,18 @@ public class Predator : SerializedMonoBehaviour
 
         if (!IsMoving())
         {
+            if (_wasMoving)
+            {
+                OnTargetReached();
+            }
             _currentTarget = null;
         }
+        _wasMoving = IsMoving();
+    }
+
+    private void OnDisable()
+    {
+        Targetable.UnitEntered -= OnEnteredTarget;
     }
 
     private void UpdateTarget()
@@ -79,5 +104,28 @@ public class Predator : SerializedMonoBehaviour
         }
 
         return true;
+    }
+
+    private void OnTargetReached()
+    {
+        var targetName = _currentTarget != null ? _currentTarget.name : "";
+        Debug.Log($"{name} reached target: {targetName} at position: {_currentTargetPosition}");
+
+        if (_currentTarget)
+        {
+            var shift = _currentTarget.transform.position - transform.position;
+            shift.y = 0f;
+            transform.LookAt(transform.position + shift);
+            _targetable?.Interact(_currentTarget);
+            _currentTarget = null;
+        }
+    }
+
+    private void OnEnteredTarget(Targetable targetable, PlayerUnitController unit)
+    {
+        if (targetable == _targetable && _navMeshAgent.enabled && unit == _currentTarget)
+        {
+            OnTargetReached();
+        }
     }
 }

@@ -161,6 +161,7 @@ public class PlayerUnitController : MonoBehaviour, IInventoryOwner
         List<Inventory> inventoriesInTouch = new();
 
         _targetablesInTouch.ClearNulls();
+
         foreach (var targetable in _targetablesInTouch)
         {
             var inventories = targetable.GetComponentsInChildren<Inventory>().ToList();
@@ -194,7 +195,7 @@ public class PlayerUnitController : MonoBehaviour, IInventoryOwner
             {
                 return new CollectItemCommand(this, _pickupSourceInventorySlot, _pickupTargetInventorySlot);
             }
-        }
+        }        
 
         // var resourceStack = _currentTarget.GetComponent<ItemStack>();
         // if (resourceStack)

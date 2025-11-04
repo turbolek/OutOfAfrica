@@ -19,7 +19,7 @@ public static class ListExtensions
         }
     }
 
-    public static void ClearNulls<T>(this List<T> list) where T : MonoBehaviour
+    public static void ClearNulls<T>(this List<T> list) where T : Component
     {
         for (int i = list.Count - 1; i >= 0; i--)
         {

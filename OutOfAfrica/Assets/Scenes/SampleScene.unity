@@ -1995,6 +1995,7 @@ MonoBehaviour:
   _mapPauseVariable: {fileID: 11400000, guid: 5d9335def21de8245adb9c8af3734d3c, type: 2}
   _itemExchangePopup: {fileID: 7334844286910230340, guid: 0a03b08e2d8803a42b575d148bd30a0d, type: 3}
   _campInteractionPopup: {fileID: 6151716149816052590, guid: 9aa5d1bdcb151e144b09d9fadd03ba9f, type: 3}
+  _combatPopup: {fileID: 7835793326529727988, guid: 669e8db9a7ed487429e8739225253500, type: 3}
   _uiManager: {fileID: 1313625381}
 --- !u!4 &839420474
 Transform:
