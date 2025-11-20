@@ -372,6 +372,7 @@ MonoBehaviour:
   InventoryPrefab: {fileID: 4871486337277431939, guid: 4130a406284c9b14eb4a554795e1cf8d, type: 3}
   <Recipes>k__BackingField:
   - {fileID: 11400000, guid: bcbe6b5046e31374cae34b64471e72c2, type: 2}
+  - {fileID: 11400000, guid: c9dcbffee44a9884e80053bf7c27a25c, type: 2}
   _mainCanvasVariable: {fileID: 11400000, guid: 0093d132a1f48f6428bc9d69c3879a59, type: 2}
 --- !u!114 &162671599
 MonoBehaviour:
