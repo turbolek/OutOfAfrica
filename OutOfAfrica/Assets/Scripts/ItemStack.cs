@@ -8,6 +8,7 @@ public class ItemStack : MonoBehaviour, IInventoryOwner
     {
 
         _inventory = GetComponent<Inventory>();
+        _inventory?.Init();
     }
 
     public Inventory GetInventory()

@@ -53,7 +53,7 @@ public class InventoryView : MonoBehaviour
 
         Inventory = inventory;
         name = $"{inventory.name} inventory view";
-        DisplaySelectable(inventory.Owner);
+        DisplayOwner(inventory.Owner.gameObject);
         DisplayInventory(inventory);
     }
 
@@ -84,9 +84,9 @@ public class InventoryView : MonoBehaviour
     //    Inventory.IsOpen = false;
     //}
 
-    private void DisplaySelectable(Selectable selectable)
+    private void DisplayOwner(GameObject owner)
     {
-        _title.text = selectable.name;
+        _title.text = owner.name;
     }
 
     private void DisplayInventory(Inventory inventory)

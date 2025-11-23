@@ -382,7 +382,7 @@ public class InputController : MonoBehaviour
         }
         else
         {
-            var unit = entry.ItemSlot.Inventory.Owner.GetComponent<PlayerUnitController>();
+            var unit = entry.ItemSlot.Inventory.Owner.GetComponentInParent<PlayerUnitController>();
             if (unit == null)
             {
                 unit = _itemTransferSourceEntry.ItemSlot.Inventory.Owner.GetComponent<PlayerUnitController>();

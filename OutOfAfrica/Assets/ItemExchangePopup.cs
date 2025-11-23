@@ -1,15 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ItemExchangePopup : InteractionPopup
 {
-    [SerializeField] private InventoryView unitInventoryView;
+    [SerializeField] private Transform unitsInventoriesParent;
+    [SerializeField] private InventoryView unitInventoryViewTemplate;
     [SerializeField] private InventoryView targetableInventoryView;
 
-    protected override void OnInit(PlayerUnitController unit, Targetable targetable)
+    protected override void OnInit(PlayerUnitController unitGroup, Targetable targetable)
     {
-        var unitInventory = unit.GetInventory();
         Inventory targetableInventory = null;
 
         var inventoryOwner = targetable.GetComponent<IInventoryOwner>();
@@ -18,7 +16,14 @@ public class ItemExchangePopup : InteractionPopup
             targetableInventory = inventoryOwner.GetInventory();
         }
 
-        unitInventoryView.Init(unitInventory);
+        foreach (var groupMember in unitGroup.Members)
+        {
+            var groupMemberInventoryView = Instantiate(unitInventoryViewTemplate, unitsInventoriesParent);
+            groupMemberInventoryView.Init(groupMember.Inventory);
+            groupMemberInventoryView.gameObject.SetActive(true);
+        }
+
         targetableInventoryView.Init(targetableInventory);
+        unitInventoryViewTemplate.gameObject.SetActive(false);
     }
 }

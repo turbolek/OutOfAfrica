@@ -11,23 +11,18 @@ public class Inventory : MonoBehaviour
     [field: SerializeField] public ItemSlot[] ItemSlots { get; private set; }
     [field: SerializeField] public int SortPriority;
 
-    public Selectable Owner { get; private set; }
+    public GameObject Owner { get; private set; }
     public List<Inventory> ConnectedInventories { get; private set; } = new();
 
     public bool IsOpen;
 
     private void Start()
     {
-        var owner = GetComponent<Selectable>();
-        if (owner != null)
-        {
-            Init(owner);
-        }
+        Owner = gameObject;
     }
 
-    public void Init(Selectable owner)
+    public void Init()
     {
-        Owner = owner;
         foreach (var slot in ItemSlots)
         {
             slot.Init(this);

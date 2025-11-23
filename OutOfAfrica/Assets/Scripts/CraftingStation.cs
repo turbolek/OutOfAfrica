@@ -61,7 +61,7 @@ public class CraftingStation : MonoBehaviour
             var inventory = Instantiate(InventoryPrefab, transform);
             inventory.gameObject.name = resource.Resource.name;
             Inventories.AddExclusive(new(inventory, resource.Resource));
-            inventory.Init(Selectable);
+            inventory.Init();
         }
 
         InventoriesUpdated?.Invoke(this);

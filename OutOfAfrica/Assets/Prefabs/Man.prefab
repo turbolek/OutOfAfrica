@@ -975,6 +975,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bac3b10859664344dbc90e4dfa18de7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <Inventory>k__BackingField: {fileID: 551928483981787726}
 --- !u!1 &4203135330754562408
 GameObject:
   m_ObjectHideFlags: 0

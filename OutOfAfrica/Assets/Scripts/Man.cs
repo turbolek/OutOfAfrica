@@ -2,15 +2,11 @@ using UnityEngine;
 
 public class Man : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    [field: SerializeField]
+    public Inventory Inventory { get; private set; }
 
-    // Update is called once per frame
-    void Update()
+    private void Start()
     {
-        
+        Inventory.Init();
     }
 }
