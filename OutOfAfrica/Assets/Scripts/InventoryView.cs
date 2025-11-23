@@ -46,6 +46,11 @@ public class InventoryView : MonoBehaviour
 
     public void Init(Inventory inventory)
     {
+        if (inventory == null)
+        {
+            return;
+        }
+
         Inventory = inventory;
         name = $"{inventory.name} inventory view";
         DisplaySelectable(inventory.Owner);

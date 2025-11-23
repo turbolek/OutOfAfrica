@@ -6,7 +6,6 @@ using UnityEngine;
 using UnityEngine.AI;
 
 [Serializable]
-[RequireComponent(typeof(Selectable), typeof(Inventory))]
 public class PlayerUnitController : MonoBehaviour, IInventoryOwner
 {
     public static Action<Inventory, Inventory> ConnectInventoriesRequest;
@@ -15,6 +14,7 @@ public class PlayerUnitController : MonoBehaviour, IInventoryOwner
     [field: SerializeField] public float BaseRadius { get; private set; }
     [SerializeField] private float _movementSpeed = 2f;
     [field: SerializeField] public float CommandCooldown { get; private set; } = 1f;
+    [field: SerializeField] public List<Man> Members;
 
     private NavMeshAgent _navMeshAgent;
     private NavMeshObstacle _navMeshObstacle;
@@ -32,7 +32,7 @@ public class PlayerUnitController : MonoBehaviour, IInventoryOwner
 
     private ItemSlot _pickupSourceInventorySlot;
     private ItemSlot _pickupTargetInventorySlot;
-    private Inventory _inventory;
+    //private Inventory _inventory;
 
     private void OnEnable()
     {
@@ -42,11 +42,11 @@ public class PlayerUnitController : MonoBehaviour, IInventoryOwner
 
     private void Start()
     {
-        _inventory = GetComponent<Inventory>();
         Selectable = GetComponent<Selectable>();
         _navMeshAgent = GetComponent<NavMeshAgent>();
         _navMeshObstacle = GetComponent<NavMeshObstacle>();
         _navMeshSurface = FindFirstObjectByType<NavMeshSurface>();
+        _navMeshAgent.updateRotation = false;
     }
 
 
@@ -93,6 +93,12 @@ public class PlayerUnitController : MonoBehaviour, IInventoryOwner
         _currentTarget = targetable;
 
         _targetablesInTouch.ClearNulls();
+
+
+        foreach (var member in Members)
+        {
+            member.transform.LookAt(targetPosition);
+        }
 
         if (_targetablesInTouch.Contains(targetable))
         {
@@ -145,7 +151,10 @@ public class PlayerUnitController : MonoBehaviour, IInventoryOwner
         {
             var shift = _currentTarget.transform.position - transform.position;
             shift.y = 0f;
-            transform.LookAt(transform.position + shift);
+            foreach (var member in Members)
+            {
+                member.transform.LookAt(member.transform.position + shift);
+            }
             _currentTarget.Interact(this);
         }
     }
@@ -175,17 +184,17 @@ public class PlayerUnitController : MonoBehaviour, IInventoryOwner
             }
         }
 
-        if (inventoriesInTouch.Count > 0)
-        {
-            var inventoriesToOpen = new List<Inventory>(inventoriesInTouch);
-            inventoriesToOpen.Add(_inventory);
+        //if (inventoriesInTouch.Count > 0)
+        //{
+        //    var inventoriesToOpen = new List<Inventory>(inventoriesInTouch);
+        //    inventoriesToOpen.Add(_inventory);
 
-            foreach (var inventory in inventoriesToOpen)
-            {
-                ConnectInventoriesRequest?.Invoke(inventory, _inventory);
-                _openedInventories.AddExclusive(inventory);
-            }
-        }
+        //    foreach (var inventory in inventoriesToOpen)
+        //    {
+        //        ConnectInventoriesRequest?.Invoke(inventory, _inventory);
+        //        _openedInventories.AddExclusive(inventory);
+        //    }
+        //}
 
         if (_pickupSourceInventorySlot != null)
         {
@@ -195,7 +204,7 @@ public class PlayerUnitController : MonoBehaviour, IInventoryOwner
             {
                 return new CollectItemCommand(this, _pickupSourceInventorySlot, _pickupTargetInventorySlot);
             }
-        }        
+        }
 
         // var resourceStack = _currentTarget.GetComponent<ItemStack>();
         // if (resourceStack)
@@ -238,15 +247,16 @@ public class PlayerUnitController : MonoBehaviour, IInventoryOwner
 
     public bool CanPickupItem(Item item)
     {
-        return _inventory.CanFitItem(item);
+        return false;
+        //return _inventory.CanFitItem(item);
     }
 
     private void CloseInventories()
     {
-        foreach (var inventory in _openedInventories)
-        {
-            DisconnectInventoriesRequest?.Invoke(inventory, _inventory);
-        }
+        //foreach (var inventory in _openedInventories)
+        //{
+        //    DisconnectInventoriesRequest?.Invoke(inventory, _inventory);
+        //}
     }
 
     public void SetPickupSlots(ItemSlot sourceSlot, ItemSlot targetSlot)
@@ -264,19 +274,19 @@ public class PlayerUnitController : MonoBehaviour, IInventoryOwner
             return true;
         }
 
-        foreach (var itemSlot in _inventory.ItemSlots)
-        {
-            if (itemSlot.Item != null && itemSlot.Item.Data.ToolCategory == toolCategory)
-            {
-                return true;
-            }
-        }
+        //foreach (var itemSlot in _inventory.ItemSlots)
+        //{
+        //    if (itemSlot.Item != null && itemSlot.Item.Data.ToolCategory == toolCategory)
+        //    {
+        //        return true;
+        //    }
+        //}
 
         return false;
     }
 
     public Inventory GetInventory()
     {
-        return _inventory;
+        return null;// _inventory;
     }
 }
