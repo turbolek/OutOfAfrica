@@ -10,7 +10,7 @@ public abstract class InteractionPopup : MonoBehaviour
 
     [SerializeField] private TMP_Text _unitNameLabel;
     [SerializeField] private TMP_Text _targetableNameLabel;
-    [SerializeField] private Button _closeButton;
+    [SerializeField] protected Button _closeButton;
 
     private void OnEnable()
     {
@@ -24,8 +24,14 @@ public abstract class InteractionPopup : MonoBehaviour
 
     public void Init(PlayerUnitController unit, Targetable targetable)
     {
-        _unitNameLabel.text = unit.name;
-        _targetableNameLabel.text = targetable.name;
+        if (_unitNameLabel != null)
+        {
+            _unitNameLabel.text = unit.name;
+        }
+        if (_targetableNameLabel != null)
+        {
+            _targetableNameLabel.text = targetable.name;
+        }
         gameObject.SetActive(true);
         OnInit(unit, targetable);
     }

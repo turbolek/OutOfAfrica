@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class Unit : MonoBehaviour
@@ -9,6 +8,7 @@ public class Unit : MonoBehaviour
 
     public bool IsDead { get; private set; }
     public bool IsFighting => _currentTarget != null && !_currentTarget.IsDead;
+    public bool CanAttack => !IsDead && Time.time - _lastAttackTime >= AttackCooldown;
 
     private Unit _currentTarget;
     private float _lastAttackTime;
@@ -17,7 +17,7 @@ public class Unit : MonoBehaviour
     {
         if (_currentTarget != null)
         {
-            if (Time.deltaTime - _lastAttackTime >= AttackCooldown)
+            if (CanAttack)
             {
                 Attack();
             }
@@ -41,6 +41,7 @@ public class Unit : MonoBehaviour
     private void Die()
     {
         IsDead = true;
+        SetTarget(null);
     }
 
     private void Attack()
@@ -51,6 +52,6 @@ public class Unit : MonoBehaviour
         }
 
         _currentTarget.TakeDamage(Strength);
-        _lastAttackTime = Time.deltaTime;
+        _lastAttackTime = Time.time;
     }
 }

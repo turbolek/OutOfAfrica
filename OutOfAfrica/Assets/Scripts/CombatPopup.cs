@@ -1,41 +1,63 @@
-﻿using System.Collections;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class CombatPopup : InteractionPopup
 {
     [SerializeField] private TMP_Text _resultText;
+    [Scene]
+    [SerializeField] private string _combatScenePath;
 
-    private PlayerUnitController _unit;
-    private Predator _predator;
+    public string CombatSceneName { get; private set; }
 
-    protected override void OnInit(PlayerUnitController unit, Targetable targetable)
+    private PlayerUnitController _unitsGroup;
+    private Predator _foe;
+
+    private void OnDestroy()
     {
-        _unit = unit;
-        _predator = targetable.GetComponent<Predator>();
-
-        HandleCombat();
+        SceneManager.UnloadSceneAsync(CombatSceneName);
     }
 
-    private void HandleCombat()
+    protected override async void OnInit(PlayerUnitController unit, Targetable targetable)
     {
-        if (_predator == null)
+        CombatSceneName = _combatScenePath.Split("/").Last().Split(".")[0];
+        _unitsGroup = unit;
+        _foe = targetable.GetComponent<Predator>();
+
+        await HandleCombat();
+    }
+
+    private async Task HandleCombat()
+    {
+        _resultText.gameObject.SetActive(false);
+        _closeButton.gameObject.SetActive(false);
+
+        var combatSceneLoadOperation = SceneManager.LoadSceneAsync(CombatSceneName, LoadSceneMode.Additive);
+
+        while (combatSceneLoadOperation.isDone)
         {
+            await Task.Yield();
+        }
+
+        for (int i = 0; i < 10; i++)
+        {
+            await Task.Yield();
+        }
+
+        var combatController = FindAnyObjectByType<CombatController>();
+        if (combatController == null)
+        {
+            Debug.LogError("Could not find a combat controller");
             return;
         }
 
-        bool playerWins = Random.Range(0f, 1f) >= 0.5f;
+        await combatController.HandleCombat(_unitsGroup, _foe);
 
-        if (playerWins)
-        {
-            _resultText.text = $"{ _predator.name} died!";
-            Destroy(_predator.gameObject);
-        }
-        else
-        {
-            _resultText.text = $"{ _unit.name} died!";
-            Destroy(_unit.gameObject);
-        }
+        _resultText.gameObject.SetActive(true);
+        _closeButton.gameObject.SetActive(true);
     }
+
 }

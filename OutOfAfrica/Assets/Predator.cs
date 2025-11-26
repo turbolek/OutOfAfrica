@@ -10,6 +10,8 @@ public class Predator : SerializedMonoBehaviour
 
     [SerializeField] private NavMeshAgent _navMeshAgent;
     [SerializeField] private NavMeshObstacle _navMeshObstacle;
+    [field: SerializeField] public CombatAvatar CombatAvatarPrefab { get; private set; }
+    [field: SerializeField] public Unit Unit { get; private set; }
 
 
     private PlayerUnitController _currentTarget;
