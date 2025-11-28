@@ -991,7 +991,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d705297b03b1e946b9c605cf201d9ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HP: 10
+  <HP>k__BackingField: 10
   Strength: 1
   AttackCooldown: 2
 --- !u!1 &4203135330754562408

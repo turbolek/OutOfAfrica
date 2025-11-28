@@ -1,10 +1,22 @@
+using System;
 using UnityEngine;
 
 public class Unit : MonoBehaviour
 {
-    [field: SerializeField] public float HP;
+    public event Action HealthChanged;
+
+    [field: SerializeField] public float HP { get; private set; }
     [field: SerializeField] public float Strength;
     [field: SerializeField] public float AttackCooldown;
+
+    public float CurrentHP
+    {
+        get { return _currentHP; }
+        private set
+        {
+            _currentHP = value; HealthChanged?.Invoke();
+        }
+    }
 
     public bool IsDead { get; private set; }
     public bool IsFighting => _currentTarget != null && !_currentTarget.IsDead;
@@ -12,6 +24,13 @@ public class Unit : MonoBehaviour
 
     private Unit _currentTarget;
     private float _lastAttackTime;
+    private float _currentHP;
+
+    private void Awake()
+    {
+        CurrentHP = HP;
+        IsDead = false;
+    }
 
     private void Update()
     {
@@ -26,13 +45,17 @@ public class Unit : MonoBehaviour
 
     public void SetTarget(Unit unit)
     {
+        if (unit != _currentTarget)
+        {
+            _lastAttackTime = Time.time;
+        }
         _currentTarget = unit;
     }
 
     public void TakeDamage(float damage)
     {
-        HP -= damage;
-        if (HP <= 0)
+        CurrentHP -= damage;
+        if (CurrentHP <= 0)
         {
             Die();
         }

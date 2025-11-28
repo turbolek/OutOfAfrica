@@ -38,6 +38,7 @@ public class CombatController : MonoBehaviour
 
             var unit = _unitsGroup.Members[i];
             var unitAvatar = Instantiate(unit.CombatAvatarPrefab, spawnPoint);
+            unitAvatar.Init(unit.Unit);
             _playerUnitsAvatars.Add(unit, unitAvatar);
 
         }
@@ -49,6 +50,7 @@ public class CombatController : MonoBehaviour
         }
 
         var foeAvatar = Instantiate(_foe.CombatAvatarPrefab, _foeSpawnPoints[0]);
+        foeAvatar.Init(_foe.Unit);
         _foeAvatars.Add(_foe, foeAvatar);
 
         return true;
