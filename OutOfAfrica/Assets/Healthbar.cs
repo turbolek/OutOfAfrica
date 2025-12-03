@@ -41,6 +41,7 @@ public class Healthbar : MonoBehaviour
     private void UpdateHealthbar(float currentHealth, float maxHealth)
     {
         _fillImage.fillAmount = currentHealth / maxHealth;
+        gameObject.SetActive(_fillImage.fillAmount > 0);
     }
 
     private void HandlePosition(Camera camera)

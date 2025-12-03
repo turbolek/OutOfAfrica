@@ -4,6 +4,8 @@ using UnityEngine;
 public class Unit : MonoBehaviour
 {
     public event Action HealthChanged;
+    public event Action Died;
+    public event Action Attacked;
 
     [field: SerializeField] public float HP { get; private set; }
     [field: SerializeField] public float Strength;
@@ -65,6 +67,7 @@ public class Unit : MonoBehaviour
     {
         IsDead = true;
         SetTarget(null);
+        Died?.Invoke();
     }
 
     private void Attack()
@@ -76,5 +79,6 @@ public class Unit : MonoBehaviour
 
         _currentTarget.TakeDamage(Strength);
         _lastAttackTime = Time.time;
+        Attacked?.Invoke();
     }
 }
