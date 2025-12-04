@@ -38,6 +38,7 @@ public class PlayerUnitController : MonoBehaviour, IInventoryOwner
     {
         Targetable.UnitEntered += OnEnteredTarget;
         Targetable.UnitExited += OnExitedTarget;
+        Man.Died += OnManDied;
     }
 
     private void Start()
@@ -85,6 +86,7 @@ public class PlayerUnitController : MonoBehaviour, IInventoryOwner
     {
         Targetable.UnitEntered -= OnEnteredTarget;
         Targetable.UnitExited -= OnExitedTarget;
+        Man.Died -= OnManDied;
     }
 
     public void SetTarget(Targetable targetable, Vector3 targetPosition)
@@ -288,5 +290,19 @@ public class PlayerUnitController : MonoBehaviour, IInventoryOwner
     public Inventory GetInventory()
     {
         return null;// _inventory;
+    }
+
+    private void OnManDied(Man man)
+    {
+        if (Members.Contains(man))
+        {
+            Members.Remove(man);
+            Destroy(man.gameObject);
+        }
+
+        if (Members.Count == 0)
+        {
+            Destroy(gameObject);
+        }
     }
 }
