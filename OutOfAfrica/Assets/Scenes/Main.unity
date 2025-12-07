@@ -476,7 +476,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2389402090440513605, guid: e8781217933d27f409456e5fba114602, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 50
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8120472253186252934, guid: e8781217933d27f409456e5fba114602, type: 3}
       propertyPath: m_AnchorMax.y
@@ -1177,6 +1177,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2273145662307008505, guid: 12577437e6fce8a46845531db623297d, type: 3}
+      propertyPath: <ItemSlots>k__BackingField.Array.data[0].InitialItem
+      value: 
+      objectReference: {fileID: 11400000, guid: 3b5d7c2b0e6f25e449cf166a588fbdd3, type: 2}
     - target: {fileID: 4203135330754401604, guid: 12577437e6fce8a46845531db623297d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 20.19

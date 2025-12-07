@@ -8,7 +8,7 @@ public class Unit : MonoBehaviour
     public event Action Attacked;
 
     [field: SerializeField] public float HP { get; private set; }
-    [field: SerializeField] public float Strength;
+    [field: SerializeField] public float BaseStrength;
     [field: SerializeField] public float AttackCooldown;
 
     public float CurrentHP
@@ -20,6 +20,7 @@ public class Unit : MonoBehaviour
         }
     }
 
+
     public bool IsDead { get; private set; }
     public bool IsFighting => _currentTarget != null && !_currentTarget.IsDead;
     public bool CanAttack => !IsDead && Time.time - _lastAttackTime >= AttackCooldown;
@@ -27,6 +28,10 @@ public class Unit : MonoBehaviour
     private Unit _currentTarget;
     private float _lastAttackTime;
     private float _currentHP;
+
+    public ItemData Weapon;
+
+    public float Strength => Mathf.Max(BaseStrength, Weapon != null ? Weapon.Strength : 0f);
 
     private void Awake()
     {

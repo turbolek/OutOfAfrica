@@ -11,6 +11,7 @@ public class ItemData : SerializedScriptableObject, IRecipeProduct
     public int SlotCapacity { get; private set; } = 1;
 
     [field: SerializeField] public float CollectionTime { get; private set; }
+    [field: SerializeField] public float Strength { get; private set; } = 0f;
 
     [field: SerializeField] public Sprite Sprite { get; private set; }
     [field: SerializeField] public ToolCategory ToolCategory { get; private set; }

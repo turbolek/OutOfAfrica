@@ -992,8 +992,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <HP>k__BackingField: 10
-  Strength: 1
+  BaseStrength: 2
   AttackCooldown: 2
+  Weapon: {fileID: 0}
 --- !u!1 &4203135330754562408
 GameObject:
   m_ObjectHideFlags: 0

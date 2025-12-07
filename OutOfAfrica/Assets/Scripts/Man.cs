@@ -11,10 +11,22 @@ public class Man : MonoBehaviour
 
     public PlayerUnitController Group { get; set; }
 
+    private void OnEnable()
+    {
+        Inventory.Modified += OnInventoyModified;
+    }
+
     private void Start()
     {
         Inventory.Init();
         Unit.Died += OnDied;
+
+        OnInventoyModified(Inventory);
+    }
+
+    private void OnDisable()
+    {
+        Inventory.Modified -= OnInventoyModified;
     }
 
     private void OnDestroy()
@@ -25,5 +37,25 @@ public class Man : MonoBehaviour
     private void OnDied()
     {
         Died?.Invoke(this);
+    }
+
+    private void OnInventoyModified(Inventory inventory)
+    {
+        ItemData bestWeapon = null;
+
+        foreach (var slot in inventory.ItemSlots)
+        {
+            var item = slot.Item;
+
+            if (item == null)
+                continue;
+
+            if (bestWeapon == null || item.Data.Strength > bestWeapon.Strength)
+            {
+                bestWeapon = item.Data;
+            }
+        }
+
+        Unit.Weapon = bestWeapon;
     }
 }

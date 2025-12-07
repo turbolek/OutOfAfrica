@@ -106,7 +106,7 @@ public class InventoryEntry : MonoBehaviour
         }
 
         var item = ItemSlot.Item;
-        if (item != null)
+        if (item != null && item.Data != null)
         {
             var title = item.Data.name;
             var message = string.Empty;

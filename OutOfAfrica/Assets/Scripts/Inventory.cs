@@ -5,6 +5,7 @@ using Variables;
 
 public class Inventory : MonoBehaviour
 {
+    public event Action<Inventory> Modified;
     public static Action<Inventory> Initialized;
     public static Action<Inventory> Destroyed;
 
@@ -44,6 +45,7 @@ public class Inventory : MonoBehaviour
             slot.Item = item;
             slot.Increment();
         }
+        Modified?.Invoke(this);
     }
 
     public void RemoveItem(Item item)
@@ -53,6 +55,7 @@ public class Inventory : MonoBehaviour
         {
             slot.Decrement();
         }
+        Modified?.Invoke(this);
     }
 
     public ItemSlot GetSlotForAddingItemTo(Item item)

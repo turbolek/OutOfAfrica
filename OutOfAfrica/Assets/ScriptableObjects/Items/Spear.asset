@@ -24,6 +24,7 @@ MonoBehaviour:
   <ResourceAmount>k__BackingField: []
   <SlotCapacity>k__BackingField: 1
   <CollectionTime>k__BackingField: 0
+  <Strength>k__BackingField: 5
   <Sprite>k__BackingField: {fileID: 21300000, guid: 8cc4564f0d7c4ba4aa225a38a093fc0e, type: 3}
   <ToolCategory>k__BackingField: {fileID: 11400000, guid: 250e6dbb1bc71ff4fa50442cf511096a, type: 2}
   <RequiredTool>k__BackingField: {fileID: 0}
