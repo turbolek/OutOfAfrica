@@ -18,11 +18,11 @@ public class Inventory : MonoBehaviour
 
     private void Start()
     {
-        Owner = gameObject;
     }
 
     public void Init()
     {
+        Owner = gameObject;
         foreach (var slot in ItemSlots)
         {
             slot.Init(this);

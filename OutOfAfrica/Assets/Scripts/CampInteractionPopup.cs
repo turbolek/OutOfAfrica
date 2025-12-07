@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class CampInteractionPopup : InteractionPopup
 {
-    [SerializeField] private InventoryView unitInventoryView;
+    [SerializeField] private Transform unitsInventoriesParent;
+    [SerializeField] private InventoryView unitInventoryViewTemplate;
     [SerializeField] private InventoryView campInventoryView;
     [SerializeField] private CraftingView craftingView;
 
-    protected override void OnInit(PlayerUnitController unit, Targetable targetable)
+    protected override void OnInit(PlayerUnitController unitGroup, Targetable targetable)
     {
-        var unitInventory = unit.GetInventory();
+
         Inventory targetableInventory = null;
 
         var inventoryOwner = targetable.GetComponent<IInventoryOwner>();
@@ -19,8 +20,16 @@ public class CampInteractionPopup : InteractionPopup
             targetableInventory = inventoryOwner.GetInventory();
         }
 
-        unitInventoryView.Init(unitInventory);
         campInventoryView.Init(targetableInventory);
+
+        foreach (var groupMember in unitGroup.Members)
+        {
+            var groupMemberInventoryView = Instantiate(unitInventoryViewTemplate, unitsInventoriesParent);
+            groupMemberInventoryView.Init(groupMember.Inventory);
+            groupMemberInventoryView.gameObject.SetActive(true);
+        }
+        unitInventoryViewTemplate.gameObject.SetActive(false);
+
 
         var craftingStation = targetable.GetComponent<CraftingStation>();
         if (craftingStation != null)

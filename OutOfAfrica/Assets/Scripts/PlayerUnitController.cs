@@ -48,6 +48,11 @@ public class PlayerUnitController : MonoBehaviour, IInventoryOwner
         _navMeshObstacle = GetComponent<NavMeshObstacle>();
         _navMeshSurface = FindFirstObjectByType<NavMeshSurface>();
         _navMeshAgent.updateRotation = false;
+
+        foreach (var member in Members)
+        {
+            member.Group = this;
+        }
     }
 
 

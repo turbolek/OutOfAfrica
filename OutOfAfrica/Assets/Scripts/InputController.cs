@@ -23,7 +23,8 @@ public class InputController : MonoBehaviour
     [SerializeField] private RectTransform _selectionFrame;
     [SerializeField] private Collider _terrainCollider;
 
-    [FormerlySerializedAs("_selectionVariable")] [SerializeField]
+    [FormerlySerializedAs("_selectionVariable")]
+    [SerializeField]
     private SelectionValueVariable selectionValueVariable;
 
     [SerializeField] private Vector3Variable _nearestPositionOnGroundVariable;
@@ -382,15 +383,16 @@ public class InputController : MonoBehaviour
         }
         else
         {
-            var unit = entry.ItemSlot.Inventory.Owner.GetComponentInParent<PlayerUnitController>();
+            var unit = entry.ItemSlot.Inventory.Owner.GetComponentInParent<Man>();
             if (unit == null)
             {
-                unit = _itemTransferSourceEntry.ItemSlot.Inventory.Owner.GetComponent<PlayerUnitController>();
+                unit = _itemTransferSourceEntry.ItemSlot.Inventory.Owner.GetComponent<Man>();
             }
 
             if (unit != null)
             {
-                unit.SetPickupSlots(_itemTransferSourceEntry.ItemSlot, entry.ItemSlot);
+                var group = unit.Group;
+                group.SetPickupSlots(_itemTransferSourceEntry.ItemSlot, entry.ItemSlot);
                 _itemTransferSourceEntry = null;
             }
         }
