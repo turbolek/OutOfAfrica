@@ -46,7 +46,6 @@ public class PlayerUnitController : MonoBehaviour, IInventoryOwner
         Selectable = GetComponent<Selectable>();
         _navMeshAgent = GetComponent<NavMeshAgent>();
         _navMeshObstacle = GetComponent<NavMeshObstacle>();
-        _navMeshSurface = FindFirstObjectByType<NavMeshSurface>();
         _navMeshAgent.updateRotation = false;
 
         foreach (var member in Members)
@@ -309,5 +308,10 @@ public class PlayerUnitController : MonoBehaviour, IInventoryOwner
         {
             Destroy(gameObject);
         }
+    }
+
+    public void FindWorldReferences()
+    {
+        _navMeshSurface = FindFirstObjectByType<NavMeshSurface>();
     }
 }

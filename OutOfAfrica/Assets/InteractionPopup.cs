@@ -12,12 +12,12 @@ public abstract class InteractionPopup : MonoBehaviour
     [SerializeField] private TMP_Text _targetableNameLabel;
     [SerializeField] protected Button _closeButton;
 
-    private void OnEnable()
+    protected virtual void OnEnable()
     {
         _closeButton.onClick.AddListener(Close);
     }
 
-    private void OnDisable()
+    protected virtual void OnDisable()
     {
         _closeButton.onClick.RemoveListener(Close);
     }
